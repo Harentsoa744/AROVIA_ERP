@@ -13,20 +13,17 @@ class Fournisseurs extends BaseController
         $this->fournisseurModel = new FournisseurModel();
     }
 
-    // Liste tous les fournisseurs
     public function index()
     {
         $data['fournisseurs'] = $this->fournisseurModel->findAll();
         return view('fournisseurs/index', $data);
     }
 
-    // Affiche le formulaire d'ajout
     public function new()
     {
         return view('fournisseurs/new');
     }
 
-    // Traite la soumission du formulaire d'ajout
     public function create()
     {
         $data = [
@@ -43,7 +40,6 @@ class Fournisseurs extends BaseController
         return redirect()->to('/fournisseurs')->with('message', 'Fournisseur ajouté avec succès.');
     }
 
-    // Affiche le formulaire d'édition
     public function edit($id)
     {
         $data['fournisseur'] = $this->fournisseurModel->find($id);
@@ -55,7 +51,6 @@ class Fournisseurs extends BaseController
         return view('fournisseurs/edit', $data);
     }
 
-    // Traite la modification
     public function update($id)
     {
         $data = [
@@ -71,7 +66,6 @@ class Fournisseurs extends BaseController
         return redirect()->to('/fournisseurs')->with('message', 'Fournisseur modifié avec succès.');
     }
 
-    // Supprime un fournisseur
     public function delete($id)
     {
         $this->fournisseurModel->delete($id);

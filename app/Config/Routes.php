@@ -7,6 +7,8 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 
+$routes->get('/employes/ajax', 'EmployeController::ajaxList');
+
 $routes->get('employes/index', 'EmployeController::index');
 
 $routes->get('employes', 'EmployeController::index');
@@ -20,7 +22,7 @@ $routes->get('employes/show/(:num)', 'EmployeController::show/$1');
 $routes->get('employes/edit/(:num)', 'EmployeController::edit/$1');
 $routes->post('employes/update/(:num)', 'EmployeController::update/$1');
 
-$routes->get('employes/delete/(:num)', 'EmployeController::delete/$1');
+$routes->get('employes/delete/(:num)', 'EmployeController::fire/$1');
 
 $routes->get('fournisseurs', 'Fournisseurs::index');
 $routes->get('fournisseurs/new', 'Fournisseurs::new');

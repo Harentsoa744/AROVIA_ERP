@@ -23,7 +23,7 @@ class EmployeController extends BaseController
     public function index()
     {
         $data = [
-            'employes' => $this->employeModel->findAll()
+            'employes' => $this->employeModel->getActifs()
         ];
 
         return view('employes/index', $data);
@@ -40,11 +40,18 @@ class EmployeController extends BaseController
 
         return view('employes/show', $data);
     }
+    
 
     // FORM CREATE
     public function create()
     {
         return view('employes/create');
+    }
+
+    public function fire($id)
+    {
+        $this->employeModel->update($id, ['statut' => 'INACTIF']);
+        return redirect()->to('/employes');
     }
 
     // STORE
@@ -98,4 +105,33 @@ class EmployeController extends BaseController
         $this->employeModel->delete($id);
         return redirect()->to('/employes');
     }
+
+    public function ajaxList()
+{
+    $request = service('request');
+
+    $search = $request->getGet('search');
+    $statut = $request->getGet('statut');
+
+    $builder = $this->employeModel;
+
+    if (!empty($statut)) {
+        $builder = $builder->where('statut', $statut);
+    }
+
+    if (!empty($search)) {
+        $builder = $builder->groupStart()
+            ->like('nom', $search)
+            ->orLike('prenom', $search)
+            ->orLike('matricule', $search)
+            ->orLike('poste', $search)
+            // ->orLike('salaire_base', $search)
+            ->orLike('telephone', $search)
+            ->groupEnd();
+    }
+
+    $employes = $builder->findAll();
+
+    return $this->response->setJSON($employes);
+}
 }
