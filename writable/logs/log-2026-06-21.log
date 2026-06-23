@@ -1,0 +1,33 @@
+CRITICAL - 2026-06-21 16:20:51 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EntreeMatierePremiereModel::getStatistiquesParDate
+[Method: GET, Route: statistiques]
+in SYSTEMPATH\Model.php on line 761.
+ 1 APPPATH\Controllers\Statistiques.php(15): CodeIgniter\Model->__call('getStatistiquesParDate', [])
+ 2 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Statistiques->index()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Statistiques))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\hp\\Documents\\L2\\S4\\Mme Baovola\\Gestion de stock\\codeigniter4\\public\\index.php')
+CRITICAL - 2026-06-21 16:21:00 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EntreeMatierePremiereModel::getStatistiquesParDate
+[Method: GET, Route: statistiques]
+in SYSTEMPATH\Model.php on line 761.
+ 1 APPPATH\Controllers\Statistiques.php(15): CodeIgniter\Model->__call('getStatistiquesParDate', [])
+ 2 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Statistiques->index()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Statistiques))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\hp\\Documents\\L2\\S4\\Mme Baovola\\Gestion de stock\\codeigniter4\\public\\index.php')
+CRITICAL - 2026-06-21 16:22:53 --> CodeIgniter\Exceptions\BadMethodCallException: Call to undefined method App\Models\EntreeMatierePremiereModel::getStatistiquesParDate
+[Method: GET, Route: statistiques]
+in SYSTEMPATH\Model.php on line 761.
+ 1 APPPATH\Controllers\Statistiques.php(15): CodeIgniter\Model->__call('getStatistiquesParDate', [])
+ 2 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Statistiques->index()
+ 3 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Statistiques))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ 8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\hp\\Documents\\L2\\S4\\Mme Baovola\\Gestion de stock\\codeigniter4\\public\\index.php')

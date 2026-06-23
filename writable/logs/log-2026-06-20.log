@@ -1,0 +1,37 @@
+ERROR - 2026-06-20 15:33:43 --> Error connecting to the database: CodeIgniter\Database\Exceptions\DatabaseException: ERREUR:  valeur invalide pour le paramètre « client_encoding » : « utf8mb4 » in C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Database\Postgre\Connection.php:98
+Stack trace:
+#0 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Database\BaseConnection.php(555): CodeIgniter\Database\Postgre\Connection->connect(false)
+#1 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Database\BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query('SELECT "table_n...')
+#3 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Commands\Database\ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+#4 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run(Array)
+#5 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('db:table', Array)
+#6 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Boot.php(442): CodeIgniter\CLI\Console->run()
+#7 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\system\Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#8 C:\Users\hp\Documents\L2\S4\Mme Baovola\Gestion de stock\codeigniter4\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#9 {main}
+CRITICAL - 2026-06-20 15:33:43 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [Postgre]: ERREUR:  valeur invalide pour le paramètre « client_encoding » : « utf8mb4 »
+[Method: CLI, Route: db:table/fournisseurs]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseConnection.php(1706): CodeIgniter\Database\BaseConnection->query('SELECT "table_name" FROM "information_schema"."tables" WHERE "table_schema" = \'public\'')
+ 3 SYSTEMPATH\Commands\Database\ShowTableInfo.php(121): CodeIgniter\Database\BaseConnection->listTables()
+ 4 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\ShowTableInfo->run([...])
+ 5 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('db:table', [...])
+ 6 SYSTEMPATH\Boot.php(442): CodeIgniter\CLI\Console->run()
+ 7 SYSTEMPATH\Boot.php(166): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 8 ROOTPATH\spark(87): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+CRITICAL - 2026-06-20 15:48:46 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "fournisseurs/new.php"
+[Method: GET, Route: fournisseurs/new]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('fournisseurs/new.php')
+ 2 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('fournisseurs/new', [], true)
+ 3 APPPATH\Controllers\Fournisseurs.php(26): view('fournisseurs/new')
+ 4 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Fournisseurs->new()
+ 5 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Fournisseurs))
+ 6 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+10 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\hp\\Documents\\L2\\S4\\Mme Baovola\\Gestion de stock\\codeigniter4\\public\\index.php')
