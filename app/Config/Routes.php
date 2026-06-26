@@ -41,3 +41,12 @@ $routes->get('sorties/new', 'Sorties::new');
 $routes->post('sorties', 'Sorties::create');
 $routes->get('statistiques', 'Statistiques::index');
 $routes->get('valeur-stock', 'ValeurStock::index');
+
+// -------------------------------------------------------
+// Finances
+// -------------------------------------------------------
+$routes->get('finances', 'Finances::index');
+$routes->post('finances/store', 'Finances::store');
+$routes->get('finances/delete/(:num)', 'Finances::delete/$1');
+$routes->get('finances/tresorerie', 'Finances::tresorerie');
+$routes->get('finances/rapport', 'Finances::rapport');

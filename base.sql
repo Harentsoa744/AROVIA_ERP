@@ -80,6 +80,17 @@ CREATE TABLE sorties (
     valeur_totale NUMERIC(12,2) NOT NULL
 );
 
+CREATE TABLE transactions (
+    id                SERIAL PRIMARY KEY,
+    type              VARCHAR(10) NOT NULL CHECK (type IN ('recette', 'depense')),
+    categorie         VARCHAR(100) NOT NULL,
+    montant           NUMERIC(15,2) NOT NULL,
+    description       TEXT,
+    date_transaction  DATE NOT NULL,
+    created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 UPDATE types_bocaux SET prix_vente = [nouveau_prix] WHERE nom = '10cl';
 UPDATE types_bocaux SET prix_vente = [nouveau_prix] WHERE nom = '25cl';
 UPDATE types_bocaux SET prix_vente = [nouveau_prix] WHERE nom = '50cl';
