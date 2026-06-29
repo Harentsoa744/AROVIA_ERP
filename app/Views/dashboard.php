@@ -31,4 +31,5 @@
     <li><a href="/valeur-stock">Valeur du stock</a></li>
     <li><a href="/statistiques">Statistiques</a></li>
     <li><a href="/finances">Finances</a></li>
+    <li><a href="/statistiques/vente">Statistique finances</a></li>
 </ul>

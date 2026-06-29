@@ -50,3 +50,11 @@ $routes->post('finances/store', 'Finances::store');
 $routes->get('finances/delete/(:num)', 'Finances::delete/$1');
 $routes->get('finances/tresorerie', 'Finances::tresorerie');
 $routes->get('finances/rapport', 'Finances::rapport');
+
+$routes->get('statistiques/vente', 'StatistiquesVente::index');
+
+$routes->group('statistiques', function($routes) {
+    $routes->get('encaissements', 'StatistiquesVente::encaissements');
+    $routes->get('decaissements', 'StatistiquesVente::decaissements');
+    $routes->get('api/graphique', 'StatistiquesVente::apiGraphique');
+});
