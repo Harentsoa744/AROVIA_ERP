@@ -1,0 +1,89 @@
+ERROR - 2026-06-29 13:23:34 --> pg_query(): Query failed: ERREUR:  la relation « entreprise » n'existe pas
+LINE 2: FROM &quot;entreprise&quot;
+             ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC', [], false)
+ 4 SYSTEMPATH\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\EntrepriseController.php(44): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EntrepriseController->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EntrepriseController))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-06-29 13:23:34 --> CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la relation « entreprise » n'existe pas
+LINE 2: FROM &quot;entreprise&quot;
+             ^
+[Method: GET, Route: entreprise]
+in SYSTEMPATH\Database\BaseConnection.php on line 865.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC', [], false)
+ 2 SYSTEMPATH\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Controllers\EntrepriseController.php(44): CodeIgniter\BaseModel->findAll()
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EntrepriseController->index()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EntrepriseController))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-06-29 13:23:34 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: pg_query(): Query failed: ERREUR:  la relation « entreprise » n'existe pas
+LINE 2: FROM &quot;entreprise&quot;
+             ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 212.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC', [], false)
+ 4 SYSTEMPATH\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Controllers\EntrepriseController.php(44): CodeIgniter\BaseModel->findAll()
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EntrepriseController->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EntrepriseController))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-06-29 13:23:34 --> [Caused by] ErrorException: pg_query(): Query failed: ERREUR:  la relation « entreprise » n'existe pas
+LINE 2: FROM &quot;entreprise&quot;
+             ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_query(): Query failed: ERREUR:  la relation « entreprise » n\'existe pas
+LINE 2: FROM &quot;entreprise&quot;
+             ^', 'C:\\Users\\Harena\\Documents\\MmeBaovola\\fusion\\fusion\\system\\Database\\Postgre\\Connection.php', 200)
+ 2 SYSTEMPATH\Database\Postgre\Connection.php(200): pg_query(Object(PgSql\Connection), 'SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 4 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC')
+ 5 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "entreprise"
+ORDER BY "nom" ASC', [], false)
+ 6 SYSTEMPATH\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 7 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 8 APPPATH\Controllers\EntrepriseController.php(44): CodeIgniter\BaseModel->findAll()
+ 9 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EntrepriseController->index()
+10 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EntrepriseController))
+11 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

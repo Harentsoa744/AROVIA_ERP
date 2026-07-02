@@ -30,4 +30,5 @@
     <li><a href="/sorties">Sorties (ventes)</a></li>
     <li><a href="/valeur-stock">Valeur du stock</a></li>
     <li><a href="/statistiques">Statistiques</a></li>
+    <li><a href="/employes">Gestion Employes</a></li>
 </ul>

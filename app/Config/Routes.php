@@ -55,3 +55,38 @@ $routes->get('sorties/new', 'Sorties::new');
 $routes->post('sorties', 'Sorties::create');
 $routes->get('statistiques', 'Statistiques::index');
 $routes->get('valeur-stock', 'ValeurStock::index');
+
+//Arinala
+
+$routes->get('/entreprise', 'EntrepriseController::index');
+$routes->get('/entreprise/ajout', 'EntrepriseController::ajout');
+$routes->post('/entreprise/save', 'EntrepriseController::save');
+$routes->get('/contrat', 'ContratController::index');
+$routes->get('/contrat/ajout', 'ContratController::ajout');
+$routes->post('/contrat/save', 'ContratController::save');
+$routes->get('/contrat/detail/(:num)', 'ContratController::detail/$1');
+$routes->get('/contrat/pdf/(:num)', 'ContratController::pdf/$1');
+$routes->get('/contrat/recherche', 'ContratController::recherche');
+$routes->get('/entreprise/modifier/(:num)', 'EntrepriseController::modifier/$1');
+$routes->post('/entreprise/update/(:num)', 'EntrepriseController::update/$1');
+$routes->post('/entreprise/supprimer/(:num)', 'EntrepriseController::supprimer/$1');
+$routes->get('/contrat/modifier/(:num)', 'ContratController::modifier/$1');
+$routes->post('/contrat/update/(:num)', 'ContratController::update/$1');
+
+
+// -------------------------------------------------------
+// Yohan
+// -------------------------------------------------------
+$routes->get('finances', 'Finances::index');
+$routes->post('finances/store', 'Finances::store');
+$routes->get('finances/delete/(:num)', 'Finances::delete/$1');
+$routes->get('finances/tresorerie', 'Finances::tresorerie');
+$routes->get('finances/rapport', 'Finances::rapport');
+
+$routes->get('statistiques/vente', 'StatistiquesVente::index');
+$routes->group('statistiques', function($routes) {
+    $routes->get('encaissements', 'StatistiquesVente::encaissements');
+    $routes->get('decaissements', 'StatistiquesVente::decaissements');
+    $routes->get('api/graphique', 'StatistiquesVente::apiGraphique');
+});
+

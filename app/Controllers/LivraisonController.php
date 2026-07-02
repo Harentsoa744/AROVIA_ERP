@@ -16,7 +16,6 @@ class LivraisonController extends BaseController
         $this->livraisonModel = new LivraisonModel();
     }
 
-    // TABLEAU DE BORD DE DISTRIBUTION (Livraisons du jour en cours et effectuées)
     public function index()
     {
         $data = [
@@ -27,8 +26,6 @@ class LivraisonController extends BaseController
 
         return view('livraisons/index', $data);
     }
-
-    // HISTORIQUE DE TOUTES LES LIVRAISONS (Effectuées, Annulées, etc.)
     public function historique()
     {
         $data = [
@@ -37,7 +34,6 @@ class LivraisonController extends BaseController
         return view('livraisons/historique', $data);
     }
 
-    // FORMULAIRE DE CRÉATION DE LIVRAISON (Avec recommandation de livreur)
     public function create()
     {
         $data = [
@@ -46,7 +42,6 @@ class LivraisonController extends BaseController
         return view('livraisons/create', $data);
     }
 
-    // ENREGISTRER LA LIVRAISON
     public function store()
     {
         $this->livraisonModel->save([
@@ -60,7 +55,6 @@ class LivraisonController extends BaseController
         return redirect()->to('/livraisons');
     }
 
-    // CHANGER LE STATUT RAPIDEMENT (Effectuer, Annuler, Mettre en cours)
     public function updateStatut($id, $statut)
     {
         $updateData = ['statut' => strtoupper($statut)];
@@ -72,7 +66,6 @@ class LivraisonController extends BaseController
         return redirect()->to('/livraisons');
     }
 
-    // API AJAX POUR L'HISTORIQUE ET RECHERCHE
     public function ajaxList()
     {
         $request = service('request');

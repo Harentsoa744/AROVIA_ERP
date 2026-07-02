@@ -63,11 +63,11 @@ function loadLivraisons() {
                 const badgeStyle = liv.statut.toLowerCase();
                 tbody.innerHTML += `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); height: 50px;">
-                        <td><strong>#${liv.vente_id}</strong></td>
-                        <td>${liv.livreur_nom ? liv.livreur_nom : '<span style="color:#718096">Non assigné</span>'}</td>
-                        <td>${liv.adresse_livraison}</td>
-                        <td style="font-size: 13px; color:#cbd5e0;">${liv.date_prevue}</td>
-                        <td><span class="status-badge ${badgeStyle}">${liv.statut}</span></td>
+                        <td style="color: black;"><strong>#${liv.vente_id}</strong></td>
+                        <td style="color: black;">${liv.livreur_nom ? liv.livreur_nom : '<span style="color:#718096">Non assigné</span>'}</td>
+                        <td style="color: black;">${liv.adresse_livraison}</td>
+                        <td style="font-size: 13px; color:black;">${liv.date_prevue}</td>
+                        <td style="color: black;"><span class="${badgeStyle}">${liv.statut}</span></td>
                     </tr>
                 `;
             });

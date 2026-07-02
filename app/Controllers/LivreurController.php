@@ -13,7 +13,6 @@ class LivreurController extends BaseController
         $this->livreurModel = new LivreurModel();
     }
 
-    // LISTE DES LIVREURS
     public function index()
     {
         $data = [
@@ -22,7 +21,6 @@ class LivreurController extends BaseController
         return view('livreurs/index', $data);
     }
 
-    // CRÉER UN LIVREUR
     public function store()
     {
         $this->livreurModel->save([
@@ -34,7 +32,6 @@ class LivreurController extends BaseController
         return redirect()->to('/livreurs');
     }
 
-    // FORM EDIT
     public function edit($id)
     {
         $data = [
@@ -43,7 +40,6 @@ class LivreurController extends BaseController
         return view('livreurs/edit', $data);
     }
 
-    // UPDATE
     public function update($id)
     {
         $this->livreurModel->update($id, [
