@@ -86,6 +86,15 @@ class ContratController extends BaseController
         ]);
     }
 
+    public function liste()
+    {
+        return view('contrat/contrats', [
+            'titre'    => 'Liste des Contrats',
+            'contrats' => $this->contratModel->getListe(),
+            'statuts'  => $this->statutModel->findAll(),
+        ]);
+    }
+
     public function ajout()
     {
         return view('contrat/ajout', [

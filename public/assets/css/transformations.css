@@ -1,0 +1,7 @@
+/* transformations.css */
+.table-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0 0; border-top: 1px solid var(--border-color);
+  margin-top: 0.5rem; flex-wrap: wrap; gap: 0.75rem;
+}
+.table-info-text { font-size: 0.8rem; color: var(--text-muted); }

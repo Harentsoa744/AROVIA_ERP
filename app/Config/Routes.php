@@ -6,6 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
+$routes->get('/dashboard', 'Home::dashboard');
 
 
 $routes->get('livraisons', 'LivraisonController::index');
@@ -61,6 +62,7 @@ $routes->get('valeur-stock', 'ValeurStock::index');
 $routes->get('/entreprise', 'EntrepriseController::index');
 $routes->get('/entreprise/ajout', 'EntrepriseController::ajout');
 $routes->post('/entreprise/save', 'EntrepriseController::save');
+$routes->get('/cont', 'ContratController::liste');
 $routes->get('/contrat', 'ContratController::index');
 $routes->get('/contrat/ajout', 'ContratController::ajout');
 $routes->post('/contrat/save', 'ContratController::save');
@@ -89,4 +91,3 @@ $routes->group('statistiques', function($routes) {
     $routes->get('decaissements', 'StatistiquesVente::decaissements');
     $routes->get('api/graphique', 'StatistiquesVente::apiGraphique');
 });
-

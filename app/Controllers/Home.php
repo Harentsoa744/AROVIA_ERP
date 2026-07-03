@@ -20,6 +20,21 @@ class Home extends BaseController
 
         $data['totalBocaux'] = array_sum(array_column($data['stockPF'], 'quantite_disponible'));
 
+        return view('home', $data);
+    }
+
+    public function dashboard(): string
+    {
+        $stockMPModel = new StockMatierePremiereModel();
+        $stockPFModel = new StockProduitFiniModel();
+        $fournisseurModel = new FournisseurModel();
+
+        $data['stockMP']        = $stockMPModel->getEtatStock();
+        $data['stockPF']        = $stockPFModel->getStockAvecTypes();
+        $data['nbFournisseurs'] = $fournisseurModel->countAll();
+
+        $data['totalBocaux'] = array_sum(array_column($data['stockPF'], 'quantite_disponible'));
+
         return view('dashboard', $data);
     }
 }

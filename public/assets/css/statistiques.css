@@ -1,0 +1,62 @@
+/* statistiques.css */
+.chart-legend {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.legend-item.green .legend-dot { background: var(--accent-green); }
+.legend-item.red .legend-dot   { background: var(--accent-red); }
+.legend-item.gold .legend-dot  { background: var(--primary-gold); }
+.legend-item.blue .legend-dot  { background: var(--accent-blue); }
+
+.chart-wrap {
+  height: 220px;
+  position: relative;
+}
+
+.chart-doughnut-wrap {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-cell {
+  padding: 1.25rem 1.5rem;
+  border-right: 1px solid var(--border-color);
+}
+
+.summary-cell:last-child { border-right: none; }
+
+.summary-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.summary-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@media (max-width: 767px) {
+  .summary-cell { border-right: none; border-bottom: 1px solid var(--border-color); }
+  .summary-cell:last-child { border-bottom: none; }
+}

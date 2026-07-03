@@ -1,103 +1,200 @@
-<?= view('partials/header') ?>
-<h1>Statistiques</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Statistiques — Miel Arovia</title>
+  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="assets/css/global.css"/>
+  <link rel="stylesheet" href="assets/css/statistiques.css"/>
+</head>
+<body>
 
-<div style="display: flex; gap: 40px; flex-wrap: wrap;">
+<!-- TOPBAR -->
+<?php include 'utils/header.php'; ?>
+<?php include 'utils/side_bar.php'; ?>
+<!-- MAIN -->
+<main class="main-wrapper">
+  <div class="breadcrumb-bar">
+    <a href="gestion-stock.html">Gestion de stock</a> <span>›</span> Statistiques
+  </div>
 
-    <div style="width: 600px;">
-        <h3>Évolution dans le temps</h3>
-        <canvas id="courbeChart"></canvas>
+  <div class="page-header">
+    <h1 class="page-title">Statistiques</h1>
+    <div class="d-flex gap-2 flex-wrap">
+      <button class="date-picker-btn">
+        <i class="fa fa-calendar"></i> 28 juin 2026 – 28 juin 2026
+        <i class="fa fa-chevron-down" style="font-size:.65rem"></i>
+      </button>
+      <button class="btn-gold"><i class="fa fa-download"></i> Exporter</button>
     </div>
+  </div>
 
-    <div style="width: 350px;">
-        <h3>Répartition par fournisseur (litres entrés)</h3>
-        <canvas id="fournisseurChart"></canvas>
+  <!-- KPI Cards -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-xl-3">
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap green"><i class="fa fa-droplet"></i></div>
+        <div class="kpi-label">Total litres entrés</div>
+        <div class="kpi-value green">15.00 <small>L</small></div>
+        <div class="kpi-sub">Sur la période sélectionnée</div>
+      </div>
     </div>
-
-    <div style="width: 350px;">
-        <h3>Répartition par destinataire (bocaux vendus)</h3>
-        <canvas id="destinataireChart"></canvas>
+    <div class="col-6 col-xl-3">
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap red"><i class="fa fa-jar"></i></div>
+        <div class="kpi-label">Total bocaux vendus</div>
+        <div class="kpi-value red">0</div>
+        <div class="kpi-sub">Sur la période sélectionnée</div>
+      </div>
     </div>
+    <div class="col-6 col-xl-3">
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap gold"><i class="fa fa-user-group"></i></div>
+        <div class="kpi-label">Fournisseur principal</div>
+        <div class="kpi-value gold" style="font-size:1.4rem">Rakoto</div>
+        <div class="kpi-sub">100% des entrées</div>
+      </div>
+    </div>
+    <div class="col-6 col-xl-3">
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap blue"><i class="fa fa-chart-line"></i></div>
+        <div class="kpi-label">Taux de vente</div>
+        <div class="kpi-value blue">0%</div>
+        <div class="kpi-sub">Par rapport aux entrées</div>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <!-- Charts Row -->
+  <div class="row g-3 mb-4">
+    <div class="col-lg-7">
+      <div class="content-card">
+        <div class="content-card-title">Évolution dans le temps</div>
+        <div class="chart-legend">
+          <span class="legend-item green"><span class="legend-dot"></span> Litres de miel entrés</span>
+          <span class="legend-item red"><span class="legend-dot"></span> Bocaux vendus</span>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="chartEvolution"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="content-card">
+        <div class="content-card-title">Répartition par fournisseur (litres entrés)</div>
+        <div class="chart-legend">
+          <span class="legend-item green"><span class="legend-dot"></span> Rakoto (100%)</span>
+        </div>
+        <div class="chart-wrap chart-doughnut-wrap">
+          <canvas id="chartRepartition"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <!-- Summary Table -->
+  <div class="content-card">
+    <div class="content-card-title">Résumé des entrées et sorties</div>
+    <div class="row g-0">
+      <div class="col-6 col-md-3">
+        <div class="summary-cell">
+          <div class="summary-label text-orange">Litres entrés</div>
+          <div class="summary-value text-green">15.00 L</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="summary-cell">
+          <div class="summary-label text-red">Bocaux vendus</div>
+          <div class="summary-value">0</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="summary-cell">
+          <div class="summary-label text-gold">Stock estimé (L)</div>
+          <div class="summary-value text-gold">15.00 L</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="summary-cell">
+          <div class="summary-label text-blue">Variation</div>
+          <div class="summary-value text-blue">+15.00 L</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
 
+<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/js/chart.min.js"></script>
 <script>
-// --- Données injectées depuis PHP ---
-const entreesParDate = <?= json_encode($entreesParDate) ?>;
-const sortiesParDate = <?= json_encode($sortiesParDate) ?>;
-const entreesParFournisseur = <?= json_encode($entreesParFournisseur) ?>;
-const sortiesParDestinataire = <?= json_encode($sortiesParDestinataire) ?>;
+function toggleSubmenu(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
 
-// --- Graphique 1 : Courbe entrées vs sorties dans le temps ---
-// On fusionne toutes les dates des deux séries pour avoir un axe commun
-const toutesLesDates = [...new Set([
-    ...entreesParDate.map(e => e.jour),
-    ...sortiesParDate.map(s => s.jour)
-])].sort();
-
-const dataEntrees = toutesLesDates.map(date => {
-    const trouve = entreesParDate.find(e => e.jour === date);
-    return trouve ? parseFloat(trouve.total_litres) : 0;
-});
-
-const dataSorties = toutesLesDates.map(date => {
-    const trouve = sortiesParDate.find(s => s.jour === date);
-    return trouve ? parseInt(trouve.total_quantite) : 0;
-});
-
-new Chart(document.getElementById('courbeChart'), {
-    type: 'line',
-    data: {
-        labels: toutesLesDates,
-        datasets: [
-            {
-                label: 'Litres de miel entrés',
-                data: dataEntrees,
-                borderColor: '#4CAF50',
-                backgroundColor: '#4CAF50',
-                tension: 0.2,
-            },
-            {
-                label: 'Bocaux vendus',
-                data: dataSorties,
-                borderColor: '#FF7043',
-                backgroundColor: '#FF7043',
-                tension: 0.2,
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
+// Line Chart
+const ctx1 = document.getElementById('chartEvolution').getContext('2d');
+new Chart(ctx1, {
+  type: 'line',
+  data: {
+    labels: ['28 juin 2026'],
+    datasets: [
+      {
+        label: 'Litres de miel entrés',
+        data: [15],
+        borderColor: '#5D7A2E',
+        backgroundColor: 'rgba(93,122,46,0.12)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#5D7A2E',
+        pointRadius: 5,
+      },
+      {
+        label: 'Bocaux vendus',
+        data: [0],
+        borderColor: '#C0392B',
+        backgroundColor: 'rgba(192,57,43,0.08)',
+        borderWidth: 2,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#C0392B',
+        pointRadius: 5,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, grid: { color: '#F0EBE3' }, ticks: { color: '#8A8A8A', font: { size: 11 } } },
+      x: { grid: { display: false }, ticks: { color: '#8A8A8A', font: { size: 11 } } }
     }
+  }
 });
 
-// --- Graphique 2 : Camembert par fournisseur ---
-new Chart(document.getElementById('fournisseurChart'), {
-    type: 'pie',
-    data: {
-        labels: entreesParFournisseur.map(f => f.fournisseur_nom),
-        datasets: [{
-            data: entreesParFournisseur.map(f => parseFloat(f.total_litres)),
-            backgroundColor: ['#4CAF50', '#FFC107', '#2196F3', '#9C27B0', '#FF5722', '#00BCD4'],
-        }]
-    },
-    options: { responsive: true }
-});
-
-// --- Graphique 3 : Camembert par destinataire ---
-const labelsDestinataire = { touriste: 'Touriste', particulier: 'Particulier', hotel: 'Hôtel' };
-
-new Chart(document.getElementById('destinataireChart'), {
-    type: 'pie',
-    data: {
-        labels: sortiesParDestinataire.map(s => labelsDestinataire[s.destinataire_type] ?? s.destinataire_type),
-        datasets: [{
-            data: sortiesParDestinataire.map(s => parseInt(s.total_quantite)),
-            backgroundColor: ['#FF7043', '#42A5F5', '#AB47BC'],
-        }]
-    },
-    options: { responsive: true }
+// Doughnut Chart
+const ctx2 = document.getElementById('chartRepartition').getContext('2d');
+new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Rakoto'],
+    datasets: [{
+      data: [100],
+      backgroundColor: ['#5D7A2E'],
+      borderWidth: 0,
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed}%` } } },
+    cutout: '0%',
+  }
 });
 </script>
+</body>
+</html>

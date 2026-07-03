@@ -1,0 +1,13 @@
+/* valeur-stock.css */
+.valeur-total-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #FAF0DC, #FEF3DC);
+  border-radius: 10px;
+  margin-top: 1rem;
+  border: 1px solid rgba(200,134,10,0.2);
+}
+.valeur-total-bar span:first-child { font-weight: 600; color: var(--primary-dark); }
+.valeur-total-num { font-size: 1.3rem; font-weight: 700; color: var(--primary-gold); }
