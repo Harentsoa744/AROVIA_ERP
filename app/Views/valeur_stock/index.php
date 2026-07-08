@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Valeur du stock — Miel Arovia</title>
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="assets/css/global.css"/>
-  <link rel="stylesheet" href="assets/css/valeur-stock.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/valeur-stock.css') ?>"/>
 </head>
 <body>
 <?php include 'utils/header.php'; ?>
@@ -15,7 +15,8 @@
   <div class="breadcrumb-bar"><a href="/valeur-stock">Gestion de stock</a> <span>›</span> Valeur du stock</div>
   <div class="page-header">
     <h1 class="page-title">Valeur du stock</h1>
-    <a href="/valeur-stock/export" class="btn-gold"><i class="fa fa-download"></i> Exporter</a>
+    <a href="<?= base_url('valeur-stock/export') ?>" class="btn-gold"><i class="fa fa-download"></i> Exporter en CSV</a>
+    <a href="<?= base_url('valeur-stock/export-pdf') ?>" class="btn-gold"><i class="fa fa-file-pdf"></i> Exporter en PDF</a>
   </div>
 
   <div class="row g-3 mb-4">
@@ -58,7 +59,7 @@
     </div>
   </div>
 </main>
-<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
 </body>
 </html>

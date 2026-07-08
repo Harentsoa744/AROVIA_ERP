@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Accueil — Miel Arovia</title>
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="assets/css/global.css"/>
-  <link rel="stylesheet" href="assets/css/index.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/index.css') ?>"/>
 </head>
 <body>
 <?php include 'utils/header.php'; ?>
@@ -27,7 +27,7 @@
           <a href="/valeur-stock" class="btn-gold mt-2"><i class="fa fa-arrow-right"></i> Aller au stock</a>
         </div>
         <div class="hero-img">
-          <img src="assets/images/honey-jar.png" alt="Bocal de miel"/>
+          <img src="<?= base_url('assets/images/honey-jar.png') ?>" alt="Bocal de miel"/>
         </div>
       </div>
     </div>
@@ -48,7 +48,7 @@
     <div class="col-6 col-lg-3"><a href="/statistiques" class="module-card"><div class="module-icon red"><i class="fa fa-chart-pie"></i></div><div class="module-name">Performances ventes</div></a></div>
   </div>
 </main>
-<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
 </body>
 </html>

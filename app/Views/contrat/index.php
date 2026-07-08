@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Gestion de contrat — Miel Arovia</title>
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="assets/css/global.css"/>
-  <link rel="stylesheet" href="assets/css/employes.css"/>
+  <link rel="stylesheet" href="/assets/css/global.css"/>
+  <link rel="stylesheet" href="/assets/css/employes.css"/>
 
 </head>
 <body>
@@ -16,7 +16,7 @@
 <main class="main-wrapper">
   <div class="page-header">
     <h1 class="page-title">Gestion des contrats</h1>
-    <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalContrat"><i class="fa fa-plus"></i> Nouveau contrat</button>
+    <a href="<?= base_url('contrat/ajout') ?>" class="btn-gold"><i class="fa fa-plus"></i> Nouveau contrat</a>
   </div>
   
   <div class="row g-3 mb-4">
@@ -26,6 +26,12 @@
   </div>
 
   <div class="content-card">
+    <div class="mb-3 d-flex justify-content-end">
+      <div style="position: relative; width: 250px;">
+        <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+        <input type="text" id="tableSearch" class="arovia-input" placeholder="Rechercher..." style="padding-left: 36px; height: 38px; font-size: 0.9rem;">
+      </div>
+    </div>
     <table class="arovia-table">
       <thead>
         <tr><th>Partenaire</th><th>Type</th><th>Date début</th><th>Date fin</th><th>Statut</th><th>Actions</th></tr>
@@ -70,6 +76,17 @@
   </div>
 </div>
 <script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
-<script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
+<script>
+function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+
+document.getElementById('tableSearch').addEventListener('keyup', function() {
+  const query = this.value.toLowerCase();
+  const rows = document.querySelectorAll('.arovia-table tbody tr');
+  rows.forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = text.includes(query) ? '' : 'none';
+  });
+});
+</script>
 </body>
 </html>

@@ -2,15 +2,15 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Mon Profil — Miel Arovia</title>
-  <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css'"/>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="/assets/css/global.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
 </head>
 <body>
-<?php include 'utils/header.php'; ?>
-<?php include 'utils/side_bar.php'; ?>
+<?php include FCPATH . 'utils/header.php'; ?>
+<?php include FCPATH . 'utils/side_bar.php'; ?>
 
 <main class="main-wrapper">
   <div class="page-header">
@@ -35,7 +35,7 @@
         <?php
           $initiales = strtoupper(substr((string) ($user['prenom'] ?? ''), 0, 1) . substr((string) ($user['nom'] ?? ''), 0, 1));
         ?>
-        <div class="table-avatar mb-3" style="width:90px; height:90px; font-size:2.2rem; margin-right:0;">
+        <div class="table-avatar mb-3" style="width:90px; height:90px; font-size:2.2rem; margin-right:0; display:flex; align-items:center; justify-content:center;">
           <?= esc($initiales ?: '?') ?>
         </div>
         <h4 class="fw-700 text-dark-primary mb-1" style="font-size:1.25rem;">
@@ -60,7 +60,8 @@
       <div class="content-card">
         <h3 class="content-card-title" style="font-size:1.1rem;"><i class="fa fa-user-gear me-2 text-gold"></i>Modifier mes informations</h3>
 
-        <form method="POST" action="/'profil/update">
+        <form method="POST" action="<?= base_url('profil/update') ?>">
+          <?= csrf_field() ?>
           <div class="row g-3">
             <div class="col-12 col-md-6">
               <label class="arovia-label" for="nom">Nom</label>

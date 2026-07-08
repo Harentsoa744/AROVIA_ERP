@@ -1,64 +1,89 @@
-<?= view('header', ['titre' => $titre]) ?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Ajouter un contrat — Miel Arovia</title>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+</head>
+<body>
+<?php include FCPATH . 'utils/header.php'; ?>
+<?php include FCPATH . 'utils/side_bar.php'; ?>
+<main class="main-wrapper">
+  <div class="breadcrumb-bar">
+    <a href="<?= base_url('contrat') ?>">Gestion de contrat</a>
+    <span>›</span> Ajouter un contrat
+  </div>
 
-<div class="page-entete">
-    <h1>Ajouter un contrat</h1>
-</div>
+  <div class="page-header">
+    <h1 class="page-title">Ajouter un contrat</h1>
+    <a href="<?= base_url('contrat') ?>" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
+  </div>
 
-<div class="carte carte-formulaire">
+  <div class="content-card" style="max-width: 760px;">
     <form action="<?= base_url('contrat/save') ?>" method="post">
-
-        <div class="champ">
-            <label for="sujet">Sujet</label>
-            <input type="text" id="sujet" name="sujet" value="<?= esc($contrat['sujet'] ?? '') ?>">
-            <?php if (isset($validation) && $validation->getError('sujet')) : ?>
-                <span class="erreur-champ"><?= esc($validation->getError('sujet')) ?></span>
-            <?php endif; ?>
+      <?= csrf_field() ?>
+      <div class="row g-3">
+        
+        <div class="col-md-12">
+          <label class="arovia-label" for="sujet">Sujet *</label>
+          <input type="text" id="sujet" name="sujet" class="arovia-input" value="<?= esc($contrat['sujet'] ?? '') ?>" required placeholder="ex: Approvisionnement Miel de Forêt">
+          <?php if (isset($validation) && $validation->getError('sujet')) : ?>
+            <span class="text-danger" style="font-size: 0.8rem;"><?= esc($validation->getError('sujet')) ?></span>
+          <?php endif; ?>
         </div>
 
-        <div class="champ">
-            <label for="entreprise_id">Entreprise</label>
-            <select id="entreprise_id" name="entreprise_id">
-                <option value="">-- Sélectionner --</option>
-                <?php foreach ($entreprises as $entreprise) : ?>
-                    <option value="<?= $entreprise['id'] ?>" <?= (($contrat['entreprise_id'] ?? '') == $entreprise['id']) ? 'selected' : '' ?>>
-                        <?= esc($entreprise['nom']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <?php if (isset($validation) && $validation->getError('entreprise_id')) : ?>
-                <span class="erreur-champ"><?= esc($validation->getError('entreprise_id')) ?></span>
-            <?php endif; ?>
+        <div class="col-md-6">
+          <label class="arovia-label" for="entreprise_id">Entreprise *</label>
+          <select id="entreprise_id" name="entreprise_id" class="arovia-input" required>
+            <option value="">-- Sélectionner --</option>
+            <?php foreach ($entreprises as $entreprise) : ?>
+              <option value="<?= $entreprise['id'] ?>" <?= (($contrat['entreprise_id'] ?? '') == $entreprise['id']) ? 'selected' : '' ?>>
+                <?= esc($entreprise['nom']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+          <?php if (isset($validation) && $validation->getError('entreprise_id')) : ?>
+            <span class="text-danger" style="font-size: 0.8rem;"><?= esc($validation->getError('entreprise_id')) ?></span>
+          <?php endif; ?>
         </div>
 
-        <div class="champ">
-            <label for="description">Description</label>
-            <textarea id="description" name="description" rows="4"><?= esc($contrat['description'] ?? '') ?></textarea>
+        <div class="col-md-6">
+          <label class="arovia-label" for="statut_id">Statut *</label>
+          <select id="statut_id" name="statut_id" class="arovia-input" required>
+            <?php foreach ($statuts as $statut) : ?>
+              <option value="<?= $statut['id'] ?>" <?= (($contrat['statut_id'] ?? '') == $statut['id']) ? 'selected' : '' ?>>
+                <?= esc($statut['nom']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+          <?php if (isset($validation) && $validation->getError('statut_id')) : ?>
+            <span class="text-danger" style="font-size: 0.8rem;"><?= esc($validation->getError('statut_id')) ?></span>
+          <?php endif; ?>
         </div>
 
-        <div class="champ">
-            <label for="statut_id">Statut</label>
-            <select id="statut_id" name="statut_id">
-                <?php foreach ($statuts as $statut) : ?>
-                    <option value="<?= $statut['id'] ?>" <?= (($contrat['statut_id'] ?? '') == $statut['id']) ? 'selected' : '' ?>>
-                        <?= esc($statut['nom']) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <?php if (isset($validation) && $validation->getError('statut_id')) : ?>
-                <span class="erreur-champ"><?= esc($validation->getError('statut_id')) ?></span>
-            <?php endif; ?>
+        <div class="col-md-6">
+          <label class="arovia-label" for="date_expiration">Date d'expiration</label>
+          <input type="date" id="date_expiration" name="date_expiration" class="arovia-input" value="<?= esc($contrat['date_expiration'] ?? '') ?>">
         </div>
 
-        <div class="champ">
-            <label for="date_expiration">Date d'expiration</label>
-            <input type="date" id="date_expiration" name="date_expiration" value="<?= esc($contrat['date_expiration'] ?? '') ?>">
+        <div class="col-md-12">
+          <label class="arovia-label" for="description">Description</label>
+          <textarea id="description" name="description" class="arovia-input" rows="4" placeholder="Termes, conditions, clauses particulières..."><?= esc($contrat['description'] ?? '') ?></textarea>
         </div>
 
-        <div class="actions-formulaire">
-            <button type="submit" class="bouton bouton-principal">Enregistrer</button>
-            <a href="<?= base_url('contrat') ?>" class="bouton bouton-secondaire">Annuler</a>
-        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn-gold">Enregistrer</button>
+        <a href="<?= base_url('contrat') ?>" class="btn-outline-gold">Annuler</a>
+      </div>
     </form>
-</div>
-
-<?= view('footer') ?>
+  </div>
+</main>
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
+<script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
+</body>
+</html>

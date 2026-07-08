@@ -93,3 +93,48 @@ in FCPATH\utils\header.php on line 2.
  9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-08 09:27:48 --> ErrorException: include(/utils/header.php): Failed to open stream: No such file or directory
+[Method: GET, Route: finances/rapport]
+in APPPATH\Views\finances\rapport.php on line 11.
+ 1 APPPATH\Views\finances\rapport.php(11): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include(/utils/header.php): Failed to open stream: No such file or directory', 'C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_fusion\\app\\Views\\finances\\rapport.php', 11)
+ 2 APPPATH\Views\finances\rapport.php(11): include()
+ 3 SYSTEMPATH\View\View.php(240): include('C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_fusion\\app\\Views\\finances\\rapport.php')
+ 4 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():237}()
+ 5 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('finances/rapport', [], true)
+ 6 APPPATH\Controllers\Finances.php(87): view('finances/rapport', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Finances->rapport()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Finances))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-08 11:40:24 --> ErrorException: include(C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Views/partials/side_bar.php): Failed to open stream: No such file or directory
+[Method: GET, Route: contrat/ajout]
+in APPPATH\Views\contrat\ajout.php on line 13.
+ 1 APPPATH\Views\contrat\ajout.php(13): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include(C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views/partials/side_bar.php): Failed to open stream: No such file or directory', 'C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views\\contrat\\ajout.php', 13)
+ 2 APPPATH\Views\contrat\ajout.php(13): include()
+ 3 SYSTEMPATH\View\View.php(240): include('C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views\\contrat\\ajout.php')
+ 4 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():237}()
+ 5 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('contrat/ajout', [], true)
+ 6 APPPATH\Controllers\ContratController.php(101): view('contrat/ajout', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\ContratController->ajout()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ContratController))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-07-08 11:40:29 --> ErrorException: include(C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Views/partials/side_bar.php): Failed to open stream: No such file or directory
+[Method: GET, Route: profil]
+in APPPATH\Views\profil\index.php on line 13.
+ 1 APPPATH\Views\profil\index.php(13): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include(C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views/partials/side_bar.php): Failed to open stream: No such file or directory', 'C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views\\profil\\index.php', 13)
+ 2 APPPATH\Views\profil\index.php(13): include()
+ 3 SYSTEMPATH\View\View.php(240): include('C:\\Users\\Harena\\Documents\\MmeBaovola\\AROVIA_upgrade\\app\\Views\\profil\\index.php')
+ 4 SYSTEMPATH\View\View.php(243): CodeIgniter\View\View->{closure:CodeIgniter\View\View::render():237}()
+ 5 SYSTEMPATH\Common.php(1250): CodeIgniter\View\View->render('profil/index', [], true)
+ 6 APPPATH\Controllers\ProfilController.php(34): view('profil/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\ProfilController->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ProfilController))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

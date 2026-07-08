@@ -23,17 +23,12 @@ class ProfilController extends BaseController
 
     public function index()
     {
-        // Utilisation de la fonction arovia_url pour les redirections sécurisées
-        if (! $this->session->get('user_id')) {
-            return redirect()->to(arovia_url('/')); // Vers ta page de login racine
-        }
-
         $userId = (int) $this->session->get('user_id');
         $user   = $this->utilisateurModel->findUserById($userId);
 
         if (! $user) {
             $this->session->destroy();
-            return redirect()->to(arovia_url('/'));
+            return redirect()->to(base_url('/'));
         }
 
         return view('profil/index', [
@@ -47,11 +42,7 @@ class ProfilController extends BaseController
     {
         // En CI4 moderne, on préfère utiliser $this->request->is('post')
         if (! $this->request->is('post')) {
-            return redirect()->to(arovia_url('profil'));
-        }
-
-        if (! $this->session->get('user_id')) {
-            return redirect()->to(arovia_url('/'));
+            return redirect()->to(base_url('profil'));
         }
 
         $userId   = (int) $this->session->get('user_id');
@@ -86,6 +77,6 @@ class ProfilController extends BaseController
             $this->session->setFlashdata('error', 'Erreur lors de la mise à jour : ' . $e->getMessage());
         }
 
-        return redirect()->to(arovia_url('profil'));
+        return redirect()->to(base_url('profil'));
     }
 }

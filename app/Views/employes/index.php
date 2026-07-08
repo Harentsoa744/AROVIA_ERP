@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Employés — Miel Arovia</title>
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link rel="stylesheet" href="assets/css/global.css"/>
-  <link rel="stylesheet" href="assets/css/employes.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/employes.css') ?>"/>
 </head>
 <body>
 <?php include 'utils/header.php'; ?>
@@ -17,7 +17,14 @@
     <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalEmploye"><i class="fa fa-user-plus"></i> Ajouter</button>
   </div>
   
-  <div class="row g-3">
+  <div class="mb-4 d-flex justify-content-end">
+    <div style="position: relative; width: 250px;">
+      <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+      <input type="text" id="gridSearch" class="arovia-input" placeholder="Rechercher..." style="padding-left: 36px; height: 38px; font-size: 0.9rem;">
+    </div>
+  </div>
+  
+  <div class="row g-3" id="employesGrid">
     <?php if (!empty($employes)): ?>
       <?php foreach ($employes as $employe): ?>
         <?php $initiales = strtoupper(substr($employe['prenom'] ?? '', 0, 1) . substr($employe['nom'] ?? '', 0, 1)); ?>
@@ -64,7 +71,18 @@
     </div>
   </div>
 </div>
-<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
-<script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
+<script>
+function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+
+document.getElementById('gridSearch').addEventListener('keyup', function() {
+  const query = this.value.toLowerCase();
+  const cards = document.querySelectorAll('#employesGrid > div');
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(query) ? '' : 'none';
+  });
+});
+</script>
 </body>
 </html>

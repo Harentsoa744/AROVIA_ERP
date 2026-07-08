@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\StockMatierePremiereModel;
 use App\Models\StockProduitFiniModel;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class ValeurStock extends BaseController
 {
@@ -36,6 +38,25 @@ class ValeurStock extends BaseController
             ->setHeader('Content-Type', 'text/csv; charset=utf-8')
             ->setHeader('Content-Disposition', 'attachment; filename="valeur-stock.csv"')
             ->setBody($csv);
+    }
+
+    public function exportPdf()
+    {
+        $data = $this->buildData();
+        $html = view('valeur_stock/pdf', $data);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', true);
+        
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+
+        return $this->response
+            ->setContentType('application/pdf')
+            ->setHeader('Content-Disposition', 'attachment; filename="valeur-stock.pdf"')
+            ->setBody($dompdf->output());
     }
 
     private function buildData(): array

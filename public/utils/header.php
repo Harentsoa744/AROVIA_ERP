@@ -4,11 +4,7 @@
     <span class="brand-text">Miel <span>Arovia</span></span>
   </a>
   
-  <div class="topbar-search d-none d-md-block">
-    <i class="fa fa-search search-icon"></i>
-    <input type="text" placeholder="Rechercher..."/>
-  </div>
-  
+
   <div class="topbar-actions">
     <a href="/logout" class="topbar-btn text-decoration-none" title="Mon Profil">
       <i class="fa fa-user"></i> <span class="badge-notif">3</span>

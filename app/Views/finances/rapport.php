@@ -4,8 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rapports financiers — Miel Arovia</title>
-  <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css"/>
-  <link rel="stylesheet" href="assets/css/global.css"/>
+  <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/assets/css/global.css"/>
 </head>
 <body>
 <?php include 'utils/header.php'; ?>
