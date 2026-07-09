@@ -17,6 +17,55 @@
     <div class="text-muted">Bonjour, Admin Arovia. Voici le résumé de vos activités.</div>
   </div>
 
+  <!-- Section Alertes de Stock Bas et Péremption -->
+  <?php if (!empty($alertesStock) || !empty($alertesPeremption)): ?>
+    <div class="row g-3 mb-4">
+      <?php if (!empty($alertesStock)): ?>
+        <div class="col-12 col-md-6">
+          <div class="card border-danger">
+            <div class="card-header bg-danger text-white d-flex align-items-center gap-2">
+              <i class="fa fa-triangle-exclamation"></i>
+              <strong>Alertes de Stock Bas</strong>
+            </div>
+            <div class="card-body">
+              <ul class="mb-0 text-danger ps-3" style="font-size: 0.95rem;">
+                <?php foreach ($alertesStock as $alerte): ?>
+                  <li><?= esc($alerte['message']) ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!empty($alertesPeremption)): ?>
+        <div class="col-12 col-md-6">
+          <div class="card border-warning">
+            <div class="card-header bg-warning text-dark d-flex align-items-center gap-2">
+              <i class="fa fa-clock"></i>
+              <strong>Alertes de Péremption / Conservation</strong>
+            </div>
+            <div class="card-body">
+              <ul class="mb-0 ps-3" style="font-size: 0.95rem;">
+                <?php foreach ($alertesPeremption as $alerte): ?>
+                  <li class="mb-1">
+                    <?php if ($alerte['est_expire']): ?>
+                      <span class="badge bg-danger text-white me-1">🔴 EXPIRE</span>
+                      Le lot du fournisseur <strong><?= esc($alerte['fournisseur']) ?></strong> (ID Transfo: #<?= (int) $alerte['id'] ?>) a expiré le <?= esc(date('d/m/Y', strtotime($alerte['date_limite']))) ?>.
+                    <?php else: ?>
+                      <span class="badge bg-warning text-dark me-1">🟡 SOUS 30j</span>
+                      Le lot du fournisseur <strong><?= esc($alerte['fournisseur']) ?></strong> expire dans <strong><?= (int) $alerte['jours_restants'] ?> jours</strong> (le <?= esc(date('d/m/Y', strtotime($alerte['date_limite']))) ?>).
+                    <?php endif; ?>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
+
   <div class="row g-3 mb-4">
     <div class="col-12 col-md-8">
       <div class="hero-banner">

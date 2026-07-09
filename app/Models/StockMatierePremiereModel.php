@@ -8,7 +8,7 @@ class StockMatierePremiereModel extends Model
 {
     protected $table         = 'stock_matiere_premiere';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['quantite_litres', 'valeur_stock', 'cump_actuel', 'derniere_maj'];
+    protected $allowedFields = ['quantite_litres', 'valeur_stock', 'cump_actuel', 'derniere_maj', 'seuil_alerte'];
 
     protected $returnType    = 'array';
     protected $useTimestamps = false;

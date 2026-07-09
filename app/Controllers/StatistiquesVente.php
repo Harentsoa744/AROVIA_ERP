@@ -49,10 +49,11 @@ class StatistiquesVente extends BaseController
 
         // 3. Requête Sorties (Bocaux)
         $builderSorties = $db->table('sorties s')
-                             ->select('to_char(s.date_sortie, \'YYYY-MM-DD\') as jour, SUM(s.quantite) as total_quantite, s.destinataire_type')
+                             ->select('to_char(s.date_sortie, \'YYYY-MM-DD\') as jour, SUM(s.quantite) as total_quantite, sm.nom as supermarche_nom')
+                             ->join('supermarches sm', 'sm.id = s.supermarche_id', 'left')
                              ->where('s.date_sortie >=', $dateDebut . ' 00:00:00')
                              ->where('s.date_sortie <=', $dateFin . ' 23:59:59')
-                             ->groupBy('jour, s.destinataire_type');
+                             ->groupBy('jour, sm.nom');
         $sortiesData = $builderSorties->get()->getResultArray();
 
         // 4. Génération de TOUTES les dates de la plage pour l'axe X
@@ -100,16 +101,16 @@ class StatistiquesVente extends BaseController
             $entreesParFournisseur[] = ['fournisseur_nom' => $nom, 'total_litres' => $total];
         }
 
-        $camembertDestinataires = [];
+        $camembertSupermarches = [];
         foreach ($sortiesData as $row) {
-            $typeType = $row['destinataire_type'];
-            if (!isset($camembertDestinataires[$typeType])) {
-                $camembertDestinataires[$typeType] = 0;
+            $smNom = $row['supermarche_nom'] ?: 'Inconnu';
+            if (!isset($camembertSupermarches[$smNom])) {
+                $camembertSupermarches[$smNom] = 0;
             }
-            $camembertDestinataires[$typeType] += intval($row['total_quantite']);
+            $camembertSupermarches[$smNom] += intval($row['total_quantite']);
         }
         $sortiesParDestinataire = [];
-        foreach ($camembertDestinataires as $type => $total) {
+        foreach ($camembertSupermarches as $type => $total) {
             $sortiesParDestinataire[] = ['destinataire_type' => $type, 'total_quantite' => $total];
         }
 

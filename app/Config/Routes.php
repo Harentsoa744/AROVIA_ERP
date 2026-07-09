@@ -66,6 +66,7 @@ $routes->get('sorties', 'Sorties::index');
 $routes->get('sorties/new', 'Sorties::new');
 $routes->post('sorties', 'Sorties::create');
 $routes->get('statistiques', 'Statistiques::index');
+$routes->get('statistiques/vente', 'StatistiquesVente::index');
 $routes->get('valeur-stock', 'ValeurStock::index');
 $routes->get('valeur-stock/export', 'ValeurStock::export');
 $routes->get('valeur-stock/export-pdf', 'ValeurStock::exportPdf');

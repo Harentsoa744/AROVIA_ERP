@@ -21,23 +21,52 @@
 
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3">
-      <div class="kpi-card"><div class="kpi-icon-wrap green"><i class="fa fa-droplet"></i></div><div class="kpi-label">Stock matière (L)</div><div class="kpi-value green"><?= number_format($stockMP['quantite_litres'] ?? 0, 2) ?> L</div></div>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap green"><i class="fa fa-droplet"></i></div>
+        <div class="kpi-label">Valeur Miel Brut (MP)</div>
+        <div class="kpi-value green"><?= number_format($stockMP['valeur_stock'] ?? 0, 0, ',', ' ') ?> <small>Ar</small></div>
+        <div class="kpi-sub"><?= number_format($stockMP['quantite_litres'] ?? 0, 2) ?> L à <?= number_format($stockMP['cump_actuel'] ?? 0, 0, ',', ' ') ?> Ar/L</div>
+      </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="kpi-card"><div class="kpi-icon-wrap gold"><i class="fa fa-jar"></i></div><div class="kpi-label">Bocaux en stock</div><div class="kpi-value gold"><?= count($stockPF ?? []) ?></div></div>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap gold"><i class="fa fa-jar"></i></div>
+        <div class="kpi-label">Valeur Bocaux (PF)</div>
+        <div class="kpi-value gold"><?= number_format($valeurComptablePF ?? 0, 0, ',', ' ') ?> <small>Ar</small></div>
+        <div class="kpi-sub">Coût de revient matière</div>
+      </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-calculator"></i></div><div class="kpi-label">CUMP (Ar/L)</div><div class="kpi-value blue"><?= number_format($stockMP['cump_actuel'] ?? 0, 0, ',', ' ') ?></div></div>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap blue"><i class="fa fa-shop"></i></div>
+        <div class="kpi-label">Valeur Vente Potentielle</div>
+        <div class="kpi-value blue"><?= number_format($valeurVentePF ?? 0, 0, ',', ' ') ?> <small>Ar</small></div>
+        <div class="kpi-sub">Selon tarifs catalogue</div>
+      </div>
     </div>
     <div class="col-6 col-md-3">
-      <div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-scale-balanced"></i></div><div class="kpi-label">Valeur totale</div><div class="kpi-value orange"><?= number_format($valeurTotaleComptable ?? 0, 0, ',', ' ') ?> Ar</div></div>
+      <div class="kpi-card">
+        <div class="kpi-icon-wrap orange"><i class="fa fa-scale-balanced"></i></div>
+        <div class="kpi-label">Total Consolidé (MP+PF)</div>
+        <div class="kpi-value orange"><?= number_format($valeurTotaleComptable ?? 0, 0, ',', ' ') ?> <small>Ar</small></div>
+        <div class="kpi-sub">Valeur comptable totale</div>
+      </div>
     </div>
   </div>
 
   <div class="content-card">
-    <div class="content-card-title">Détail de valorisation</div>
+    <div class="content-card-title">Détail de valorisation du stock Produit Fini (Bocaux)</div>
     <table class="arovia-table">
-      <thead><tr><th>Article</th><th>Quantité</th><th>CUMP unitaire</th><th>Valeur totale</th></tr></thead>
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Quantité en stock</th>
+          <th>Coût matière unitaire</th>
+          <th>Valeur Comptable</th>
+          <th>Prix de Vente Catalogue</th>
+          <th>Valeur Vente Potentielle</th>
+        </tr>
+      </thead>
       <tbody>
         <?php if (!empty($stockPF)): ?>
           <?php foreach ($stockPF as $bocal): ?>
@@ -46,16 +75,28 @@
               <td><?= (int) ($bocal['quantite_disponible'] ?? 0) ?> unités</td>
               <td><?= number_format($bocal['cout_unitaire'] ?? 0, 0, ',', ' ') ?> Ar</td>
               <td class="fw-600 text-gold"><?= number_format($bocal['valeur_comptable'] ?? 0, 0, ',', ' ') ?> Ar</td>
+              <td><?= $bocal['prix_vente'] !== null ? number_format($bocal['prix_vente'], 0, ',', ' ') . ' Ar' : '<span class="text-muted">Non défini</span>' ?></td>
+              <td class="fw-600 text-blue"><?= number_format($bocal['valeur_vente'] ?? 0, 0, ',', ' ') ?> Ar</td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="4" class="text-center text-muted" style="padding:2rem">Aucune donnée de stock disponible.</td></tr>
+          <tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune donnée de stock disponible.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
-    <div class="valeur-total-bar">
-      <span>Valeur totale du stock</span>
-      <span class="valeur-total-num"><?= number_format($valeurTotaleComptable ?? 0, 0, ',', ' ') ?> Ar</span>
+    <div class="valeur-total-bar mt-3 d-flex flex-column gap-2" style="background: var(--bg-card); border-top: 1px solid var(--border-color); padding-top: 1rem;">
+      <div class="d-flex justify-content-between">
+        <span class="text-muted">Valeur du stock Miel Brut (Matière Première) :</span>
+        <span class="fw-bold text-green"><?= number_format($stockMP['valeur_stock'] ?? 0, 0, ',', ' ') ?> Ar</span>
+      </div>
+      <div class="d-flex justify-content-between">
+        <span class="text-muted">Valeur du stock Bocaux (Produits Finis) :</span>
+        <span class="fw-bold text-gold"><?= number_format($valeurComptablePF ?? 0, 0, ',', ' ') ?> Ar</span>
+      </div>
+      <div class="d-flex justify-content-between" style="border-top: 2px solid var(--border-color); padding-top: 0.5rem; font-size: 1.2rem;">
+        <span class="fw-bold">Valeur comptable totale consolidée :</span>
+        <span class="fw-bold text-orange"><?= number_format($valeurTotaleComptable ?? 0, 0, ',', ' ') ?> Ar</span>
+      </div>
     </div>
   </div>
 </main>
