@@ -12,6 +12,14 @@ $routes->get('logout', 'AuthController::logout');
 $routes->get('/dashboard', 'Home::dashboard');
 $routes->get('home', 'Home::index');
 
+
+//Notification
+
+$routes->get('notification/liste','Notification::liste');
+$routes->get('notification/count','Notification::count');
+$routes->post('notification/lire/(:num)','Notification::lire/$1');
+$routes->post('notification/create','Notification::create');
+
 $routes->get('pro','ProfilController::index');
 $routes->get('profil','ProfilController::index');
 $routes->post('profil/update', 'ProfilController::update');
