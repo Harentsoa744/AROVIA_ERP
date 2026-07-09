@@ -78,6 +78,13 @@ CREATE TABLE planning (
 );
 
 -- novaiko le tableau contrats de napiako tableau entreprise sy statut xxxxxxxxxxxxxxxx
+DROP TABLE entreprise CASCADE;
+CREATE TABLE entreprise (
+    id        SERIAL PRIMARY KEY,
+    nom       VARCHAR(200) NOT NULL,
+    telephone VARCHAR(50),
+    email     VARCHAR(150)
+);
 
 DROP TABLE contrats CASCADE;
 
@@ -278,12 +285,6 @@ INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role_id) VALUES
 
 
 -- Table entreprise
-CREATE TABLE entreprise (
-    id        SERIAL PRIMARY KEY,
-    nom       VARCHAR(200) NOT NULL,
-    telephone VARCHAR(50),
-    email     VARCHAR(150)
-);
 
 -- Table statut
 CREATE TABLE statut (
