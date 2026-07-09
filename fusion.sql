@@ -349,3 +349,22 @@ INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut)
 (2, '2025-03-15 09:30:00', 5000000.00, 'Virement', 'PAYE'),
 (3, '2025-03-20 14:00:00', 6000000.00, 'Virement', 'PAYE'),
 (4, '2025-04-02 11:15:00', 2750000.00, 'Cash', 'EN_COURS');
+
+DROP TABLE IF EXISTS notifications;
+CREATE TABLE notifications (
+    id SERIAL PRIMARY KEY,
+
+    utilisateur_id INTEGER REFERENCES utilisateurs(id),
+
+    titre VARCHAR(150) NOT NULL,
+
+    message TEXT NOT NULL,
+
+    type VARCHAR(30),           -- INFO, SUCCESS, WARNING, ERROR
+
+    lien VARCHAR(255),
+
+    lu BOOLEAN DEFAULT FALSE,
+
+    date_creation TIMESTAMP DEFAULT NOW()
+);
