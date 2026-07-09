@@ -8,13 +8,17 @@ class TransformationModel extends Model
 {
     protected $table         = 'transformations';
     protected $primaryKey    = 'id';
-    protected $allowedFields = ['date_transformation', 'quantite_litres_utilisee', 'cump_applique', 'valeur_sortie'];
+    protected $allowedFields = [
+        'date_transformation', 'quantite_litres_utilisee', 'cump_applique', 
+        'valeur_sortie', 'date_production', 'date_limite_vente', 
+        'duree_conservation_mois', 'fournisseur_id'
+    ];
 
     protected $returnType    = 'array';
     protected $useTimestamps = false;
 
     /**
-     * Récupère l'historique des transformations avec le nombre de bocaux produits.
+     * Récupère l'historique des transformations avec le nombre de bocaux produits et le fournisseur d'origine.
      */
     public function getHistorique(): array
     {
@@ -25,7 +29,8 @@ class TransformationModel extends Model
         }
 
         $transformations = $db->table('transformations as t')
-            ->select('t.id, t.date_transformation, t.quantite_litres_utilisee, t.cump_applique, t.valeur_sortie')
+            ->select('t.id, t.date_transformation, t.quantite_litres_utilisee, t.cump_applique, t.valeur_sortie, t.date_production, t.date_limite_vente, f.nom as fournisseur_nom')
+            ->join('fournisseurs as f', 'f.id = t.fournisseur_id', 'left')
             ->orderBy('t.date_transformation', 'DESC')
             ->get()
             ->getResultArray();
@@ -71,7 +76,7 @@ class TransformationModel extends Model
 
             $transformation['total_bocaux'] = $detailsTransformation['total_bocaux'];
             $transformation['volume_bocal_litres'] = $detailsTransformation['volume_bocal_litres'];
-            $transformation['bocal_noms'] = implode(array_unique($detailsTransformation['bocal_noms']));
+            $transformation['bocal_noms'] = implode(', ', array_unique($detailsTransformation['bocal_noms']));
             if ($transformation['bocal_noms'] === '') {
                 $transformation['bocal_noms'] = '—';
             }
@@ -84,11 +89,9 @@ class TransformationModel extends Model
      * Enregistre une transformation (mise en bocal).
      *
      * @param array $repartition Tableau [type_bocal_id => quantite_a_produire]
-     *
-     * Le volume total nécessaire est calculé côté serveur à partir du volume
-     * réel de chaque type de bocal (jamais fait confiance au calcul du frontend).
+     * @param int $fournisseurId ID du fournisseur d'origine (matière première)
      */
-    public function enregistrerTransformation(array $repartition): array
+    public function enregistrerTransformation(array $repartition, int $fournisseurId): array
     {
         $db = \Config\Database::connect();
         $db->transStart();
@@ -125,12 +128,19 @@ class TransformationModel extends Model
                'derniere_maj'    => date('Y-m-d H:i:s'),
            ]);
 
-        // 6. Enregistre la transformation elle-même
+        // 6. Enregistre la transformation elle-même (avec dates et traçabilité fournisseur)
+        $dateProduction = date('Y-m-d');
+        $dateLimite = date('Y-m-d', strtotime('+24 months'));
+
         $db->table('transformations')->insert([
             'date_transformation'      => date('Y-m-d H:i:s'),
             'quantite_litres_utilisee' => $volumeTotalNecessaire,
             'cump_applique'            => $cumpApplique,
             'valeur_sortie'            => $valeurSortie,
+            'fournisseur_id'           => $fournisseurId,
+            'date_production'          => $dateProduction,
+            'date_limite_vente'        => $dateLimite,
+            'duree_conservation_mois'  => 24
         ]);
         $transformationId = $db->insertID();
 
@@ -160,4 +170,4 @@ class TransformationModel extends Model
             'valeur_sortie'          => $valeurSortie,
         ];
     }
-}
+}

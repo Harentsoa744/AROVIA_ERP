@@ -9,10 +9,10 @@
     <style>
         /* Ajustements mineurs pour centrer parfaitement la carte */
         body {
-            background-image: url('/assets/images/login-alt.png');
+            background: linear-gradient(rgba(255, 255, 255, 0.59), rgba(255, 255, 255, 0.4)), url('/assets/images/backgound.jpg');
             background-size: cover;
             background-position: center;
-            backdrop-filter: brightness(0.6);
+            backdrop-filter: opacity(0.6);
             width: 100vw;
             height: 100vh;
             display: flex;

@@ -15,7 +15,7 @@
   <div class="breadcrumb-bar"><a href="/valeur-stock">Gestion de stock</a> <span>›</span> Transformations</div>
   <div class="page-header">
     <h1 class="page-title">Transformations (mise en bocal)</h1>
-    <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalTransfo"><i class="fa fa-plus"></i> Nouvelle transformation</button>
+    <a href="/transformations/new" class="btn-gold"><i class="fa fa-plus"></i> Nouvelle transformation</a>
   </div>
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-3"><div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-recycle"></i></div><div class="kpi-label">Transformations totales</div><div class="kpi-value dark"><?= (int) ($totalTransformations ?? 0) ?></div></div></div>
@@ -32,47 +32,38 @@
     </div>
     <table class="arovia-table">
       <thead>
-        <tr><th>Date</th><th>Litres utilisés</th><th>Nb. bocaux</th><th>Type de bocal</th><th>Perte (L)</th><th>Statut</th></tr>
+        <tr>
+          <th>Date</th>
+          <th>Fournisseur d'origine</th>
+          <th>Litres utilisés</th>
+          <th>Nb. bocaux</th>
+          <th>Type de bocal</th>
+          <th>Perte (L)</th>
+          <th>Date Limite Vente</th>
+          <th>Statut</th>
+        </tr>
       </thead>
       <tbody>
         <?php if (!empty($transformations)): ?>
           <?php foreach ($transformations as $item): ?>
             <tr>
-              <td><?= esc($item['date_transformation'] ?? '') ?></td>
+              <td><?= esc(date('d/m/Y H:i', strtotime($item['date_transformation'] ?? ''))) ?></td>
+              <td><strong><?= esc($item['fournisseur_nom'] ?? '—') ?></strong></td>
               <td><?= number_format($item['quantite_litres_utilisee'] ?? 0, 2) ?> L</td>
               <td><span class="badge-arovia badge-gold"><?= (int) ($item['total_bocaux'] ?? 0) ?></span></td>
               <td><?= esc($item['bocal_noms'] ?? '—') ?></td>
               <td class="text-orange"><?= number_format(max(0, ($item['quantite_litres_utilisee'] ?? 0) - (($item['total_bocaux'] ?? 0) * ($item['volume_bocal_litres'] ?? 0))), 2) ?> L</td>
+              <td><?= esc($item['date_limite_vente'] ? date('d/m/Y', strtotime($item['date_limite_vente'])) : '—') ?></td>
               <td><span class="badge-arovia badge-green"><i class="fa fa-check me-1"></i>Terminé</span></td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="6" class="text-center text-muted">Aucune transformation enregistrée.</td></tr>
+          <tr><td colspan="8" class="text-center text-muted">Aucune transformation enregistrée.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
   </div>
 </main>
-<div class="modal fade" id="modalTransfo" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Nouvelle transformation</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <form method="post" action="/transformations">
-        <div class="modal-body">
-          <?php if (!empty($typesBocaux)): ?>
-            <?php foreach ($typesBocaux as $type): ?>
-              <div class="mb-3">
-                <label class="arovia-label" for="quantite_<?= (int) $type['id'] ?>"><?= esc($type['nom'] ?? 'Bocal') ?> (<?= (int) ($type['volume_litres'] * 1000) ?> mL)</label>
-                <input type="number" class="arovia-input" id="quantite_<?= (int) $type['id'] ?>" name="quantite_<?= (int) $type['id'] ?>" min="0" value="0" placeholder="0"/>
-              </div>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn-outline-gold" data-bs-dismiss="modal">Annuler</button><button type="submit" class="btn-gold">Enregistrer</button></div>
-      </form>
-    </div>
-  </div>
-</div>
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}

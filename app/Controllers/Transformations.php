@@ -6,6 +6,7 @@ use App\Models\TransformationModel;
 use App\Models\StockMatierePremiereModel;
 use App\Models\StockProduitFiniModel;
 use App\Models\TypeBocalModel;
+use App\Models\FournisseurModel;
 
 class Transformations extends BaseController
 {
@@ -13,6 +14,7 @@ class Transformations extends BaseController
     protected StockMatierePremiereModel $stockMPModel;
     protected StockProduitFiniModel $stockPFModel;
     protected TypeBocalModel $typeBocalModel;
+    protected FournisseurModel $fournisseurModel;
 
     public function __construct()
     {
@@ -20,6 +22,7 @@ class Transformations extends BaseController
         $this->stockMPModel        = new StockMatierePremiereModel();
         $this->stockPFModel        = new StockProduitFiniModel();
         $this->typeBocalModel      = new TypeBocalModel();
+        $this->fournisseurModel    = new FournisseurModel();
     }
 
     public function index()
@@ -39,14 +42,17 @@ class Transformations extends BaseController
         $data['tauxPerte'] = $data['litresTransformes'] > 0
             ? round(($data['perteTotale'] / $data['litresTransformes']) * 100, 2)
             : 0;
+        
+        $data['typesBocaux'] = $this->typeBocalModel->findAll();
 
         return view('transformations/index', $data);
     }
 
     public function new()
     {
-        $data['stockMP']     = $this->stockMPModel->getEtatStock();
-        $data['typesBocaux'] = $this->typeBocalModel->findAll();
+        $data['stockMP']      = $this->stockMPModel->getEtatStock();
+        $data['typesBocaux']  = $this->typeBocalModel->findAll();
+        $data['fournisseurs'] = $this->fournisseurModel->findAll();
 
         return view('transformations/new', $data);
     }
@@ -68,7 +74,12 @@ class Transformations extends BaseController
             return redirect()->back()->with('errors', ['Veuillez indiquer au moins une quantité de bocal à produire.']);
         }
 
-        $resultat = $this->transformationModel->enregistrerTransformation($repartition);
+        $fournisseurId = (int) $this->request->getPost('fournisseur_id');
+        if ($fournisseurId <= 0) {
+            return redirect()->back()->withInput()->with('errors', ['Veuillez sélectionner un fournisseur d\'origine pour assurer la traçabilité.']);
+        }
+
+        $resultat = $this->transformationModel->enregistrerTransformation($repartition, $fournisseurId);
 
         if (! $resultat['succes']) {
             return redirect()->back()->withInput()->with('errors', [$resultat['message'] ?? 'Erreur lors de la transformation.']);
@@ -77,4 +88,4 @@ class Transformations extends BaseController
         return redirect()->to('/transformations')
             ->with('message', 'Transformation enregistrée : ' . number_format($resultat['volume_total_utilise'], 2) . ' L utilisés.');
     }
-}
+}

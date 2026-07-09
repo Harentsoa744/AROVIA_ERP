@@ -47,6 +47,15 @@ $routes->post('fournisseurs', 'Fournisseurs::create');
 $routes->get('fournisseurs/(:num)/edit', 'Fournisseurs::edit/$1');
 $routes->post('fournisseurs/(:num)', 'Fournisseurs::update/$1');
 $routes->get('fournisseurs/(:num)/delete', 'Fournisseurs::delete/$1');
+
+// Supermarchés
+$routes->get('supermarches', 'Supermarches::index');
+$routes->get('supermarches/new', 'Supermarches::new');
+$routes->post('supermarches', 'Supermarches::create');
+$routes->get('supermarches/(:num)/edit', 'Supermarches::edit/$1');
+$routes->post('supermarches/(:num)', 'Supermarches::update/$1');
+$routes->get('supermarches/(:num)/delete', 'Supermarches::delete/$1');
+
 $routes->get('entrees-matiere-premiere', 'EntreesMatierePremiere::index');
 $routes->get('entrees-matiere-premiere/new', 'EntreesMatierePremiere::new');
 $routes->post('entrees-matiere-premiere', 'EntreesMatierePremiere::create');
@@ -60,6 +69,10 @@ $routes->get('statistiques', 'Statistiques::index');
 $routes->get('valeur-stock', 'ValeurStock::index');
 $routes->get('valeur-stock/export', 'ValeurStock::export');
 $routes->get('valeur-stock/export-pdf', 'ValeurStock::exportPdf');
+
+// Configuration
+$routes->get('configuration', 'Configuration::index');
+$routes->post('configuration', 'Configuration::update');
 
 //Arinala
 

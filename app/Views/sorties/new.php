@@ -1,55 +1,85 @@
-<?= view('partials/header') ?>
-<h1>Enregistrer une vente</h1>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Enregistrer une vente — Miel Arovia</title>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+</head>
+<body>
+<?php include 'utils/header.php'; ?>
+<?php include 'utils/side_bar.php'; ?>
+<main class="main-wrapper">
+  <div class="breadcrumb-bar"><a href="/sorties">Sorties (ventes)</a> <span>›</span> Enregistrer une vente</div>
+  <div class="page-header">
+    <h1 class="page-title">Enregistrer une vente</h1>
+    <a href="/sorties" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
+  </div>
 
-<?php if (session()->getFlashdata('errors')): ?>
-    <ul style="color: red;">
-        <?php foreach (session()->getFlashdata('errors') as $error): ?>
+  <div class="content-card" style="max-width: 760px;">
+    <?php if (session()->getFlashdata('errors')): ?>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <?php foreach (session()->getFlashdata('errors') as $error): ?>
             <li><?= esc($error) ?></li>
-        <?php endforeach; ?>
-    </ul>
-<?php endif; ?>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
 
-<form action="/sorties" method="post">
-    <?= csrf_field() ?>
+    <form action="/sorties" method="post">
+      <?= csrf_field() ?>
 
-    <label>Type de bocal :</label><br>
-    <select name="type_bocal_id" id="type-bocal-select">
-        <?php foreach ($typesBocaux as $type): ?>
+      <div class="mb-3">
+        <label class="arovia-label" for="type-bocal-select">Type de bocal *</label>
+        <select name="type_bocal_id" id="type-bocal-select" class="arovia-input" required>
+          <option value="">Sélectionner...</option>
+          <?php foreach ($typesBocaux as $type): ?>
             <option
                 value="<?= $type['id'] ?>"
                 data-prix-vente="<?= $type['prix_vente'] ?>"
                 data-volume="<?= $type['volume_litres'] ?>"
             >
-                <?= esc($type['nom']) ?> (<?= esc($type['cible']) ?>)
+                <?= esc($type['nom']) ?> (<?= (float) $type['volume_litres'] ?> L)
             </option>
-        <?php endforeach; ?>
-    </select><br><br>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-    <label>Quantité :</label><br>
-    <input type="number" min="1" name="quantite" id="quantite-input" value="<?= old('quantite') ?>"><br><br>
+      <div class="mb-3">
+        <label class="arovia-label" for="supermarche-select">Supermarché *</label>
+        <select name="supermarche_id" id="supermarche-select" class="arovia-input" required>
+          <option value="">Sélectionner...</option>
+          <?php foreach ($supermarches as $sm): ?>
+            <option value="<?= $sm['id'] ?>"><?= esc($sm['nom']) ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
 
-    <label>Destinataire :</label><br>
-    <select name="destinataire_type">
-        <option value="touriste">Touriste</option>
-        <option value="particulier">Particulier</option>
-        <option value="hotel">Hôtel</option>
-    </select><br><br>
+      <div class="mb-3">
+        <label class="arovia-label" for="quantite-input">Nombre de bocaux *</label>
+        <input type="number" min="1" name="quantite" id="quantite-input" class="arovia-input" value="<?= old('quantite') ?>" placeholder="0" required>
+      </div>
 
-    <label>Nom du destinataire (optionnel) :</label><br>
-    <input type="text" name="destinataire_nom" value="<?= old('destinataire_nom') ?>"><br><br>
+      <div class="mb-3">
+        <label class="arovia-label" for="prix-input">Prix de vente unitaire (Ar) *</label>
+        <input type="number" step="0.01" name="prix_vente_unitaire" id="prix-input" class="arovia-input" value="<?= old('prix_vente_unitaire') ?>" placeholder="0" required>
+        <small id="cump-info" class="text-muted d-block mt-1"></small>
+      </div>
 
-    <label>Prix de vente unitaire (Ar) :</label><br>
-    <input type="number" step="0.01" name="prix_vente_unitaire" id="prix-input" value="<?= old('prix_vente_unitaire') ?>"><br>
-    <small id="cump-info" style="color: #666;"></small><br><br>
+      <div class="d-flex gap-2 mt-4">
+        <button type="submit" class="btn-gold">Valider la vente</button>
+        <a href="/sorties" class="btn-outline-gold">Annuler</a>
+      </div>
+    </form>
+  </div>
+</main>
 
-    <button type="submit">Valider la vente</button>
-</form>
-
-<br>
-<a href="/sorties">Retour</a>
-
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>
-const cumpActuel = <?= $stockMP['cump_actuel'] ?? 0 ?>; // coût matière première par litre
+const cumpActuel = <?= (float) ($stockMP['cump_actuel'] ?? 0) ?>;
 
 const select = document.getElementById('type-bocal-select');
 const prixInput = document.getElementById('prix-input');
@@ -57,15 +87,20 @@ const cumpInfo = document.getElementById('cump-info');
 
 function majPrixEtCout() {
     const option = select.options[select.selectedIndex];
+    if (!option || !option.value) {
+        cumpInfo.textContent = '';
+        return;
+    }
     const prixVente = parseFloat(option.dataset.prixVente) || 0;
     const volume = parseFloat(option.dataset.volume) || 0;
 
     prixInput.value = prixVente;
 
     const coutMatierePremiere = (cumpActuel * volume).toFixed(2);
-    cumpInfo.textContent = 'Coût matière première estimé : ' + coutMatierePremiere + ' Ar/bocal';
+    cumpInfo.textContent = 'Coût matière première estimé : ' + coutMatierePremiere + ' Ar/bocal (CUMP actuel: ' + cumpActuel.toFixed(2) + ' Ar/L)';
 }
 
 select.addEventListener('change', majPrixEtCout);
-majPrixEtCout(); // au chargement
 </script>
+</body>
+</html>

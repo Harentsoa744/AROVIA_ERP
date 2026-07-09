@@ -5,52 +5,60 @@ namespace App\Controllers;
 use App\Models\SortieModel;
 use App\Models\StockProduitFiniModel;
 use App\Models\TypeBocalModel;
+use App\Models\SupermarcheModel;
 
 class Sorties extends BaseController
 {
     protected SortieModel $sortieModel;
     protected StockProduitFiniModel $stockPFModel;
     protected TypeBocalModel $typeBocalModel;
+    protected SupermarcheModel $supermarcheModel;
 
     public function __construct()
     {
-        $this->sortieModel   = new SortieModel();
-        $this->stockPFModel  = new StockProduitFiniModel();
-        $this->typeBocalModel = new TypeBocalModel();
+        $this->sortieModel      = new SortieModel();
+        $this->stockPFModel     = new StockProduitFiniModel();
+        $this->typeBocalModel   = new TypeBocalModel();
+        $this->supermarcheModel = new SupermarcheModel();
     }
 
     public function index()
-{
-    $filtres = [
-        'type_bocal_id'      => $this->request->getGet('type_bocal_id'),
-        'destinataire_type'  => $this->request->getGet('destinataire_type'),
-        'date_debut'         => $this->request->getGet('date_debut'),
-        'date_fin'           => $this->request->getGet('date_fin'),
-    ];
+    {
+        $filtres = [
+            'type_bocal_id'   => $this->request->getGet('type_bocal_id'),
+            'supermarche_id'  => $this->request->getGet('supermarche_id'),
+            'date_debut'      => $this->request->getGet('date_debut'),
+            'date_fin'        => $this->request->getGet('date_fin'),
+        ];
 
-    $data['sorties']      = $this->sortieModel->getSortiesAvecBocal($filtres);
-    $data['stockPF']      = $this->stockPFModel->getStockAvecTypes();
-    $data['typesBocaux']  = $this->typeBocalModel->findAll();
-    $data['filtres']      = $filtres;
+        $data['sorties']      = $this->sortieModel->getSortiesAvecBocal($filtres);
+        $data['stockPF']      = $this->stockPFModel->getStockAvecTypes();
+        $data['typesBocaux']  = $this->typeBocalModel->findAll();
+        $data['supermarches'] = $this->supermarcheModel->findAll();
+        $data['filtres']      = $filtres;
 
-    return view('sorties/index', $data);
-}
+        // Fetch CUMP for real-time cost / margin calculations on frontend
+        $data['stockMP']      = (new \App\Models\StockMatierePremiereModel())->getEtatStock();
 
-   public function new()
-{
-    $data['typesBocaux'] = $this->typeBocalModel->findAll();
-    $data['stockPF']     = $this->stockPFModel->getStockAvecTypes();
-    $data['stockMP']     = (new \App\Models\StockMatierePremiereModel())->getEtatStock();
+        return view('sorties/index', $data);
+    }
 
-    return view('sorties/new', $data);
-}
+    public function new()
+    {
+        $data['typesBocaux']  = $this->typeBocalModel->findAll();
+        $data['stockPF']      = $this->stockPFModel->getStockAvecTypes();
+        $data['stockMP']      = (new \App\Models\StockMatierePremiereModel())->getEtatStock();
+        $data['supermarches'] = $this->supermarcheModel->findAll();
+
+        return view('sorties/new', $data);
+    }
 
     public function create()
     {
         $rules = [
             'type_bocal_id'       => 'required|is_natural_no_zero',
             'quantite'            => 'required|is_natural_no_zero',
-            'destinataire_type'   => 'required|in_list[touriste,particulier,hotel]',
+            'supermarche_id'      => 'required|is_natural_no_zero',
             'prix_vente_unitaire' => 'required|numeric|greater_than[0]',
         ];
 
@@ -61,8 +69,7 @@ class Sorties extends BaseController
         $resultat = $this->sortieModel->enregistrerSortie(
             (int) $this->request->getPost('type_bocal_id'),
             (int) $this->request->getPost('quantite'),
-            $this->request->getPost('destinataire_type'),
-            $this->request->getPost('destinataire_nom'),
+            (int) $this->request->getPost('supermarche_id'),
             (float) $this->request->getPost('prix_vente_unitaire')
         );
 
@@ -70,6 +77,6 @@ class Sorties extends BaseController
             return redirect()->back()->withInput()->with('errors', [$resultat['message'] ?? 'Erreur lors de la sortie.']);
         }
 
-        return redirect()->to('/sorties')->with('message', 'Sortie enregistrée pour ' . number_format($resultat['valeur_totale'], 2) . ' Ar.');
+        return redirect()->to('/sorties')->with('message', 'Vente enregistrée pour ' . number_format($resultat['valeur_totale'], 2) . ' Ar.');
     }
-}
+}

@@ -8,10 +8,12 @@
       </div>
       <div class="nav-submenu">
         <a href="/fournisseurs" class="nav-subitem">Fournisseurs</a>
+        <a href="/supermarches" class="nav-subitem">Supermarchés</a>
         <a href="/entrees-matiere-premiere" class="nav-subitem">Entrées matière première</a>
         <a href="/transformations" class="nav-subitem">Transformations (mise en bocal)</a>
         <a href="/sorties" class="nav-subitem">Sorties (ventes)</a>
         <a href="/valeur-stock" class="nav-subitem">Valeur du stock</a>
+        <a href="/configuration" class="nav-subitem">Configuration</a>
       </div>
     </div>
     <a href="/contrat" class="nav-item-main"><i class="fa fa-file-contract nav-icon"></i> Gestion de contrat</a>
