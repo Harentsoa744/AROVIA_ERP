@@ -20,6 +20,15 @@ $routes->get('notification/count','Notification::count');
 $routes->post('notification/lire/(:num)','Notification::lire/$1');
 $routes->post('notification/create','Notification::create');
 
+$routes->group('factures', function ($routes) {
+    $routes->get('/', 'FactureController::index');
+    $routes->get('creer', 'FactureController::creer');
+    $routes->post('enregistrer', 'FactureController::enregistrer');
+    $routes->get('(:num)', 'FactureController::afficher/$1');
+    $routes->post('(:num)/statut', 'FactureController::changerStatut/$1');
+    $routes->get('(:num)/supprimer', 'FactureController::supprimer/$1');
+});
+
 $routes->get('pro','ProfilController::index');
 $routes->get('profil','ProfilController::index');
 $routes->post('profil/update', 'ProfilController::update');
@@ -73,6 +82,8 @@ $routes->post('transformations', 'Transformations::create');
 $routes->get('sorties', 'Sorties::index');
 $routes->get('sorties/new', 'Sorties::new');
 $routes->post('sorties', 'Sorties::create');
+$routes->get('sorties/facture/(:num)', 'Sorties::facture/$1');
+$routes->get('sorties/imprimer/(:num)', 'Sorties::imprimer/$1');
 $routes->get('statistiques', 'Statistiques::index');
 $routes->get('statistiques/vente', 'StatistiquesVente::index');
 $routes->get('valeur-stock', 'ValeurStock::index');

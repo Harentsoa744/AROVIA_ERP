@@ -52,8 +52,7 @@
         <th>Quantité</th>
         <th>Destinataire</th>
         <th>Nom</th>
-        <th>Valeur totale</th>
-        <th>Actions</th>
+        <th>Valeur totale</th>\n        <th>Actions</th>
     </tr>
     <?php foreach ($sorties as $s): ?>
     <tr>
@@ -63,10 +62,6 @@
         <td><?= esc($s['destinataire_type']) ?></td>
         <td><?= esc($s['destinataire_nom'] ?? '-') ?></td>
         <td><?= number_format($s['valeur_totale'], 2) ?> Ar</td>
-        <td>
-            <a href="<?= base_url('sorties/facture/' . $s['id']) ?>" style="text-decoration: none; padding: 4px 8px; background: #3d0f12; color: #f4efe6; border-radius: 3px; font-size: 12px; margin-right: 4px;">Voir</a>
-            <a href="<?= base_url('sorties/imprimer/' . $s['id']) ?>" style="text-decoration: none; padding: 4px 8px; background: #c1440e; color: #fff; border-radius: 3px; font-size: 12px;">Imprimer</a>
-        </td>
     </tr>
     <?php endforeach; ?>
 </table>

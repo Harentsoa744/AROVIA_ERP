@@ -79,4 +79,52 @@ class Sorties extends BaseController
 
         return redirect()->to('/sorties')->with('message', 'Vente enregistrée pour ' . number_format($resultat['valeur_totale'], 2) . ' Ar.');
     }
-}
+
+    /**
+     * GET /sorties/facture/(:num)
+     * Affiche la facture pour une sortie donnée
+     */
+    public function facture(int $id)
+    {
+        $sortie = $this->sortieModel->select('sorties.*, types_bocaux.nom as bocal_nom, types_bocaux.volume_litres as bocal_volume, supermarches.nom as supermarche_nom, supermarches.contact as supermarche_contact')
+                                    ->join('types_bocaux', 'types_bocaux.id = sorties.type_bocal_id')
+                                    ->join('supermarches', 'supermarches.id = sorties.supermarche_id')
+                                    ->where('sorties.id', $id)
+                                    ->first();
+
+        if (! $sortie) {
+            return redirect()->to('/sorties')->with('error', 'Sortie introuvable.');
+        }
+
+        $data = [
+            'titre'  => 'Facture N°' . str_pad((string) $sortie['id'], 5, '0', STR_PAD_LEFT),
+            'sortie' => $sortie,
+        ];
+
+        return view('sorties/facture', $data);
+    }
+
+    /**
+     * GET /sorties/imprimer/(:num)
+     * Affiche la facture en mode impression
+     */
+    public function imprimer(int $id)
+    {
+        $sortie = $this->sortieModel->select('sorties.*, types_bocaux.nom as bocal_nom, types_bocaux.volume_litres as bocal_volume, supermarches.nom as supermarche_nom, supermarches.contact as supermarche_contact')
+                                    ->join('types_bocaux', 'types_bocaux.id = sorties.type_bocal_id')
+                                    ->join('supermarches', 'supermarches.id = sorties.supermarche_id')
+                                    ->where('sorties.id', $id)
+                                    ->first();
+
+        if (! $sortie) {
+            return redirect()->to('/sorties')->with('error', 'Sortie introuvable.');
+        }
+
+        $data = [
+            'titre'  => 'Facture N°' . str_pad((string) $sortie['id'], 5, '0', STR_PAD_LEFT),
+            'sortie' => $sortie,
+        ];
+
+        return view('sorties/facture_impression', $data);
+    }
+}

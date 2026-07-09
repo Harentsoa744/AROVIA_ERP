@@ -145,7 +145,9 @@
                 <?= number_format($marge, 0, ',', ' ') ?> Ar
                 <small class="d-block text-muted"><?= number_format($tauxMarge, 2) ?> %</small>
               </td>
-              <td><button class="btn-icon-edit" type="button"><i class="fa fa-pen"></i></button></td>
+              <td>
+                <a class="btn-icon-edit" href="/factures/<?= (int) ($sortie['id'] ?? 0) ?>" title="Voir"><i class="fa fa-eye"></i></a>
+              </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
