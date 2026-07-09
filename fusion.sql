@@ -24,6 +24,19 @@ DROP TABLE IF EXISTS roles CASCADE;
 -- ============================================================================
 -- 2. STRUCTURES DE GESTION DES UTILISATEURS & RH
 -- ============================================================================
+
+CREATE TABLE statut (
+    id  SERIAL PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL
+);
+
+-- Statuts de base
+INSERT INTO statut (nom) VALUES
+    ('En cours'),
+    ('Signé'),
+    ('Expiré'),
+    ('Annulé');
+
 CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     nom VARCHAR(50) UNIQUE NOT NULL
@@ -287,14 +300,3 @@ INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, role_id) VALUES
 -- Table entreprise
 
 -- Table statut
-CREATE TABLE statut (
-    id  SERIAL PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL
-);
-
--- Statuts de base
-INSERT INTO statut (nom) VALUES
-    ('En cours'),
-    ('Signé'),
-    ('Expiré'),
-    ('Annulé');

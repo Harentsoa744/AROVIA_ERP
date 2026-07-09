@@ -49,7 +49,6 @@
                 <section class="login-header" style="line-height: 22px; height: 20%;">
                     <h1 class="fw-medium mb-1" style="font-size: 1.75rem;">Login</h1>
                     <h5 class="fw-light text-muted mb-2" style="font-size: 0.95rem;">Hello Dear !</h5>
-                    <span class="line"></span>
                 </section>
             
                 <form action="/login" method="post" class="Form-place d-flex flex-column justify-content-center flex-grow-1 gap-3">
