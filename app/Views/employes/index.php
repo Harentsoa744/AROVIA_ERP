@@ -17,7 +17,21 @@
     <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalEmploye"><i class="fa fa-user-plus"></i> Ajouter</button>
   </div>
   
-  <div class="mb-4 d-flex justify-content-end">
+  <div class="mb-4 d-flex justify-content-end gap-2 flex-wrap align-items-center">
+    <!-- Filtre poste -->
+    <div style="position:relative;">
+      <select id="filterPoste" class="arovia-input" style="height:38px;font-size:.9rem;min-width:160px;">
+        <option value="">Tous les postes</option>
+        <?php
+          $postes = array_unique(array_filter(array_column($employes ?? [], 'poste')));
+          sort($postes);
+          foreach ($postes as $poste):
+        ?>
+        <option value="<?= esc(strtolower($poste)) ?>"><?= esc($poste) ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+    <!-- Recherche -->
     <div style="position: relative; width: 250px;">
       <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
       <input type="text" id="gridSearch" class="arovia-input" placeholder="Rechercher..." style="padding-left: 36px; height: 38px; font-size: 0.9rem;">
@@ -75,14 +89,23 @@
 <script>
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
 
-document.getElementById('gridSearch').addEventListener('keyup', function() {
-  const query = this.value.toLowerCase();
-  const cards = document.querySelectorAll('#employesGrid > div');
+function applyGridFilters() {
+  const query  = document.getElementById('gridSearch').value.toLowerCase();
+  const filtre = document.getElementById('filterPoste').value.toLowerCase();
+  const cards  = document.querySelectorAll('#employesGrid > div');
+
   cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(query) ? '' : 'none';
+    const text      = card.textContent.toLowerCase();
+    const posteEl   = card.querySelector('.text-muted');
+    const posteText = (posteEl?.textContent || '').toLowerCase();
+    const matchQ = !query  || text.includes(query);
+    const matchF = !filtre || posteText.includes(filtre);
+    card.style.display = (matchQ && matchF) ? '' : 'none';
   });
-});
+}
+
+document.getElementById('gridSearch').addEventListener('keyup', applyGridFilters);
+document.getElementById('filterPoste').addEventListener('change', applyGridFilters);
 </script>
 </body>
 </html>

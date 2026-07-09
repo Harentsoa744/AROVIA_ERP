@@ -78,7 +78,7 @@
   </div>
 
   <!-- Graphiques -->
-  <div class="row g-4">
+  <div class="row g-4 mb-4">
     <div class="col-12 col-xl-6">
       <div class="content-card">
         <h3 class="content-card-title"><i class="fa fa-chart-line text-gold me-2"></i>Évolution Miel & Bocaux</h3>
@@ -93,6 +93,52 @@
         <div style="position: relative; height:320px;">
           <canvas id="fluxChart"></canvas>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Diagramme : Répartition par supermarché -->
+  <div class="row g-4">
+    <div class="col-12 col-xl-5">
+      <div class="content-card">
+        <h3 class="content-card-title"><i class="fa fa-store text-gold me-2"></i>Répartition par supermarché des bocaux vendus</h3>
+        <div style="position:relative; height:300px; display:flex; align-items:center; justify-content:center;">
+          <canvas id="supermarcheChart"></canvas>
+        </div>
+        <div id="supermarcheLegend" class="chart-legend mt-3" style="flex-wrap:wrap; gap:.6rem;"></div>
+      </div>
+    </div>
+    <div class="col-12 col-xl-7">
+      <div class="content-card">
+        <h3 class="content-card-title"><i class="fa fa-table text-gold me-2"></i>Détail par supermarché</h3>
+        <table class="arovia-table">
+          <thead>
+            <tr><th>Supermarché</th><th>Bocaux vendus</th><th>Part (%)</th></tr>
+          </thead>
+          <tbody id="supermarcheTableBody">
+            <?php
+              $totalBocaux = array_sum(array_column($sortiesParDestinataire ?? [], 'total_quantite'));
+              foreach ($sortiesParDestinataire ?? [] as $s):
+                $pct = $totalBocaux > 0 ? round(($s['total_quantite'] / $totalBocaux) * 100, 1) : 0;
+            ?>
+            <tr>
+              <td><?= esc($s['destinataire_type'] ?? '—') ?></td>
+              <td><span class="badge-arovia badge-gold"><?= (int) $s['total_quantite'] ?></span></td>
+              <td>
+                <div style="display:flex;align-items:center;gap:.5rem;">
+                  <div style="flex:1;height:6px;background:var(--border-color);border-radius:3px;">
+                    <div style="width:<?= $pct ?>%;height:100%;background:var(--primary-gold);border-radius:3px;"></div>
+                  </div>
+                  <span style="font-size:.8rem;font-weight:600;color:var(--primary-gold);min-width:36px;"><?= $pct ?>%</span>
+                </div>
+              </td>
+            </tr>
+            <?php endforeach; ?>
+            <?php if (empty($sortiesParDestinataire)): ?>
+            <tr><td colspan="3" class="text-center text-muted py-3">Aucune donnée disponible</td></tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -179,6 +225,43 @@
             plugins: { legend: { position: 'top' } }
         }
     });
+
+    // --- 3. Diagramme Camembert : Répartition par supermarché ---
+    const smColors = ['#c8860a','#5d7a2e','#c0392b','#4a7fa5','#7b4f8c','#c8570a','#2ecc71','#e74c3c','#3498db','#9b59b6'];
+    const smLabels = sortiesParDestinataire.map(s => s.destinataire_type || 'Inconnu');
+    const smData   = sortiesParDestinataire.map(s => parseInt(s.total_quantite) || 0);
+    const smBg     = smLabels.map((_, i) => smColors[i % smColors.length]);
+
+    if (document.getElementById('supermarcheChart')) {
+        const smChart = new Chart(document.getElementById('supermarcheChart'), {
+            type: 'pie',
+            data: {
+                labels: smLabels.length ? smLabels : ['Aucune donnée'],
+                datasets: [{ data: smData.length ? smData : [1], backgroundColor: smBg, borderWidth: 2, borderColor: '#fff' }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} bocaux` } }
+                }
+            }
+        });
+
+        // Légende personnalisée
+        const legend = document.getElementById('supermarcheLegend');
+        if (legend && smLabels.length) {
+            legend.innerHTML = smLabels.map((label, i) => {
+                const total = smData.reduce((a, b) => a + b, 0);
+                const pct   = total > 0 ? ((smData[i] / total) * 100).toFixed(1) : 0;
+                return `<span style="display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--text-primary);">
+                    <span style="width:10px;height:10px;border-radius:50%;background:${smBg[i]};display:inline-block;"></span>
+                    <span>${label}</span><strong>(${pct}%)</strong>
+                </span>`;
+            }).join('');
+        }
+    }
 </script>
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>

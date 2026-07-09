@@ -24,7 +24,18 @@
   </div>
 
   <div class="content-card">
-    <div class="mb-3 d-flex justify-content-end">
+    <div class="mb-3 d-flex justify-content-end gap-2 flex-wrap align-items-center">
+      <!-- Filtre statut -->
+      <div style="position:relative;">
+        <select id="filterStatut" class="arovia-input" style="height:38px;font-size:.9rem;min-width:170px;">
+          <option value="">Tous les statuts</option>
+          <option value="EN_COURS">En cours</option>
+          <option value="EN_ATTENTE">En attente</option>
+          <option value="EFFECTUEE">Effectuée</option>
+          <option value="ANNULEE">Annulée</option>
+        </select>
+      </div>
+      <!-- Recherche -->
       <div style="position: relative; width: 250px;">
         <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
         <input type="text" id="tableSearch" class="arovia-input" placeholder="Rechercher..." style="padding-left: 36px; height: 38px; font-size: 0.9rem;">
@@ -104,14 +115,22 @@
 <script>
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
 
-document.getElementById('tableSearch').addEventListener('keyup', function() {
-  const query = this.value.toLowerCase();
-  const rows = document.querySelectorAll('.arovia-table tbody tr');
+function applyFilters() {
+  const query  = document.getElementById('tableSearch').value.toLowerCase();
+  const filtre = document.getElementById('filterStatut').value.toLowerCase();
+  const rows   = document.querySelectorAll('.arovia-table tbody tr');
+
   rows.forEach(row => {
-    const text = row.textContent.toLowerCase();
-    row.style.display = text.includes(query) ? '' : 'none';
+    const text       = row.textContent.toLowerCase();
+    const statutCell = (row.cells[4]?.textContent || '').toLowerCase();
+    const matchQ = !query  || text.includes(query);
+    const matchF = !filtre || statutCell.includes(filtre.replace('_', ' '));
+    row.style.display = (matchQ && matchF) ? '' : 'none';
   });
-});
+}
+
+document.getElementById('tableSearch').addEventListener('keyup', applyFilters);
+document.getElementById('filterStatut').addEventListener('change', applyFilters);
 
 const clientSelect = document.getElementById('client_id');
 const addressField = document.getElementById('adresse_livraison');

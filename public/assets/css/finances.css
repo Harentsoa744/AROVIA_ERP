@@ -1,18 +1,116 @@
 /* finances.css */
-.chart-wrap { height: 280px; position: relative; }
-.chart-legend { display: flex; gap: 1.25rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: var(--text-muted); }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.legend-item.green .legend-dot { background: var(--accent-green); }
-.legend-item.red .legend-dot { background: var(--accent-red); }
+.chart-wrap {
+    height: 300px;
+    position: relative;
+}
 
-.transaction-list { display: flex; flex-direction: column; gap: 1rem; }
-.transaction-item { display: flex; align-items: center; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
-.transaction-item:last-child { border-bottom: none; padding-bottom: 0; }
-.trans-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; }
-.trans-icon.bg-red { background: var(--accent-red); }
-.trans-icon.bg-green { background: var(--accent-green); }
-.trans-info { flex: 1; }
-.trans-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.2rem; }
-.trans-date { font-size: 0.75rem; color: var(--text-muted); }
-.trans-amount { font-size: 0.95rem; font-weight: 700; white-space: nowrap; }
+.chart-legend {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-item.green .legend-dot {
+    background: var(--accent-green);
+}
+
+.legend-item.red .legend-dot {
+    background: var(--accent-red);
+}
+
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.trans-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.trans-icon.bg-red {
+    background: var(--accent-red);
+}
+
+.trans-icon.bg-green {
+    background: var(--accent-green);
+}
+
+.trans-info {
+    flex: 1;
+}
+
+.trans-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+}
+
+.trans-date {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.trans-amount {
+    font-size: 0.95rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.finance-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+}
+
+.finance-filter-bar label {
+    font-size: .78rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.finance-filter-bar .arovia-input {
+    height: 36px;
+    font-size: .85rem;
+    width: auto;
+}
