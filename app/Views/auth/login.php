@@ -9,7 +9,10 @@
     <style>
         /* Ajustements mineurs pour centrer parfaitement la carte */
         body {
-            background-color: #f8f8f8;
+            background-image: url('/assets/images/login-alt.png');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: brightness(0.6);
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -27,6 +30,13 @@
             outline: none;
             border-color: #000 !important;
             box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+        .deco{
+            background-image: url('/assets/images/miel.jpg');
+            background-size: cover;
+            background-position: center;
+            backdrop-filter: blur(2px);
+            color: white;
         }
     </style>
 </head>
@@ -77,7 +87,7 @@
                 </form>
             </div>
 
-            <div class="col-6 h-100 rounded-5 p-4 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
+            <div class="deco col-6 h-100 rounded-5 p-4 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
                 <section class="content mb-2">
                     <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px;">AROVIA</h1>
                     <span class="d-block mt-1" style="font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); font-weight: 500;">Bienvenue sur Arovia ERP</span>
