@@ -337,3 +337,15 @@ SELECT id, 0, 20 FROM types_bocaux;
 -- État initial du stock matière première (vide)
 INSERT INTO stock_matiere_premiere (quantite_litres, valeur_stock, cump_actuel, seuil_alerte)
 VALUES (0, 0, 0, 10);
+
+INSERT INTO clients (nom, type_client, telephone, email, adresse) VALUES
+('Jumbo Score Ankorondrano', 'supermarche', '+261 20 22 444 55', 'achats@jumbo.mg', 'Ankorondrano, Tana'),
+('Leader Price Ivandry', 'supermarche', '+261 20 22 155 88', 'stock@leaderprice.mg', 'Ivandry, Tana'),
+('Shoprite Antsirabe', 'supermarche', '+261 20 44 321 00', 'shoprite.ant@mg.mg', 'Centre-ville Antsirabe'),
+('Score Behoririka', 'supermarche', '+261 20 22 987 65', 'behoririka@jumbo.mg', 'Behoririka, Tana');
+
+INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut) VALUES
+(1, '2025-02-25 10:00:00', 1500000.00, 'Virement', 'PAYE'),
+(2, '2025-03-15 09:30:00', 5000000.00, 'Virement', 'PAYE'),
+(3, '2025-03-20 14:00:00', 6000000.00, 'Virement', 'PAYE'),
+(4, '2025-04-02 11:15:00', 2750000.00, 'Cash', 'EN_COURS');

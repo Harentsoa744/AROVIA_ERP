@@ -109,6 +109,18 @@ INSERT INTO supermarches (nom, contact, telephone, email, localisation, actif) V
 ('Shoprite Antsirabe',      'M. Andrianah',   '+261 20 44 321 00', 'shoprite.ant@mg.mg',   'Centre-ville Antsirabe',TRUE),
 ('Score Behoririka',        'Mme Volah',      '+261 20 22 987 65', 'behoririka@jumbo.mg',  'Behoririka, Tana',      TRUE);
 
+INSERT INTO clients (nom, type_client, telephone, email, adresse) VALUES
+('Jumbo Score Ankorondrano', 'supermarche', '+261 20 22 444 55', 'achats@jumbo.mg', 'Ankorondrano, Tana'),
+('Leader Price Ivandry', 'supermarche', '+261 20 22 155 88', 'stock@leaderprice.mg', 'Ivandry, Tana'),
+('Shoprite Antsirabe', 'supermarche', '+261 20 44 321 00', 'shoprite.ant@mg.mg', 'Centre-ville Antsirabe'),
+('Score Behoririka', 'supermarche', '+261 20 22 987 65', 'behoririka@jumbo.mg', 'Behoririka, Tana');
+
+INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut) VALUES
+(1, '2025-02-25 10:00:00', 1500000.00, 'Virement', 'PAYE'),
+(2, '2025-03-15 09:30:00', 5000000.00, 'Virement', 'PAYE'),
+(3, '2025-03-20 14:00:00', 6000000.00, 'Virement', 'PAYE'),
+(4, '2025-04-02 11:15:00', 2750000.00, 'Cash', 'EN_COURS');
+
 -- Ventes aux supermarchés (Sorties)
 -- Vente 1 : Jumbo Score — 100 bocaux de 10cl (CUMP de la MP utilisé pour le bocal 10cl = 12 375 * 0.10 = 1 237.50 Ar/bocal)
 INSERT INTO sorties (date_sortie, supermarche_id, type_bocal_id, quantite, prix_vente_unitaire, valeur_totale, cump_applique, marge_unitaire, marge_totale, motif) VALUES
@@ -160,3 +172,15 @@ INSERT INTO mouvements_financiers (compte_id, type, categorie, montant, descript
 UPDATE comptes_tresorerie SET solde = 1500000.00 - 45000.00 WHERE id = 1; -- CAISSE : 1 455 000 Ar
 UPDATE comptes_tresorerie SET solde = 25000000.00 - 6000000.00 - 11500000.00 - 1250000.00 - 780000.00 - 780000.00 + 1500000.00 + 5000000.00 + 6000000.00 WHERE id = 2; -- BNI : 16 190 000 Ar
 UPDATE comptes_tresorerie SET solde = 4500000.00 - 3900000.00 WHERE id = 3; -- MVOLA : 600 000 Ar
+
+-- Logistique & Livraisons
+INSERT INTO livreurs (nom, telephone, vehicule, disponible) VALUES
+('Ranja Delivery', '+261 34 99 555 11', 'Scooter Sym', TRUE),
+('Trans-Arovia Rapide', '+261 32 88 444 22', 'Camionnette Renault Kangoo', TRUE);
+
+INSERT INTO livraisons (vente_id, livreur_id, date_prevue, date_effective, adresse_livraison, statut) VALUES
+(2, 2, '2025-03-13 09:00:00', '2025-03-13 10:30:00', 'Hôtel Carlton, Réception stock, Anosy', 'LIVRE');
+
+INSERT INTO disponibilites_livreurs (livreur_id, date_debut, date_fin) VALUES
+(1, '2025-03-01 08:00:00', '2025-03-31 18:00:00'),
+(2, '2025-03-01 07:00:00', '2025-03-31 19:00:00');

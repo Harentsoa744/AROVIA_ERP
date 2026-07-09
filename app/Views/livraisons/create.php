@@ -32,8 +32,28 @@
           
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="arovia-label" for="vente_id">ID Numéro de Vente *</label>
-              <input type="number" id="vente_id" name="vente_id" class="arovia-input" required placeholder="ex: 4502">
+              <label class="arovia-label" for="vente_id">Vente / Commande *</label>
+              <select id="vente_id" name="vente_id" class="arovia-input" required>
+                <option value="">— Sélectionner —</option>
+                <?php foreach (($ventes ?? []) as $vente): ?>
+                  <option value="<?= (int) $vente['id'] ?>">
+                    Vente #<?= (int) $vente['id'] ?><?= !empty($vente['client_nom']) ? ' - ' . esc($vente['client_nom']) : '' ?>
+                    <?= isset($vente['montant_total']) ? ' - ' . number_format((float) $vente['montant_total'], 0, ',', ' ') . ' Ar' : '' ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="arovia-label" for="client_id">Client / Destinataire *</label>
+              <select id="client_id" name="client_id" class="arovia-input" required>
+                <option value="">— Sélectionner —</option>
+                <?php foreach (($clients ?? []) as $client): ?>
+                  <option value="<?= (int) $client['id'] ?>" data-address="<?= esc($client['adresse'] ?? '', 'attr') ?>">
+                    <?= esc($client['nom']) ?><?= !empty($client['telephone']) ? ' - ' . esc($client['telephone']) : '' ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
             </div>
 
             <div class="col-md-6">
@@ -92,6 +112,18 @@
   </div>
 </main>
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
-<script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
+<script>
+function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+
+const clientSelect = document.getElementById('client_id');
+const addressField = document.getElementById('adresse_livraison');
+
+if (clientSelect && addressField) {
+  clientSelect.addEventListener('change', function () {
+    const option = this.options[this.selectedIndex];
+    addressField.value = option ? (option.dataset.address || '') : '';
+  });
+}
+</script>
 </body>
 </html>

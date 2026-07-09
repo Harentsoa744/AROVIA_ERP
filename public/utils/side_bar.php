@@ -13,7 +13,6 @@
         <a href="/transformations" class="nav-subitem">Transformations (mise en bocal)</a>
         <a href="/sorties" class="nav-subitem">Sorties (ventes)</a>
         <a href="/valeur-stock" class="nav-subitem">Valeur du stock</a>
-        <a href="/configuration" class="nav-subitem">Configuration</a>
       </div>
     </div>
     <a href="/contrat" class="nav-item-main"><i class="fa fa-file-contract nav-icon"></i> Gestion de contrat</a>

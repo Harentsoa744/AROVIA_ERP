@@ -27,7 +27,7 @@
           <a href="/valeur-stock" class="btn-gold mt-2"><i class="fa fa-arrow-right"></i> Aller au stock</a>
         </div>
         <div class="hero-img">
-          <img src="<?= base_url('assets/images/honey-jar.png') ?>" alt="Bocal de miel"/>
+          <img src="<?= base_url('assets/images/arovia-bocal.png') ?>" alt="Bocal de miel"/>
         </div>
       </div>
     </div>

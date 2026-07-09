@@ -16,6 +16,7 @@
   <div class="page-header">
     <h1 class="page-title">Bilan Financier (Stock)</h1>
     <div class="d-flex gap-2 flex-wrap">
+      <a href="/finances/tresorerie" class="btn-gold"><i class="fa fa-print"></i> Tresorerie</a>
       <a href="/finances/rapport" class="btn-gold"><i class="fa fa-print"></i> Rapport</a>
     </div>
   </div>

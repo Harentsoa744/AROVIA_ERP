@@ -62,15 +62,37 @@
       <div class="modal-header"><h5 class="modal-title">Planifier une livraison</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
       <form method="post" action="/livraisons/store">
         <div class="modal-body">
-          <div class="mb-3"><label class="arovia-label" for="vente_id">Vente / commande</label><input id="vente_id" name="vente_id" type="text" class="arovia-input"/></div>
-          <div class="mb-3"><label class="arovia-label" for="adresse_livraison">Client / Destination *</label><input id="adresse_livraison" name="adresse_livraison" type="text" class="arovia-input" required/></div>
+          <div class="mb-3">
+            <label class="arovia-label" for="vente_id">Vente / commande *</label>
+            <select id="vente_id" name="vente_id" class="arovia-input" required>
+              <option value="">— Sélectionner —</option>
+              <?php foreach (($ventes ?? []) as $vente): ?>
+                <option value="<?= (int) $vente['id'] ?>">
+                  Vente #<?= (int) $vente['id'] ?><?= !empty($vente['client_nom']) ? ' - ' . esc($vente['client_nom']) : '' ?>
+                  <?= isset($vente['montant_total']) ? ' - ' . number_format((float) $vente['montant_total'], 0, ',', ' ') . ' Ar' : '' ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="arovia-label" for="client_id">Client / Destinataire *</label>
+            <select id="client_id" name="client_id" class="arovia-input" required>
+              <option value="">— Sélectionner —</option>
+              <?php foreach (($clients ?? []) as $client): ?>
+                <option value="<?= (int) $client['id'] ?>" data-address="<?= esc($client['adresse'] ?? '', 'attr') ?>">
+                  <?= esc($client['nom']) ?><?= !empty($client['telephone']) ? ' - ' . esc($client['telephone']) : '' ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+          <div class="mb-3"><label class="arovia-label" for="adresse_livraison">Adresse de destination *</label><input id="adresse_livraison" name="adresse_livraison" type="text" class="arovia-input" required/></div>
           <div class="mb-3"><label class="arovia-label" for="livreur_id">Livreur assigné *</label><select id="livreur_id" name="livreur_id" class="arovia-input" required>
             <?php foreach ($livreurs_dispo ?? [] as $livreur): ?>
               <option value="<?= (int) ($livreur['id'] ?? 0) ?>"><?= esc($livreur['nom'] ?? 'Livreur') ?></option>
             <?php endforeach; ?>
           </select></div>
           <div class="row">
-            <div class="col-6 mb-3"><label class="arovia-label" for="date_prevue">Date</label><input id="date_prevue" name="date_prevue" type="date" class="arovia-input"/></div>
+            <div class="col-6 mb-3"><label class="arovia-label" for="date_prevue">Date</label><input id="date_prevue" name="date_prevue" type="datetime-local" class="arovia-input"/></div>
           </div>
         </div>
         <div class="modal-footer"><button type="button" class="btn-outline-gold" data-bs-dismiss="modal">Annuler</button><button type="submit" class="btn-gold">Planifier</button></div>
@@ -90,6 +112,16 @@ document.getElementById('tableSearch').addEventListener('keyup', function() {
     row.style.display = text.includes(query) ? '' : 'none';
   });
 });
+
+const clientSelect = document.getElementById('client_id');
+const addressField = document.getElementById('adresse_livraison');
+
+if (clientSelect && addressField) {
+  clientSelect.addEventListener('change', function () {
+    const option = this.options[this.selectedIndex];
+    addressField.value = option ? (option.dataset.address || '') : '';
+  });
+}
 </script>
 </body>
 </html>

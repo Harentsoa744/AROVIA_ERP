@@ -108,3 +108,17 @@ $routes->group('statistiques', function($routes) {
     $routes->get('decaissements', 'StatistiquesVente::decaissements');
     $routes->get('api/graphique', 'StatistiquesVente::apiGraphique');
 });
+
+// -------------------------------------------------------
+// Planning
+// -------------------------------------------------------
+$routes->get('emploi-temps', 'PlanningController::index');
+$routes->get('planning/calendrier', 'PlanningController::index');
+$routes->get('planning/events', 'PlanningController::events');
+$routes->get('planning/liste', 'PlanningController::liste');
+$routes->get('planning/ajouter', 'PlanningController::ajouter');
+$routes->post('planning/save', 'PlanningController::save');
+$routes->get('planning/details/(:num)', 'PlanningController::details/$1');
+$routes->get('planning/modifier/(:num)', 'PlanningController::modifier/$1');
+$routes->post('planning/update/(:num)', 'PlanningController::update/$1');
+$routes->get('planning/delete/(:num)', 'PlanningController::delete/$1');
