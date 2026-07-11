@@ -44,7 +44,14 @@
         <?php $initiales = strtoupper(substr($employe['prenom'] ?? '', 0, 1) . substr($employe['nom'] ?? '', 0, 1)); ?>
         <div class="col-12 col-md-6 col-lg-4">
           <div class="content-card d-flex flex-column align-items-center text-center">
-            <div class="table-avatar mb-3" style="width:72px;height:72px;font-size:1.8rem"><?= esc($initiales ?: '?') ?></div>
+            <?php if (!empty($employe['photo_profil'])): ?>
+              <img src="<?= base_url('uploads/employes/' . $employe['photo_profil']) ?>" 
+                   alt="<?= esc($employe['prenom']) ?>" 
+                   class="rounded-circle mb-3" 
+                   style="width:72px;height:72px;object-fit:cover;border:2px solid var(--primary-gold);">
+            <?php else: ?>
+              <div class="table-avatar mb-3" style="width:72px;height:72px;font-size:1.8rem"><?= esc($initiales ?: '?') ?></div>
+            <?php endif; ?>
             <h4 class="fw-700 text-dark-primary mb-1" style="font-size:1.1rem"><?= esc(($employe['prenom'] ?? '') . ' ' . ($employe['nom'] ?? '')) ?></h4>
             <div class="text-muted" style="font-size:.85rem"><?= esc($employe['poste'] ?? '—') ?></div>
             <div class="d-flex gap-2 mt-3 w-100">

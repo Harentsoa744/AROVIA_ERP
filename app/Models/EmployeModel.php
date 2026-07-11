@@ -20,7 +20,8 @@ class EmployeModel extends Model
         'salaire_base',
         'date_embauche',
         'date_fin_contrat',
-        'statut'
+        'statut',
+        'photo_profil'
     ];
 
     public function getActifs()

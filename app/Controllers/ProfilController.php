@@ -62,15 +62,37 @@ class ProfilController extends BaseController
                 // Utilisation du mécanisme par défaut PASSWORD_DEFAULT conforme PHP 8+
                 $data['mot_de_passe'] = password_hash($password, PASSWORD_DEFAULT);
             }
+            
+            // Handle photo upload
+            $file = $this->request->getFile('photo_profil');
+            if ($file && $file->isValid() && !$file->hasMoved()) {
+                $newName = $file->getRandomName();
+                $file->move(WRITEPATH . 'uploads/utilisateurs', $newName);
+                
+                // Also copy to public directory for web access
+                $publicPath = FCPATH . 'uploads/utilisateurs/';
+                if (!is_dir($publicPath)) {
+                    mkdir($publicPath, 0755, true);
+                }
+                copy(WRITEPATH . 'uploads/utilisateurs/' . $newName, $publicPath . $newName);
+                
+                $data['photo_profil'] = $newName;
+            }
 
             $this->utilisateurModel->update($userId, $data);
 
             // Mise à jour immédiate de la session pour l'affichage dynamique du header
-            $this->session->set([
+            $sessionData = [
                 'user_nom'    => $nom,
                 'user_prenom' => $prenom,
                 'user_email'  => $email,
-            ]);
+            ];
+            
+            if (isset($data['photo_profil'])) {
+                $sessionData['user_photo'] = $data['photo_profil'];
+            }
+            
+            $this->session->set($sessionData);
 
             $this->session->setFlashdata('success', 'Profil mis à jour avec succès.');
         } catch (\Throwable $e) {

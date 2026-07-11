@@ -34,12 +34,12 @@ $routes->get('profil','ProfilController::index');
 $routes->post('profil/update', 'ProfilController::update');
 
 
-$routes->get('livraisons', 'LivraisonController::index');
-$routes->get('livraisons/historique', 'LivraisonController::historique');
-$routes->get('livraisons/create', 'LivraisonController::create');
-$routes->post('livraisons/store', 'LivraisonController::store');
-$routes->get('livraisons/status/(:num)/(:any)', 'LivraisonController::updateStatut/$1/$2');
-$routes->get('livraisons/ajax', 'LivraisonController::ajaxList');
+$routes->get('livraisons', 'LivraisonController::index', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/historique', 'LivraisonController::historique', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/create', 'LivraisonController::create', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->post('livraisons/store', 'LivraisonController::store', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/status/(:num)/(:any)', 'LivraisonController::updateStatut/$1/$2', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/ajax', 'LivraisonController::ajaxList', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
 $routes->get('livreurs', 'LivreurController::index');
 $routes->post('livreurs/store', 'LivreurController::store');
 $routes->get('livreurs/edit/(:num)', 'LivreurController::edit/$1');
@@ -48,15 +48,16 @@ $routes->post('livreurs/update/(:num)', 'LivreurController::update/$1');
 
 
 $routes->get('/employes/ajax', 'EmployeController::ajaxList');
-$routes->get('employes/index', 'EmployeController::index');
-$routes->get('employes', 'EmployeController::index');
-$routes->get('employes/index', 'EmployeController::index');
-$routes->get('employes/create', 'EmployeController::create');
-$routes->post('employes/store', 'EmployeController::store');
-$routes->get('employes/show/(:num)', 'EmployeController::show/$1');
-$routes->get('employes/edit/(:num)', 'EmployeController::edit/$1');
-$routes->post('employes/update/(:num)', 'EmployeController::update/$1');
-$routes->get('employes/delete/(:num)', 'EmployeController::fire/$1');
+$routes->get('employes/index', 'EmployeController::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes', 'EmployeController::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes/index', 'EmployeController::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes/create', 'EmployeController::create', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->post('employes/store', 'EmployeController::store', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes/show/(:num)', 'EmployeController::show/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes/edit/(:num)', 'EmployeController::edit/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->post('employes/update/(:num)', 'EmployeController::update/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('employes/delete/(:num)', 'EmployeController::fire/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->post('employes/upload-photo/(:num)', 'EmployeController::uploadPhoto/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
 
 $routes->get('fournisseurs', 'Fournisseurs::index');
 $routes->get('fournisseurs/new', 'Fournisseurs::new');
@@ -79,11 +80,11 @@ $routes->post('entrees-matiere-premiere', 'EntreesMatierePremiere::create');
 $routes->get('transformations', 'Transformations::index');
 $routes->get('transformations/new', 'Transformations::new');
 $routes->post('transformations', 'Transformations::create');
-$routes->get('sorties', 'Sorties::index');
-$routes->get('sorties/new', 'Sorties::new');
-$routes->post('sorties', 'Sorties::create');
-$routes->get('sorties/facture/(:num)', 'Sorties::facture/$1');
-$routes->get('sorties/imprimer/(:num)', 'Sorties::imprimer/$1');
+$routes->get('sorties', 'Sorties::index', ['filter' => 'role:MAGASINIER,COMPTABLE,ADMIN,RESPONSABLE']);
+$routes->get('sorties/new', 'Sorties::new', ['filter' => 'role:MAGASINIER,COMPTABLE,ADMIN,RESPONSABLE']);
+$routes->post('sorties', 'Sorties::create', ['filter' => 'role:MAGASINIER,COMPTABLE,ADMIN,RESPONSABLE']);
+$routes->get('sorties/facture/(:num)', 'Sorties::facture/$1', ['filter' => 'role:MAGASINIER,COMPTABLE,ADMIN,RESPONSABLE']);
+$routes->get('sorties/imprimer/(:num)', 'Sorties::imprimer/$1', ['filter' => 'role:MAGASINIER,COMPTABLE,ADMIN,RESPONSABLE']);
 $routes->get('statistiques', 'Statistiques::index');
 $routes->get('statistiques/vente', 'StatistiquesVente::index');
 $routes->get('valeur-stock', 'ValeurStock::index');
@@ -116,11 +117,11 @@ $routes->post('/contrat/update/(:num)', 'ContratController::update/$1');
 // -------------------------------------------------------
 // Yohan
 // -------------------------------------------------------
-$routes->get('finances', 'Finances::index');
-$routes->post('finances/store', 'Finances::store');
-$routes->get('finances/delete/(:num)', 'Finances::delete/$1');
-$routes->get('finances/tresorerie', 'Finances::tresorerie');
-$routes->get('finances/rapport', 'Finances::rapport');
+$routes->get('finances', 'Finances::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->post('finances/store', 'Finances::store', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('finances/delete/(:num)', 'Finances::delete/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('finances/tresorerie', 'Finances::tresorerie', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('finances/rapport', 'Finances::rapport', ['filter' => 'role:ADMIN,RESPONSABLE']);
 
 $routes->get('statistiques/vente', 'StatistiquesVente::index');
 $routes->group('statistiques', function($routes) {
@@ -142,3 +143,7 @@ $routes->get('planning/details/(:num)', 'PlanningController::details/$1');
 $routes->get('planning/modifier/(:num)', 'PlanningController::modifier/$1');
 $routes->post('planning/update/(:num)', 'PlanningController::update/$1');
 $routes->get('planning/delete/(:num)', 'PlanningController::delete/$1');
+
+// Serve uploaded files from writable directory
+$routes->get('uploads/employes/(:segment)', 'UploadController::serveEmploye/$1');
+$routes->get('uploads/utilisateurs/(:segment)', 'UploadController::serveUtilisateur/$1');

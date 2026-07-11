@@ -1,280 +1,169 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails employé — <?= $employe['prenom'] ?> <?= $employe['nom'] ?></title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css"/>
-  <link rel="stylesheet" href="/assets/css/global.css"/>
-  <link rel="stylesheet" href="/assets/css/employes.css"/>
-    <link rel="stylesheet" href="/assets-real/css/show.css">
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Détails employé — <?= $employe['prenom'] ?> <?= $employe['nom'] ?></title>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/employes.css') ?>"/>
 </head>
 <body>
 <?php include 'utils/header.php'; ?>
 <?php include 'utils/side_bar.php'; ?>
-<div class="page-wrapper">
+<main class="main-wrapper">
+  <div class="breadcrumb-bar">
+    <a href="/employes">Employés</a>
+    <span>›</span> Détails
+  </div>
 
-    <!-- NAV RETOUR -->
-    <nav class="breadcrumb">
-        <a href="/employes" class="back-link">
-            <svg viewBox="0 0 20 20" fill="none">
-                <path d="M12 15l-5-5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Retour à la liste
-        </a>
-    </nav>
+  <div class="page-header">
+    <h1 class="page-title">Détails employé</h1>
+    <div class="d-flex gap-2">
+      <a href="/employes/edit/<?= $employe['id'] ?>" class="btn-gold"><i class="fa fa-pen"></i> Modifier</a>
+      <a href="/employes" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
+    </div>
+  </div>
 
-    <!-- HERO -->
-    <div class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-
-            <div class="avatar-wrap">
-                <?php if (!empty($employe['photo'])): ?>
-                    <img src="<?= $employe['photo'] ?>" alt="Photo de <?= $employe['prenom'] ?>" class="avatar-img">
-                <?php else: ?>
-                    <div class="avatar-initials">
-                        <?= strtoupper(substr($employe['prenom'],0,1) . substr($employe['nom'],0,1)) ?>
-                    </div>
-                <?php endif; ?>
+  <div class="row g-4">
+    <!-- Photo et informations principales -->
+    <div class="col-12 col-md-4">
+      <div class="content-card text-center">
+        <div class="mb-3">
+          <?php if (!empty($employe['photo_profil'])): ?>
+            <img src="<?= base_url('uploads/employes/' . $employe['photo_profil']) ?>" 
+                 alt="Photo de <?= $employe['prenom'] ?>" 
+                 class="rounded-circle" 
+                 style="width:120px;height:120px;object-fit:cover;border:3px solid var(--primary-gold);">
+          <?php else: ?>
+            <div class="table-avatar" style="width:120px;height:120px;font-size:2.5rem">
+              <?= strtoupper(substr($employe['prenom'] ?? '', 0, 1) . substr($employe['nom'] ?? '', 0, 1)) ?>
             </div>
-
-            <div class="hero-info">
-                <span class="hero-matricule"><?= $employe['matricule'] ?></span>
-                <h1><?= $employe['prenom'] ?> <?= $employe['nom'] ?></h1>
-                <p class="hero-poste"><?= $employe['poste'] ?></p>
-                <div class="hero-meta">
-                    <span class="hero-dept">
-                        <svg viewBox="0 0 16 16" fill="none">
-                            <path d="M2 13V6l6-4 6 4v7H2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
-                            <rect x="6" y="9" width="4" height="4" rx=".5" stroke="currentColor" stroke-width="1.3"/>
-                        </svg>
-                        <?= $employe['departement'] ?? 'Département' ?>
-                    </span>
-                    <span class="status-pill <?= strtolower($employe['statut']) ?>">
-                        <?= $employe['statut'] ?>
-                    </span>
-                </div>
-            </div>
-
-            <div class="hero-actions">
-                <a href="/employes/edit/<?= $employe['id'] ?>" class="btn-hero btn-edit">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <path d="M14.5 3.5l2 2L7 15H5v-2L14.5 3.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                    </svg>
-                    Modifier
-                </a>
-                <a href="/employes/delete/<?= $employe['id'] ?>"
-                   class="btn-hero btn-delete"
-                   onclick="return confirm('Supprimer cet employé définitivement ?')">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <path d="M5 7h10l-1 9H6L5 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-                        <path d="M3 7h14M8 7V5h4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Supprimer
-                </a>
-            </div>
-
+          <?php endif; ?>
         </div>
-    </div><!-- /hero -->
+        <h3 class="fw-700 text-dark-primary"><?= esc(($employe['prenom'] ?? '') . ' ' . ($employe['nom'] ?? '')) ?></h3>
+        <p class="text-muted mb-2"><?= esc($employe['poste'] ?? '—') ?></p>
+        <span class="badge-arovia badge-<?= strtolower($employe['statut']) === 'actif' ? 'green' : 'red' ?>">
+          <?= $employe['statut'] ?>
+        </span>
+      </div>
+    </div>
 
-    <!-- GRILLE PRINCIPALE -->
-    <div class="main-grid">
+    <!-- Informations détaillées -->
+    <div class="col-12 col-md-8">
+      <div class="content-card">
+        <h3 class="content-card-title"><i class="fa fa-user text-gold me-2"></i>Informations personnelles</h3>
+        <div class="row g-3">
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Matricule</label>
+            <div class="fw-600"><?= esc($employe['matricule'] ?? '—') ?></div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Email</label>
+            <div class="fw-600">
+              <?php if (!empty($employe['email'])): ?>
+                <a href="mailto:<?= esc($employe['email']) ?>"><?= esc($employe['email']) ?></a>
+              <?php else: ?>
+                —
+              <?php endif; ?>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Téléphone</label>
+            <div class="fw-600">
+              <?php if (!empty($employe['telephone'])): ?>
+                <a href="tel:<?= esc($employe['telephone']) ?>"><?= esc($employe['telephone']) ?></a>
+              <?php else: ?>
+                —
+              <?php endif; ?>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Adresse</label>
+            <div class="fw-600"><?= esc($employe['adresse'] ?? '—') ?></div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Date d'embauche</label>
+            <div class="fw-600"><i class="fa fa-calendar-plus text-muted me-2"></i><?= isset($employe['date_embauche']) ? date('d/m/Y', strtotime($employe['date_embauche'])) : '—' ?></div>
+          </div>
+          <div class="col-12 col-md-6">
+            <label class="arovia-label">Salaire de base</label>
+            <div class="fw-600 text-gold"><?= number_format($employe['salaire_base'] ?? 0, 0, ',', ' ') ?> Ar</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- COLONNE GAUCHE : informations -->
-        <div class="col-left">
+  <!-- Paiements -->
+  <?php if (!empty($paiements)): ?>
+  <div class="row g-4 mt-2">
+    <div class="col-12">
+      <div class="content-card">
+        <h3 class="content-card-title"><i class="fa fa-money-bill-wave text-gold me-2"></i>Historique des paiements</h3>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Période</th>
+                <th>Brut</th>
+                <th>Net payé</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($paiements as $p): ?>
+              <tr>
+                <td><?= str_pad($p['mois'], 2, '0', STR_PAD_LEFT) ?>/<?= $p['annee'] ?></td>
+                <td><?= number_format($p['salaire_brut'] ?? $employe['salaire_base'], 0, ',', ' ') ?> Ar</td>
+                <td class="gold"><?= number_format($p['montant_paye'], 0, ',', ' ') ?> Ar</td>
+                <td>
+                  <span class="badge-arovia badge-<?= strtolower($p['statut'] ?? 'paye') === 'paye' ? 'green' : 'orange' ?>">
+                    <?= $p['statut'] ?? 'Payé' ?>
+                  </span>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php endif; ?>
 
-            <!-- Informations personnelles -->
-            <section class="card">
-                <h2 class="card-title">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Informations personnelles
-                </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Nom complet</span>
-                        <span class="info-value"><?= $employe['prenom'] ?> <?= $employe['nom'] ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Date de naissance</span>
-                        <span class="info-value"><?= isset($employe['date_naissance']) ? date('d/m/Y', strtotime($employe['date_naissance'])) : '—' ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">CIN</span>
-                        <span class="info-value"><?= $employe['cin'] ?? '—' ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Genre</span>
-                        <span class="info-value"><?= $employe['genre'] ?? '—' ?></span>
-                    </div>
-                    <div class="info-item info-item--full">
-                        <span class="info-label">Adresse</span>
-                        <span class="info-value"><?= $employe['adresse'] ?? '—' ?></span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Informations professionnelles -->
-            <section class="card">
-                <h2 class="card-title">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <rect x="3" y="6" width="14" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M7 6V4.5A1.5 1.5 0 018.5 3h3A1.5 1.5 0 0113 4.5V6" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M3 10h14" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 2"/>
-                    </svg>
-                    Informations professionnelles
-                </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Matricule</span>
-                        <span class="info-value mono"><?= $employe['matricule'] ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Poste</span>
-                        <span class="info-value"><?= $employe['poste'] ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Département</span>
-                        <span class="info-value"><?= $employe['departement'] ?? '—' ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Date d'embauche</span>
-                        <span class="info-value"><?= isset($employe['date_embauche']) ? date('d/m/Y', strtotime($employe['date_embauche'])) : '—' ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Type de contrat</span>
-                        <span class="info-value"><?= $employe['type_contrat'] ?? '—' ?></span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Salaire de base</span>
-                        <span class="info-value salary"><?= number_format($employe['salaire_base'], 0, ',', ' ') ?> Ar</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Coordonnées -->
-            <section class="card">
-                <h2 class="card-title">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <path d="M14.5 13.5l-2.5 2.5a11 11 0 01-8-8l2.5-2.5L5 2H2a1 1 0 00-1 1 15 15 0 0016 16 1 1 0 001-1v-3l-3.5-1.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-                    </svg>
-                    Coordonnées
-                </h2>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">Téléphone</span>
-                        <span class="info-value">
-                            <a href="tel:<?= $employe['telephone'] ?>"><?= $employe['telephone'] ?></a>
-                        </span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Email</span>
-                        <span class="info-value">
-                            <a href="mailto:<?= $employe['email'] ?>"><?= $employe['email'] ?></a>
-                        </span>
-                    </div>
-                </div>
-            </section>
-
-        </div><!-- /col-left -->
-
-        <!-- COLONNE DROITE : paiements + planning -->
-        <div class="col-right">
-
-            <!-- Paiements -->
-            <section class="card card--flush">
-                <h2 class="card-title card-title--padded">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <rect x="2" y="5" width="16" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M2 9h16" stroke="currentColor" stroke-width="1.5"/>
-                        <circle cx="6" cy="13" r="1" fill="currentColor"/>
-                    </svg>
-                    Historique des paiements
-                    <span class="count-badge"><?= count($paiements) ?></span>
-                </h2>
-
-                <?php if (empty($paiements)): ?>
-                    <p class="empty-msg">Aucun paiement enregistré.</p>
-                <?php else: ?>
-                <div class="table-wrap">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Période</th>
-                                <th>Brut</th>
-                                <th>Net payé</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($paiements as $p): ?>
-                            <tr>
-                                <td class="period">
-                                    <?= str_pad($p['mois'], 2, '0', STR_PAD_LEFT) ?>/<?= $p['annee'] ?>
-                                </td>
-                                <td><?= number_format($p['salaire_brut'] ?? $employe['salaire_base'], 0, ',', ' ') ?> Ar</td>
-                                <td class="amount"><?= number_format($p['montant_paye'], 0, ',', ' ') ?> Ar</td>
-                                <td>
-                                    <span class="pay-status <?= strtolower($p['statut'] ?? 'paye') ?>">
-                                        <?= $p['statut'] ?? 'Payé' ?>
-                                    </span>
-                                </td>
-                            </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
+  <!-- Planning -->
+  <?php if (!empty($planning)): ?>
+  <div class="row g-4 mt-2">
+    <div class="col-12">
+      <div class="content-card">
+        <h3 class="content-card-title"><i class="fa fa-calendar text-gold me-2"></i>Planning</h3>
+        <?php foreach ($planning as $pl): ?>
+        <div class="d-flex align-items-start mb-3 pb-3 border-bottom">
+          <div class="me-3">
+            <i class="fa fa-calendar-check text-gold fa-lg"></i>
+          </div>
+          <div>
+            <div class="fw-700"><?= esc($pl['type_evenement']) ?></div>
+            <div class="text-muted small">
+              <?php if (!empty($pl['date_debut'])): ?>
+                <?= date('d/m/Y', strtotime($pl['date_debut'])) ?>
+                <?php if (!empty($pl['date_fin'])): ?>
+                  → <?= date('d/m/Y', strtotime($pl['date_fin'])) ?>
                 <?php endif; ?>
-            </section>
+              <?php endif; ?>
+            </div>
+            <div class="text-muted"><?= esc($pl['description']) ?></div>
+          </div>
+        </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </div>
+  <?php endif; ?>
 
-            <!-- Planning -->
-            <section class="card">
-                <h2 class="card-title">
-                    <svg viewBox="0 0 20 20" fill="none">
-                        <rect x="3" y="4" width="14" height="13" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
-                        <path d="M7 2v4M13 2v4M3 9h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                    </svg>
-                    Planning
-                    <span class="count-badge"><?= count($planning) ?></span>
-                </h2>
-
-                <?php if (empty($planning)): ?>
-                    <p class="empty-msg">Aucun événement dans le planning.</p>
-                <?php else: ?>
-                <div class="timeline">
-                    <?php foreach ($planning as $pl): ?>
-                    <div class="timeline-item">
-                        <span class="event-dot event-<?= strtolower(str_replace(' ', '-', $pl['type_evenement'])) ?>"></span>
-                        <div class="event-body">
-                            <div class="event-header">
-                                <span class="event-type"><?= $pl['type_evenement'] ?></span>
-                                <?php if (!empty($pl['date_debut'])): ?>
-                                <span class="event-date">
-                                    <?= date('d/m/Y', strtotime($pl['date_debut'])) ?>
-                                    <?php if (!empty($pl['date_fin'])): ?>
-                                        → <?= date('d/m/Y', strtotime($pl['date_fin'])) ?>
-                                    <?php endif; ?>
-                                </span>
-                                <?php endif; ?>
-                            </div>
-                            <p class="event-desc"><?= $pl['description'] ?></p>
-                        </div>
-                    </div>
-                    <?php endforeach; ?>
-                </div>
-                <?php endif; ?>
-            </section>
-
-        </div><!-- /col-right -->
-
-    </div><!-- /main-grid -->
-
-</div><!-- /page-wrapper -->
-
+</main>
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
+<script>function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}</script>
 </body>
 </html>

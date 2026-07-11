@@ -19,6 +19,7 @@ class UtilisateurModel extends Model
         'mot_de_passe',
         'role_id',
         'actif',
+        'photo_profil'
     ];
 
     protected $useTimestamps = false;

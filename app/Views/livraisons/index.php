@@ -16,12 +16,32 @@
     <h1 class="page-title">Suivi des Distributions</h1>
     <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalLivraison"><i class="fa fa-plus"></i> Nouvelle Livraison</button>
   </div>
-  
   <div class="row g-3 mb-4">
+    <div class="col-6 col-md-8">
+      <div class="kpi-card col-md-9 d-flex flex-row g-5 align-items-center" style="height: 100%; gap:70px">
+        <div class="image col-md-3">
+        <img src="/assets/images/camion-livraison.png" style="width: 100%">
+      </div>
+
+        <div class="d-flex flex-column">
+
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap blue flex-column justify-content-center "><i class="fa fa-spinner"></i></div><span class="kpi-label d-flex justify-content-center"> En cours </span><span class="kpi-value d-flex justify-content-center blue"><?= count($livraisons_en_cours ?? []) ?></span></div>
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap green flex-column justify-content-center "><i class="fa fa-check-double"></i></div><span class="kpi-label d-flex justify-content-center"> Livrées (Mois) </span><span class="kpi-value d-flex justify-content-center green"><?= count($livraisons_faites ?? []) ?></span></div>
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap orange flex-column justify-content-center "><i class="fa fa-triangle-exclamation"></i></div><span class="kpi-label d-flex justify-content-center"> Incidents </span><span class="kpi-value d-flex justify-content-center orange"><?= (int) ($stats['annulees'] ?? 0) ?></span></div>
+
+        </div>
+        </div>
+
+        </div>
+        </div>
+
+        
+  </div>
+  <!-- <div class="row g-3 mb-4">
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-spinner"></i></div><div class="kpi-label">En cours</div><div class="kpi-value blue"><?= count($livraisons_en_cours ?? []) ?></div></div></div>
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap green"><i class="fa fa-check-double"></i></div><div class="kpi-label">Livrées (Mois)</div><div class="kpi-value green"><?= count($livraisons_faites ?? []) ?></div></div></div>
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-triangle-exclamation"></i></div><div class="kpi-label">Incidents</div><div class="kpi-value orange"><?= (int) ($stats['annulees'] ?? 0) ?></div></div></div>
-  </div>
+  </div> -->
 
   <div class="content-card">
     <div class="mb-3 d-flex justify-content-end gap-2 flex-wrap align-items-center">

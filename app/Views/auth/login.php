@@ -9,10 +9,9 @@
     <style>
         /* Ajustements mineurs pour centrer parfaitement la carte */
         body {
-            background: linear-gradient(rgba(255, 255, 255, 0.59), rgba(255, 255, 255, 0.4)), url('/assets/images/backgound.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.59), rgba(0, 0, 0, 0.4)), url('/assets/images/bg-arovia.png');
             background-size: cover;
             background-position: center;
-            backdrop-filter: opacity(0.6);
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -32,17 +31,16 @@
             box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
         }
         .deco{
-            background-image: url('/assets/images/miel.jpg');
+            background-image: url('/assets/images/miel-fond.png');
             background-size: cover;
             background-position: center;
-            backdrop-filter: blur(2px);
             color: white;
         }
     </style>
 </head>
 <body>
     <section class="container p-2 col-10 col-md-10 col-lg-9 mx-auto text-black">
-        <div class="row card-container rounded-5 col-12 col-md-10 border border-5 border-white p-1 mx-auto shadow" style="aspect-ratio: 16 / 9; background-color: #f2f2f2;">
+        <div class="row card-container rounded-5 col-12 col-md-10 border border-5 border-white p-1 mx-auto shadow" style="aspect-ratio: 16 / 9; background-color: #f2f2f2; filter:brightness(0.9)">
             
             <div class="log-section col-6 px-4 py-4 d-flex flex-column justify-content-between" style="height: 100%;">
                 
@@ -86,11 +84,11 @@
                 </form>
             </div>
 
-            <div class="deco col-6 h-100 rounded-5 p-4 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
-                <section class="content mb-2">
-                    <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px;">AROVIA</h1>
-                    <span class="d-block mt-1" style="font-size: 0.75rem; color: rgba(0, 0, 0, 0.6); font-weight: 500;">Bienvenue sur Arovia ERP</span>
-                    <span class="d-block" style="font-size: 0.7rem; color: rgba(0, 0, 0, 0.5);">Application dédiée à l'entreprise AROVIA</span>
+            <div class="deco col-6 h-100 rounded-5 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
+                <section class="content col-12 px-3 pb-3 mb-3 d-flex flex-column ">
+                    <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px; color: white;">AROVIA</h1>
+                    <span class="d-block mt-1" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); font-weight: 500;">Bienvenue sur Arovia ERP</span>
+                    <span class="d-block" style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.5);">Application dédiée à l'entreprise AROVIA</span>
                 </section>
             </div>
 

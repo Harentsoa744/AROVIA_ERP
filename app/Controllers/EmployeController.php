@@ -57,7 +57,7 @@ class EmployeController extends BaseController
     // STORE
     public function store()
     {
-        $this->employeModel->save([
+        $data = [
             'matricule' => $this->request->getPost('matricule'),
             'nom' => $this->request->getPost('nom'),
             'prenom' => $this->request->getPost('prenom'),
@@ -68,7 +68,25 @@ class EmployeController extends BaseController
             'salaire_base' => $this->request->getPost('salaire_base'),
             'date_embauche' => $this->request->getPost('date_embauche'),
             'statut' => 'ACTIF'
-        ]);
+        ];
+        
+        // Handle photo upload
+        $file = $this->request->getFile('photo_profil');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads/employes', $newName);
+            
+            // Also copy to public directory for web access
+            $publicPath = FCPATH . 'uploads/employes/';
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0755, true);
+            }
+            copy(WRITEPATH . 'uploads/employes/' . $newName, $publicPath . $newName);
+            
+            $data['photo_profil'] = $newName;
+        }
+        
+        $this->employeModel->save($data);
 
         return redirect()->to('/employes');
     }
@@ -86,7 +104,7 @@ class EmployeController extends BaseController
     // UPDATE
     public function update($id)
     {
-        $this->employeModel->update($id, [
+        $data = [
             'nom' => $this->request->getPost('nom'),
             'prenom' => $this->request->getPost('prenom'),
             'telephone' => $this->request->getPost('telephone'),
@@ -94,7 +112,25 @@ class EmployeController extends BaseController
             'poste' => $this->request->getPost('poste'),
             'salaire_base' => $this->request->getPost('salaire_base'),
             'statut' => $this->request->getPost('statut')
-        ]);
+        ];
+        
+        // Handle photo upload
+        $file = $this->request->getFile('photo_profil');
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            $newName = $file->getRandomName();
+            $file->move(WRITEPATH . 'uploads/employes', $newName);
+            
+            // Also copy to public directory for web access
+            $publicPath = FCPATH . 'uploads/employes/';
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0755, true);
+            }
+            copy(WRITEPATH . 'uploads/employes/' . $newName, $publicPath . $newName);
+            
+            $data['photo_profil'] = $newName;
+        }
+        
+        $this->employeModel->update($id, $data);
 
         return redirect()->to('/employes');
     }
@@ -104,6 +140,35 @@ class EmployeController extends BaseController
     {
         $this->employeModel->delete($id);
         return redirect()->to('/employes');
+    }
+
+
+    // UPLOAD PHOTO DE PROFIL
+    public function uploadPhoto($id)
+    {
+        $file = $this->request->getFile('photo_profil');
+        
+        if ($file && $file->isValid() && !$file->hasMoved()) {
+            // Generate unique filename
+            $newName = $file->getRandomName();
+            
+            // Move file to uploads directory
+            $file->move(WRITEPATH . 'uploads/employes', $newName);
+            
+            // Also copy to public directory for web access
+            $publicPath = FCPATH . 'uploads/employes/';
+            if (!is_dir($publicPath)) {
+                mkdir($publicPath, 0755, true);
+            }
+            copy(WRITEPATH . 'uploads/employes/' . $newName, $publicPath . $newName);
+            
+            // Update database
+            $this->employeModel->update($id, ['photo_profil' => $newName]);
+            
+            return redirect()->to('/employes/edit/' . $id)->with('success', 'Photo de profil mise à jour avec succès.');
+        }
+        
+        return redirect()->to('/employes/edit/' . $id)->with('error', 'Erreur lors du téléchargement de la photo.');
     }
 
     public function ajaxList()

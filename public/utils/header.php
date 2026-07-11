@@ -30,7 +30,13 @@
     
     <a href="/profil" class="topbar-user">
       <div class="avatar">
-        <?= strtoupper(substr(session()->get('user_prenom') ?? 'A', 0, 1)) ?>
+        <?php if (!empty(session()->get('user_photo'))): ?>
+          <img src="<?= base_url('uploads/utilisateurs/' . session()->get('user_photo')) ?>" 
+               alt="Photo de profil" 
+               style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+        <?php else: ?>
+          <?= strtoupper(substr(session()->get('user_prenom') ?? 'A', 0, 1)) ?>
+        <?php endif; ?>
       </div>
       <div class="user-info d-none d-lg-block">
         <div class="user-name">

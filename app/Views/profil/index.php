@@ -35,9 +35,16 @@
         <?php
           $initiales = strtoupper(substr((string) ($user['prenom'] ?? ''), 0, 1) . substr((string) ($user['nom'] ?? ''), 0, 1));
         ?>
-        <div class="table-avatar mb-3" style="width:90px; height:90px; font-size:2.2rem; margin-right:0; display:flex; align-items:center; justify-content:center;">
-          <?= esc($initiales ?: '?') ?>
-        </div>
+        <?php if (!empty($user['photo_profil'])): ?>
+          <img src="<?= base_url('uploads/utilisateurs/' . $user['photo_profil']) ?>" 
+               alt="Photo de profil" 
+               class="rounded-circle mb-3" 
+               style="width:90px; height:90px; object-fit:cover; border:3px solid var(--primary-gold);">
+        <?php else: ?>
+          <div class="table-avatar mb-3" style="width:90px; height:90px; font-size:2.2rem; margin-right:0; display:flex; align-items:center; justify-content:center;">
+            <?= esc($initiales ?: '?') ?>
+          </div>
+        <?php endif; ?>
         <h4 class="fw-700 text-dark-primary mb-1" style="font-size:1.25rem;">
           <?= esc(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? '')) ?>
         </h4>
@@ -60,7 +67,7 @@
       <div class="content-card">
         <h3 class="content-card-title" style="font-size:1.1rem;"><i class="fa fa-user-gear me-2 text-gold"></i>Modifier mes informations</h3>
 
-        <form method="POST" action="<?= base_url('profil/update') ?>">
+        <form method="POST" action="<?= base_url('profil/update') ?>" enctype="multipart/form-data">
           <?= csrf_field() ?>
           <div class="row g-3">
             <div class="col-12 col-md-6">
@@ -74,6 +81,12 @@
             <div class="col-12">
               <label class="arovia-label" for="email">Adresse Email</label>
               <input id="email" name="email" type="email" class="arovia-input" value="<?= esc($user['email'] ?? '') ?>" required/>
+            </div>
+
+            <div class="col-12">
+              <label class="arovia-label" for="photo_profil">Photo de profil</label>
+              <input id="photo_profil" name="photo_profil" type="file" class="arovia-input" accept="image/*"/>
+              <small class="text-muted">Formats acceptés : JPG, PNG, GIF (max 2MB)</small>
             </div>
 
             <div class="col-12 mt-4">
