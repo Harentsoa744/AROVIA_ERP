@@ -1,0 +1,139 @@
+ERROR - 2026-07-11 23:09:49 --> Error connecting to the database: ErrorException: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres � in C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php:78
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_connect(): U...', 'C:\\Users\\Harena...', 78)
+#1 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php(78): pg_connect('host=127.0.0.1 ...')
+#2 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(555): CodeIgniter\Database\Postgre\Connection->connect(false)
+#3 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#4 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#5 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Model.php(523): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#6 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Models\NotificationModel.php(54): CodeIgniter\Model->countAllResults()
+#7 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Controllers\Notification.php(66): App\Models\NotificationModel->countNonLues('1')
+#8 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(951): App\Controllers\Notification->count()
+#9 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Notification))
+#10 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-07-11 23:09:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres �
+[Method: GET, Route: notification/count]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS "numrows"
+FROM "notifications"
+WHERE "utilisateur_id" = :utilisateur_id:
+AND "lu" = :lu:', [...], false)
+ 3 SYSTEMPATH\Model.php(523): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 4 APPPATH\Models\NotificationModel.php(54): CodeIgniter\Model->countAllResults()
+ 5 APPPATH\Controllers\Notification.php(66): App\Models\NotificationModel->countNonLues('1')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Notification->count()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Notification))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-07-11 23:09:55 --> Error connecting to the database: ErrorException: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres � in C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php:78
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_connect(): U...', 'C:\\Users\\Harena...', 78)
+#1 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php(78): pg_connect('host=127.0.0.1 ...')
+#2 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(555): CodeIgniter\Database\Postgre\Connection->connect(false)
+#3 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#4 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Model.php(192): CodeIgniter\Database\BaseBuilder->get()
+#6 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\BaseModel.php(615): CodeIgniter\Model->doFind(true, '1')
+#7 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Controllers\EmployeController.php(36): CodeIgniter\BaseModel->find('1')
+#8 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(951): App\Controllers\EmployeController->show('1')
+#9 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+#10 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-07-11 23:09:55 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres �
+[Method: GET, Route: employes/show/1]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "employes"
+WHERE "employes"."id" = :employes.id:', [...], false)
+ 3 SYSTEMPATH\Model.php(192): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(615): CodeIgniter\Model->doFind(true, '1')
+ 5 APPPATH\Controllers\EmployeController.php(36): CodeIgniter\BaseModel->find('1')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EmployeController->show('1')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-07-11 23:09:56 --> Error connecting to the database: ErrorException: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres � in C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php:78
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_connect(): U...', 'C:\\Users\\Harena...', 78)
+#1 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php(78): pg_connect('host=127.0.0.1 ...')
+#2 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(555): CodeIgniter\Database\Postgre\Connection->connect(false)
+#3 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#4 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Model.php(192): CodeIgniter\Database\BaseBuilder->get()
+#6 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\BaseModel.php(615): CodeIgniter\Model->doFind(true, '1')
+#7 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Controllers\EmployeController.php(36): CodeIgniter\BaseModel->find('1')
+#8 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(951): App\Controllers\EmployeController->show('1')
+#9 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+#10 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#12 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2026-07-11 23:09:56 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres �
+[Method: GET, Route: employes/show/1]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "employes"
+WHERE "employes"."id" = :employes.id:', [...], false)
+ 3 SYSTEMPATH\Model.php(192): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(615): CodeIgniter\Model->doFind(true, '1')
+ 5 APPPATH\Controllers\EmployeController.php(36): CodeIgniter\BaseModel->find('1')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EmployeController->show('1')
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2026-07-11 23:10:02 --> Error connecting to the database: ErrorException: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres � in C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php:78
+Stack trace:
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'pg_connect(): U...', 'C:\\Users\\Harena...', 78)
+#1 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\Postgre\Connection.php(78): pg_connect('host=127.0.0.1 ...')
+#2 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(555): CodeIgniter\Database\Postgre\Connection->connect(false)
+#3 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#4 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM "...', Array, false)
+#5 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+#6 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+#7 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Models\EmployeModel.php(29): CodeIgniter\BaseModel->findAll()
+#8 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\app\Controllers\EmployeController.php(26): App\Models\EmployeModel->getActifs()
+#9 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(951): App\Controllers\EmployeController->index()
+#10 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+#11 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#13 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\Users\Harena\Documents\MmeBaovola\AROVIA_upgrade\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+CRITICAL - 2026-07-11 23:10:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [Postgre]: pg_connect(): Unable to connect to PostgreSQL server: connection to server at &quot;127.0.0.1&quot;, port 5432 failed: FATAL:  authentification par mot de passe �chou�e pour l'utilisateur  � postgres �
+[Method: GET, Route: employes/]
+in SYSTEMPATH\Database\BaseConnection.php on line 606.
+ 1 SYSTEMPATH\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM "employes"
+WHERE "statut" = :statut:', [...], false)
+ 3 SYSTEMPATH\Model.php(253): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(676): CodeIgniter\Model->doFindAll(0, 0)
+ 5 APPPATH\Models\EmployeModel.php(29): CodeIgniter\BaseModel->findAll()
+ 6 APPPATH\Controllers\EmployeController.php(26): App\Models\EmployeModel->getActifs()
+ 7 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\EmployeController->index()
+ 8 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\EmployeController))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

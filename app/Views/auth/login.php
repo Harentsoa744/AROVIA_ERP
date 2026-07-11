@@ -27,11 +27,11 @@
         }
         .place-entree:focus {
             outline: none;
-            border-color: #000 !important;
+            border-color: #ffffff !important;
             box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
         }
         .deco{
-            background-image: url('/assets/images/miel-fond.png');
+            background-image: url('/assets/images/Arovia-login.png');
             background-size: cover;
             background-position: center;
             color: white;
@@ -46,7 +46,6 @@
                 
                 <section class="login-header" style="line-height: 22px; height: 20%;">
                     <h1 class="fw-medium mb-1" style="font-size: 1.75rem;">Login</h1>
-                    <h5 class="fw-light text-muted mb-2" style="font-size: 0.95rem;">Hello Dear !</h5>
                 </section>
             
                 <form action="/login" method="post" class="Form-place d-flex flex-column justify-content-center flex-grow-1 gap-3">
@@ -84,11 +83,11 @@
                 </form>
             </div>
 
-            <div class="deco col-6 h-100 rounded-5 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
-                <section class="content col-12 px-3 pb-3 mb-3 d-flex flex-column ">
-                    <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px; color: white;">AROVIA</h1>
-                    <span class="d-block mt-1" style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); font-weight: 500;">Bienvenue sur Arovia ERP</span>
-                    <span class="d-block" style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.5);">Application dédiée à l'entreprise AROVIA</span>
+            <div class="deco col-6 h-100 rounded-5 p-4 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
+                <section class="content mb-2">
+                    <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px;">AROVIA</h1>
+                    <span class="d-block mt-1" style="font-size: 0.75rem; color: rgb(255, 255, 255); font-weight: 500;">Bienvenue sur Arovia ERP</span>
+                    <span class="d-block" style="font-size: 0.7rem; color: rgb(245, 245, 245);">Application dédiée à l'entreprise AROVIA</span>
                 </section>
             </div>
 
