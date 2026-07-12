@@ -45,12 +45,47 @@
             <div class="log-section col-6 px-4 py-4 d-flex flex-column justify-content-between" style="height: 100%;">
                 
                 <section class="login-header" style="line-height: 22px; height: 20%;">
-      <img src="<?= base_url('assets/images/Pattern simple - 1.png') ?>" alt="Pattern" class="header-pattern-img" />
-      <h1 class="fw-medium mb-1" style="font-size: 1.75rem;">Login</h1>
-                    <div class="page-title-wrap">
-      <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px;">AROVIA</h1>
-      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
-    </div>
+                    <h1 class="fw-medium mb-1" style="font-size: 1.75rem;">Login</h1>
+                </section>
+            
+                <form action="/login" method="post" class="Form-place d-flex flex-column justify-content-center flex-grow-1 gap-3">
+                    
+                    <?php if (!empty($error)): ?>
+                        <div class="alert alert-danger py-2 px-3 text-center mb-0" style="font-size: 0.8rem; border-radius: 8px;">
+                            <?= $error ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <div class="email-place col-12">
+                        <label for="email" class="fw-medium mb-1" style="font-size: 0.85rem;">Email</label>
+                        <input type="email" name="email" class="col-12 place-entree px-2 rounded-2" id="email" value="<?= esc($email ?? '') ?>" placeholder="votre email" style="border: 1px solid rgba(0,0,0,0.25); font-size: 0.9rem;" required autofocus>
+                    </div>
+
+                    <div class="password-place col-12">
+                        <label for="password" class="fw-medium mb-1" style="font-size: 0.85rem;">Mot de passe</label>
+                        <input type="password" name="password" class="col-12 place-entree px-2 rounded-2" id="password" placeholder="votre mot de passe" style="border: 1px solid rgba(0,0,0,0.25); font-size: 0.9rem;" required>
+                    </div>
+
+                    <button type="submit" class="text-center bg-black text-white shadow-sm py-2 rounded-2 border-0 fw-medium" style="font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s;">
+                        Se connecter
+                    </button>
+                    
+                    <div class="least-row d-flex justify-content-between align-items-center">
+                        <div class="check-memo d-flex align-items-center gap-1">
+                            <input type="checkbox" name="memorize" id="memorize" style="cursor: pointer;">
+                            <label for="memorize" class="tiny-text text-muted mb-0" style="cursor: pointer;">Memorize Password</label>
+                        </div>
+
+                        <div class="forget">
+                            <a href="/auth/forgot" class="tiny-text text-dark" style="text-decoration: none;">Forgot Password?</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="deco col-6 h-100 rounded-5 p-4 shadow-sm d-flex flex-column justify-content-end text-black text-end" style="background-color: #fff7ae;">
+                <section class="content mb-2">
+                    <h1 class="fw-bold m-0" style="font-size: 2.5rem; letter-spacing: 1px;">AROVIA</h1>
                     <span class="d-block mt-1" style="font-size: 0.75rem; color: rgb(255, 255, 255); font-weight: 500;">Bienvenue sur Arovia ERP</span>
                     <span class="d-block" style="font-size: 0.7rem; color: rgb(245, 245, 245);">Application dédiée à l'entreprise AROVIA</span>
                 </section>
