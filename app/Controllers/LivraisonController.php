@@ -145,7 +145,7 @@ class LivraisonController extends BaseController
             ->select('sorties.*, supermarches.nom as supermarche_nom, supermarches.localisation as supermarche_adresse')
             ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
             ->where('sorties.id', $sortieId)
-            ->first();
+            ->get()->getRowArray();
 
         if (!$sortie) {
             return redirect()->to('/livraisons')->with('error', 'Sortie introuvable.');
@@ -182,7 +182,7 @@ class LivraisonController extends BaseController
             ->select('sorties.*, supermarches.localisation as supermarche_adresse')
             ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
             ->where('sorties.id', $sortieId)
-            ->first();
+            ->get()->getRowArray();
 
         if (!$sortie) {
             return redirect()->to('/livraisons')->with('error', 'Sortie introuvable.');

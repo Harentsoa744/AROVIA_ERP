@@ -93,7 +93,7 @@ $routes->get('valeur-stock/export', 'ValeurStock::export');
 $routes->get('valeur-stock/export-pdf', 'ValeurStock::exportPdf');
 
 // Configuration
-$routes->get('configuration', 'Configuration::index');
+$routes->get('configuration', 'Configuration::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
 $routes->post('configuration', 'Configuration::update');
 
 //Arinala

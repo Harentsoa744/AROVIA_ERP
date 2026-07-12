@@ -24,7 +24,7 @@ class HistoriqueLivraisonModel extends Model
     /**
      * Enregistre un changement de statut de livraison dans l'historique
      */
-    public function enregistrerChangement(int $livraisonId, string $statutPrecedent, string $statutNouveau, ?int $utilisateurId = null, ?string $commentaire = null): bool
+    public function enregistrerChangement(int $livraisonId, ?string $statutPrecedent, string $statutNouveau, ?int $utilisateurId = null, ?string $commentaire = null): bool
     {
         return $this->insert([
             'livraison_id' => $livraisonId,

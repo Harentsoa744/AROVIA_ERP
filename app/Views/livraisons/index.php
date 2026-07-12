@@ -117,7 +117,7 @@
               <td><span class="badge-arovia badge-<?= strtolower(str_replace('_', '', $livraison['statut'] ?? 'en_cours')) === 'encours' ? 'blue' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'effectuee' ? 'green' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'enattente' ? 'orange' : 'red')) ?>"><i class="fa fa-truck me-1"></i><?= esc($livraison['statut'] ?? 'EN_COURS') ?></span></td>
               <td>
                 <div class="dropdown">
-                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" <?= in_array(strtoupper($livraison['statut'] ?? ''), ['EFFECTUEE', 'ANNULEE']) ? 'disabled' : '' ?>>
                     <i class="fa fa-ellipsis-v"></i>
                   </button>
                   <ul class="dropdown-menu">
@@ -178,7 +178,7 @@ function applyFilters() {
           <td><span class="badge-arovia badge-${statutClass}"><i class="fa fa-truck me-1"></i>${livraison.statut}</span></td>
           <td>
             <div class="dropdown">
-              <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" ${(livraison.statut === 'EFFECTUEE' || livraison.statut === 'ANNULEE') ? 'disabled' : ''}>
                 <i class="fa fa-ellipsis-v"></i>
               </button>
               <ul class="dropdown-menu">

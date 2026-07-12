@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
 </head>
 <body>
-<?php include '../partials/header.php'; ?>
-<?php include '../partials/side_bar.php'; ?>
+<?php include 'utils/header.php'; ?>
+<?php include 'utils/side_bar.php'; ?>
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/finances">Finance</a> <span>›</span> Rapports & Analyses</div>
   <div class="page-header">
