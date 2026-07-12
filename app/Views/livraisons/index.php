@@ -13,7 +13,10 @@
 <?php include 'utils/side_bar.php'; ?>
 <main class="main-wrapper">
   <div class="page-header">
-    <h1 class="page-title">Suivi des Distributions</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Suivi des Distributions</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
     <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalLivraison"><i class="fa fa-plus"></i> Nouvelle Livraison</button>
   </div>
   <div class="row g-3 mb-4">

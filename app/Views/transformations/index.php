@@ -14,7 +14,10 @@
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/valeur-stock">Gestion de stock</a> <span>›</span> Transformations</div>
   <div class="page-header">
-    <h1 class="page-title">Transformations (mise en bocal)</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Transformations (mise en bocal)</h1>
+      <img src="<?= base_url('assets/images/Pattern combi.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="/transformations/new" class="btn-gold"><i class="fa fa-plus"></i> Nouvelle transformation</a>
   </div>
   <div class="row g-3 mb-4">

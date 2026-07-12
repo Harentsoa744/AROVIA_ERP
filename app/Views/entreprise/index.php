@@ -14,7 +14,10 @@
 
 <main class="main-wrapper">
   <div class="page-header">
-    <h1 class="page-title">Entreprises partenaires</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Entreprises partenaires</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="<?= base_url('entreprise/ajout') ?>" class="btn-gold"><i class="fa fa-plus"></i> Ajouter une entreprise</a>
   </div>
 

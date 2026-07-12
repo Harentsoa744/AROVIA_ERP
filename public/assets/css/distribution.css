@@ -1,2 +1,18 @@
 /* distribution.css */
 .bg-green-light { background: rgba(93,122,46,0.12) !important; }
+
+
+/* Ajout image a cote du h1 */
+.page-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.page-title-wrap h1 {
+  margin-bottom: 0;
+}
+.header-pattern-img {
+  height: 2.2rem; /* Adjusted to visually match the total height of h1 usually */
+  width: auto;
+  object-fit: contain;
+}

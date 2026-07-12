@@ -13,7 +13,10 @@
 <?php include 'utils/side_bar.php'; ?>
 <main class="main-wrapper">
   <div class="page-header">
-    <h1 class="page-title">Tableau de bord Général</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Tableau de bord Général</h1>
+      <img src="<?= base_url('assets/images/Pattern simple - 1.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
     <div class="text-muted">Bonjour, Admin Arovia. Voici le résumé de vos activités.</div>
   </div>
 

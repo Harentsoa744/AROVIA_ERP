@@ -14,7 +14,10 @@
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/sorties">Sorties (ventes)</a> <span>›</span> Enregistrer une vente</div>
   <div class="page-header">
-    <h1 class="page-title">Enregistrer une vente</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Enregistrer une vente</h1>
+      <img src="<?= base_url('assets/images/Pattern combi.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="/sorties" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
   </div>
 

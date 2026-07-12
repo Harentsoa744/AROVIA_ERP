@@ -71,8 +71,11 @@
 </style>
 </head>
 <body>
-<div class="conteneur">
-    <h1>NOUVELLE FACTURE</h1>
+<div class="conteneur"><h1>NOUVELLE FACTURE</h1>
+    <div class="page-title-wrap">
+      <h1>NOUVELLE FACTURE</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
 
     <?php if (session()->getFlashdata('error')): ?>
         <div class="erreurs"><?= esc(session()->getFlashdata('error')) ?></div>

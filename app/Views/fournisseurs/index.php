@@ -22,7 +22,10 @@
   </div>
 
   <div class="page-header">
-    <h1 class="page-title">Liste des fournisseurs</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Liste des fournisseurs</h1>
+      <img src="<?= base_url('assets/images/Pattern combi.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
     <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalAjout">
       <i class="fa fa-plus"></i> Ajouter un fournisseur
     </button>

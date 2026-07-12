@@ -9,8 +9,11 @@
 <body>
 <div class="page-wrapper">
     <header class="page-header">
-        <div class="header-left">
-            <h1>Historique général</h1>
+        <div class="header-left"><h1>Historique général</h1>
+            <div class="page-title-wrap">
+              <h1>Historique général</h1>
+              <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+            </div>
             <span class="employee-count" id="count">— livraisons</span>
         </div>
         <a href="/livraisons" class="btn-cancel">🏠 Retour Distribution</a>

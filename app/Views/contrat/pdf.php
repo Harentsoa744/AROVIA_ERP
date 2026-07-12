@@ -36,9 +36,11 @@
         }
     </style>
 </head>
-<body>
-
-    <h1>Contrat #<?= esc($contrat['id']) ?> — <?= esc($contrat['sujet']) ?></h1>
+<body><h1>Contrat #<?= esc($contrat['id']) ?> — <?= esc($contrat['sujet']) ?></h1>
+    <div class="page-title-wrap">
+      <h1>Contrat #<?= esc($contrat['id']) ?> — <?= esc($contrat['sujet']) ?></h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
 
     <table>
         <tr><td class="etiquette">Entreprise</td><td><?= esc($contrat['entreprise_nom']) ?></td></tr>

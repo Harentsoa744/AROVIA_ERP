@@ -69,8 +69,11 @@
     </style>
 </head>
 <body>
-<div class="wrap">
-    <h1>400</h1>
+<div class="wrap"><h1>400</h1>
+    <div class="page-title-wrap">
+      <h1>400</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
 
     <p>
         <?php if (ENVIRONMENT !== 'production') : ?>

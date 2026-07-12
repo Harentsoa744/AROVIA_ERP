@@ -29,8 +29,11 @@ $errorId = uniqid('error', true);
             CodeIgniter: <?= esc(CodeIgniter::CI_VERSION) ?> --
             Environment: <?= ENVIRONMENT ?>
         </div>
-        <div class="container">
-            <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+        <div class="container"><h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+            <div class="page-title-wrap">
+              <h1><?= esc($title), esc($exception->getCode() ? ' #' . $exception->getCode() : '') ?></h1>
+              <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+            </div>
             <p>
                 <?= nl2br(esc($exception->getMessage())) ?>
                 <a href="https://www.duckduckgo.com/?q=<?= urlencode($title . ' ' . preg_replace('#\'.*\'|".*"#Us', '', $exception->getMessage())) ?>"

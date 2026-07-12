@@ -1,4 +1,8 @@
 <h1>Gestion de stock — Miel Arovia</h1>
+<div class="page-title-wrap">
+  <h1>Gestion de stock — Miel Arovia</h1>
+  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+</div>
 
 <div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
     <div style="border: 1px solid #ccc; padding: 16px; width: 220px;">

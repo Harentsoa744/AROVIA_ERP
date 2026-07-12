@@ -14,8 +14,11 @@
 <div class="page-wrapper">
 
     <header class="page-header">
-        <div class="header-left">
-            <h1>Équipe</h1>
+        <div class="header-left"><h1>Équipe</h1>
+            <div class="page-title-wrap">
+              <h1>Équipe</h1>
+              <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+            </div>
             <span class="employee-count" id="count">— employés</span>
         </div>
         <a href="/employes/create" class="btn-add">

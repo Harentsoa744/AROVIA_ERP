@@ -1,5 +1,8 @@
-<?= view('partials/header') ?>
-<h1>Statistiques</h1>
+<?= view('partials/header') ?><h1>Statistiques</h1>
+<div class="page-title-wrap">
+  <h1>Statistiques</h1>
+  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+</div>
 
 <div style="display: flex; gap: 40px; flex-wrap: wrap;">
 

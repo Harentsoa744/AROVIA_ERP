@@ -14,7 +14,10 @@
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/dashboard">Accueil</a> <span>›</span> Configuration</div>
   <div class="page-header">
-    <h1 class="page-title">Configuration des Seuils d'Alerte</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Configuration des Seuils d'Alerte</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="/home" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
   </div>
 

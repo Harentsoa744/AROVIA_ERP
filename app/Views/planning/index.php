@@ -13,7 +13,10 @@
 <?php include FCPATH . 'utils/side_bar.php'; ?>
 <main class="main-wrapper">
   <div class="page-header">
-    <h1 class="page-title">Liste des livraisons</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Liste des livraisons</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
     <div>
       <a href="<?= base_url('planning/calendrier') ?>" class="btn-outline-gold me-2"><i class="fa fa-calendar-days"></i> Voir calendrier</a>
       <a href="<?= base_url('planning/ajouter') ?>" class="btn-gold"><i class="fa fa-plus"></i> Nouvelle livraison</a>

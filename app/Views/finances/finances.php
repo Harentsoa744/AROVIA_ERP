@@ -1,6 +1,8 @@
-<?= view('partials/header') ?>
-
-<h1>Recettes & Dépenses</h1>
+<?= view('partials/header') ?><h1>Recettes & Dépenses</h1>
+<div class="page-title-wrap">
+  <h1>Recettes & Dépenses</h1>
+  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+</div>
 
 <a href="/finances/tresorerie">Trésorerie</a> |
 <a href="/finances/rapport">Rapports & Analyses</a>

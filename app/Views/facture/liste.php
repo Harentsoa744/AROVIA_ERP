@@ -77,8 +77,11 @@
         <div class="flash-error"><?= esc(session()->getFlashdata('error')) ?></div>
     <?php endif; ?>
 
-    <div class="entete-page">
-        <h1>FACTURES DE VENTE</h1>
+    <div class="entete-page"><h1>FACTURES DE VENTE</h1>
+        <div class="page-title-wrap">
+          <h1>FACTURES DE VENTE</h1>
+          <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+        </div>
         <a href="<?= base_url('factures/creer') ?>" class="btn-nouvelle">+ Nouvelle facture</a>
     </div>
 

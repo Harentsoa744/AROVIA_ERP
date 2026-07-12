@@ -14,7 +14,10 @@
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/entrees-matiere-premiere">Gestion de stock</a> <span>›</span> Nouvelle entrée</div>
   <div class="page-header">
-    <h1 class="page-title">Nouvelle entrée matière première</h1>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Nouvelle entrée matière première</h1>
+      <img src="<?= base_url('assets/images/Pattern combi.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="/entrees-matiere-premiere" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
   </div>
 

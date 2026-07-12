@@ -14,9 +14,14 @@
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/valeur-stock">Gestion de stock</a> <span>›</span> Valeur du stock</div>
   <div class="page-header">
-    <h1 class="page-title">Valeur du stock</h1>
-    <a href="<?= base_url('valeur-stock/export') ?>" class="btn-gold"><i class="fa fa-download"></i> Exporter en CSV</a>
-    <a href="<?= base_url('valeur-stock/export-pdf') ?>" class="btn-gold"><i class="fa fa-file-pdf"></i> Exporter en PDF</a>
+    <div class="page-title-wrap">
+      <h1 class="page-title">Valeur du stock</h1>
+      <img src="<?= base_url('assets/images/Pattern combi.png') ?>" alt="Pattern" class="header-pattern-img" />
+    </div>
+    <div class="d-flex gap-2">
+      <a href="<?= base_url('valeur-stock/export') ?>" class="btn-gold"><i class="fa fa-download"></i> Exporter en CSV</a>
+      <a href="<?= base_url('valeur-stock/export-pdf') ?>" class="btn-gold"><i class="fa fa-file-pdf"></i> Exporter en PDF</a>
+    </div>
   </div>
 
   <div class="row g-3 mb-4">

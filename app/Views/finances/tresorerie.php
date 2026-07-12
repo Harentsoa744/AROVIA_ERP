@@ -18,13 +18,13 @@
   <div class="page-header">
     <div class="page-title-wrap">
       <h1 class="page-title">Trésorerie</h1>
-      <img src="<?= base_url('assets/images/Pattern simple - 1.png') ?>" alt="" class="page-title-pattern">
+      <img src="/assets/images/Pattern simple - 1.png" alt="" class="page-title-pattern">
     </div>
     <a href="/finances" class="btn-outline-gold"><i class="fa fa-arrow-left"></i> Retour</a>
   </div>
 
   <?php if ($alerte) : ?>
-    <div class="tresorerie-alert"><strong>⚠️ Attention :</strong> solde négatif !</div>
+    <div class="tresorerie-alert"><strong>Attention :</strong> solde négatif !</div>
   <?php endif ?>
 
   <div class="row g-3 mb-4">

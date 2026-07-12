@@ -192,8 +192,11 @@
     <div class="entete">
         <div class="logo-bloc">
             <!-- Logo abeille pixel Arovia (peut être remplacé par <img src="<?= base_url('assets/img/arovia-logo.png') ?>">) -->
-            <div class="marque">
-                <h1>AROVIA</h1>
+            <div class="marque"><h1>AROVIA</h1>
+                <div class="page-title-wrap">
+                  <h1>AROVIA</h1>
+                  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+                </div>
                 <div class="slogan">Beelieve in Madagascar</div>
             </div>
         </div>

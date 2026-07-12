@@ -1,7 +1,10 @@
 <?= view('header', ['titre' => $titre]) ?>
 
-<div class="page-entete">
-    <h1>Contrats</h1>
+<div class="page-entete"><h1>Contrats</h1>
+    <div class="page-title-wrap">
+      <h1>Contrats</h1>
+      <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+    </div>
     <a href="<?= base_url('contrat/ajout') ?>" class="bouton bouton-principal">+ Ajouter un contrat</a>
 </div>
 
