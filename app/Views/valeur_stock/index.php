@@ -84,20 +84,6 @@
         <?php endif; ?>
       </tbody>
     </table>
-    <div class="valeur-total-bar mt-3 d-flex flex-column gap-2" style="background: var(--bg-card); border-top: 1px solid var(--border-color); padding-top: 1rem;">
-      <div class="d-flex justify-content-between">
-        <span class="text-muted">Valeur du stock Miel Brut (Matière Première) :</span>
-        <span class="fw-bold text-green"><?= number_format($stockMP['valeur_stock'] ?? 0, 0, ',', ' ') ?> Ar</span>
-      </div>
-      <div class="d-flex justify-content-between">
-        <span class="text-muted">Valeur du stock Bocaux (Produits Finis) :</span>
-        <span class="fw-bold text-gold"><?= number_format($valeurComptablePF ?? 0, 0, ',', ' ') ?> Ar</span>
-      </div>
-      <div class="d-flex justify-content-between" style="border-top: 2px solid var(--border-color); padding-top: 0.5rem; font-size: 1.2rem;">
-        <span class="fw-bold">Valeur comptable totale consolidée :</span>
-        <span class="fw-bold text-orange"><?= number_format($valeurTotaleComptable ?? 0, 0, ',', ' ') ?> Ar</span>
-      </div>
-    </div>
   </div>
 </main>
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
