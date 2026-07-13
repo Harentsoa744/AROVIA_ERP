@@ -54,7 +54,7 @@
     </div>
     <table class="arovia-table">
       <thead>
-        <tr><th>Date</th><th>Fournisseur</th><th>Quantité (L)</th><th>Prix unit. (Ar)</th><th>Total (Ar)</th><th>Actions</th></tr>
+        <tr><th>Date</th><th>Fournisseur</th><th>Quantité (L)</th><th>Prix unit. (Ar)</th><th>Total (Ar)</th></tr>
       </thead>
       <tbody>
         <?php if (!empty($entrees)): ?>
@@ -65,10 +65,6 @@
               <td><span class="badge-arovia badge-green"><?= number_format($entree['quantite_litres'] ?? 0, 2) ?> L</span></td>
               <td><?= number_format($entree['prix_unitaire'] ?? 0, 0, ',', ' ') ?></td>
               <td class="fw-600 text-orange"><?= number_format($entree['valeur_totale'] ?? 0, 0, ',', ' ') ?></td>
-              <td>
-                <button class="btn-icon-edit" type="button"><i class="fa fa-pen"></i></button>
-                <button class="btn-icon-delete ms-1" type="button"><i class="fa fa-trash"></i></button>
-              </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
