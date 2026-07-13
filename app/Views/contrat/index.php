@@ -23,9 +23,23 @@
   </div>
   
   <div class="row g-3 mb-4">
-    <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-file-signature"></i></div><div class="kpi-label">Contrats actifs</div><div class="kpi-value dark"><?= count(array_filter($contrats ?? [], fn($c) => ($c['statut_nom'] ?? '') === 'Actif')) ?></div></div></div>
-    <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-hourglass-half"></i></div><div class="kpi-label">En attente</div><div class="kpi-value orange"><?= count(array_filter($contrats ?? [], fn($c) => ($c['statut_nom'] ?? '') === 'En attente')) ?></div></div></div>
-    <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap red"><i class="fa fa-circle-xmark"></i></div><div class="kpi-label">Expirés</div><div class="kpi-value red"><?= count(array_filter($contrats ?? [], fn($c) => ($c['statut_nom'] ?? '') === 'Expiré')) ?></div></div></div>
+    <div class="col-6 col-md-8">
+      <div class="kpi-card col-md-9 d-flex flex-row g-5 align-items-center" style="height: 100%; gap:70px">
+        <div class="image col-md-3">
+        <img src="/assets/images/contrat-icon.png" style="width: 100%">
+      </div>
+
+        <div class="d-flex flex-column">
+
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap blue flex-column justify-content-center "><i class="fa fa-file-signature"></i></div><span class="kpi-label d-flex justify-content-center"> Contrats actifs </span><span class="kpi-value d-flex justify-content-center blue"><?= count(array_filter($contrats ?? [], fn($c) => stripos($c['statut_nom'] ?? '', 'actif') !== false || stripos($c['statut_nom'] ?? '', 'sign') !== false)) ?></span></div>
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap orange flex-column justify-content-center "><i class="fa fa-hourglass-half"></i></div><span class="kpi-label d-flex justify-content-center"> En attente </span><span class="kpi-value d-flex justify-content-center orange"><?= count(array_filter($contrats ?? [], fn($c) => stripos($c['statut_nom'] ?? '', 'attente') !== false)) ?></span></div>
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap red flex-column justify-content-center "><i class="fa fa-circle-xmark"></i></div><span class="kpi-label d-flex justify-content-center"> Expirés </span><span class="kpi-value d-flex justify-content-center red"><?= count(array_filter($contrats ?? [], fn($c) => stripos($c['statut_nom'] ?? '', 'expir') !== false)) ?></span></div>
+
+        </div>
+        </div>
+
+        </div>
+        </div>
   </div>
 
   <div class="content-card">
@@ -101,7 +115,7 @@ function applyFilters() {
     const text       = row.textContent.toLowerCase();
     const statutCell = (row.cells[4]?.textContent || '').toLowerCase();
     const matchQ = !query  || text.includes(query);
-    const matchF = !filtre || statutCell.includes(filtre);
+    const matchF = !filtre || statutCell.includes(filtre.replace('_', ' ')) || statutCell.includes(filtre);
     row.style.display = (matchQ && matchF) ? '' : 'none';
   });
 }

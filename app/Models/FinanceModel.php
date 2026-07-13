@@ -86,7 +86,7 @@ class FinanceModel extends Model
 
         $query = $db->query("
             SELECT 
-                TO_CHAR(date_transaction, 'YYYY-MM') AS mois,
+                DATE_FORMAT(date_transaction, '%Y-%m') AS mois,
                 type,
                 SUM(montant) AS total
             FROM mouvements_financiers
