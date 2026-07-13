@@ -55,6 +55,7 @@ class LivraisonController extends BaseController
         $data = [
             'livraisons_en_cours' => $this->livraisonModel->getLivraisonsWithLivreur(['EN_COURS', 'EN_ATTENTE']),
             'livraisons_faites'   => $this->livraisonModel->getLivraisonsWithLivreur(['EFFECTUEE']),
+            'livraisons'         => $this->livraisonModel->getLivraisonsWithLivreur(), // All livraisons
             'stats'               => $this->livraisonModel->getStats(),
             'livreurs_dispo'      => $this->livreurModel->getDisponibles(),
             'ventes'              => $this->getVentes(),

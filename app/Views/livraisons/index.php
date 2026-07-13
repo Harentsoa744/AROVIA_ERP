@@ -28,7 +28,7 @@
 
         <div class="d-flex flex-column">
 
-          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap blue flex-column justify-content-center "><i class="fa fa-spinner"></i></div><span class="kpi-label d-flex justify-content-center"> En cours </span><span class="kpi-value d-flex justify-content-center blue"><?= count($livraisons_en_cours ?? []) ?></span></div>
+          <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap blue flex-column justify-content-center "><i class="fa fa-spinner"></i></div><span class="kpi-label d-flex justify-content-center"> En cours </span><span class="kpi-value d-flex justify-content-center blue"><?= count($livraisons ?? []) ?></span></div>
           <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap green flex-column justify-content-center "><i class="fa fa-check-double"></i></div><span class="kpi-label d-flex justify-content-center"> Livrées (Mois) </span><span class="kpi-value d-flex justify-content-center green"><?= count($livraisons_faites ?? []) ?></span></div>
           <div class="row-1 d-flex align-items-center"><div class="kpi-icon-wrap orange flex-column justify-content-center "><i class="fa fa-triangle-exclamation"></i></div><span class="kpi-label d-flex justify-content-center"> Incidents </span><span class="kpi-value d-flex justify-content-center orange"><?= (int) ($stats['annulees'] ?? 0) ?></span></div>
 
@@ -41,7 +41,7 @@
         
   </div>
   <!-- <div class="row g-3 mb-4">
-    <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-spinner"></i></div><div class="kpi-label">En cours</div><div class="kpi-value blue"><?= count($livraisons_en_cours ?? []) ?></div></div></div>
+    <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap blue"><i class="fa fa-spinner"></i></div><div class="kpi-label">En cours</div><div class="kpi-value blue"><?= count($livraisons ?? []) ?></div></div></div>
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap green"><i class="fa fa-check-double"></i></div><div class="kpi-label">Livrées (Mois)</div><div class="kpi-value green"><?= count($livraisons_faites ?? []) ?></div></div></div>
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-triangle-exclamation"></i></div><div class="kpi-label">Incidents</div><div class="kpi-value orange"><?= (int) ($stats['annulees'] ?? 0) ?></div></div></div>
   </div> -->
@@ -68,22 +68,22 @@
       <thead>
         <tr><th>ID</th><th>Client/Destination</th><th>Livreur</th><th>Date prévue</th><th>Statut</th><th>Actions</th></tr>
       </thead>
-      <tbody>
-        <?php if (!empty($livraisons_en_cours)): ?>
-          <?php foreach ($livraisons_en_cours as $livraison): ?>
-            <tr>
+      <tbody id="livraisonsTableBody">
+        <?php if (!empty($livraisons)): ?>
+          <?php foreach ($livraisons as $livraison): ?>
+            <tr data-statut="<?= esc($livraison['statut'] ?? '') ?>">
               <td class="fw-600">#<?= (int) ($livraison['id'] ?? 0) ?></td>
               <td><?= esc($livraison['adresse_livraison'] ?? '—') ?></td>
               <td><span class="table-avatar" style="width:24px;height:24px;font-size:.7rem;margin-right:.3rem"><?= esc(strtoupper(substr($livraison['livreur_nom'] ?? 'L', 0, 1))) ?></span> <?= esc($livraison['livreur_nom'] ?? '—') ?></td>
               <td><?= esc($livraison['date_prevue'] ?? '—') ?></td>
-              <td><span class="badge-arovia badge-blue"><i class="fa fa-truck me-1"></i><?= esc($livraison['statut'] ?? 'EN_COURS') ?></span></td>
+              <td><span class="badge-arovia badge-<?= strtolower(str_replace('_', '', $livraison['statut'] ?? 'en_cours')) === 'encours' ? 'blue' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'effectuee' ? 'green' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'enattente' ? 'orange' : 'red')) ?>"><i class="fa fa-truck me-1"></i><?= esc($livraison['statut'] ?? 'EN_COURS') ?></span></td>
               <td>
                 <a class="btn-icon-edit" href="/livraisons/status/<?= (int) ($livraison['id'] ?? 0) ?>/EFFECTUEE" title="Marquer livré"><i class="fa fa-check"></i></a>
               </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune livraison en cours.</td></tr>
+          <tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune livraison trouvée.</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
@@ -139,17 +139,46 @@
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
 
 function applyFilters() {
-  const query  = document.getElementById('tableSearch').value.toLowerCase();
-  const filtre = document.getElementById('filterStatut').value.toLowerCase();
-  const rows   = document.querySelectorAll('.arovia-table tbody tr');
-
-  rows.forEach(row => {
-    const text       = row.textContent.toLowerCase();
-    const statutCell = (row.cells[4]?.textContent || '').toLowerCase();
-    const matchQ = !query  || text.includes(query);
-    const matchF = !filtre || statutCell.includes(filtre.replace('_', ' '));
-    row.style.display = (matchQ && matchF) ? '' : 'none';
-  });
+  const query  = document.getElementById('tableSearch').value;
+  const filtre = document.getElementById('filterStatut').value;
+  const tbody  = document.getElementById('livraisonsTableBody');
+  
+  // Build URL with parameters
+  const params = new URLSearchParams();
+  if (query) params.append('search', query);
+  if (filtre) params.append('statut', filtre);
+  
+  // Fetch filtered data via AJAX
+  fetch('/livraisons/ajax?' + params.toString())
+    .then(response => response.json())
+    .then(data => {
+      tbody.innerHTML = '';
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune livraison trouvée.</td></tr>';
+        return;
+      }
+      
+      data.forEach(livraison => {
+        const statutClass = livraison.statut === 'EN_COURS' ? 'blue' : 
+                           (livraison.statut === 'EFFECTUEE' ? 'green' : 
+                           (livraison.statut === 'EN_ATTENTE' ? 'orange' : 'red'));
+        const initials = livraison.livreur_nom ? livraison.livreur_nom.charAt(0).toUpperCase() : 'L';
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="fw-600">#${livraison.id}</td>
+          <td>${livraison.adresse_livraison || '—'}</td>
+          <td><span class="table-avatar" style="width:24px;height:24px;font-size:.7rem;margin-right:.3rem">${initials}</span> ${livraison.livreur_nom || '—'}</td>
+          <td>${livraison.date_prevue || '—'}</td>
+          <td><span class="badge-arovia badge-${statutClass}"><i class="fa fa-truck me-1"></i>${livraison.statut}</span></td>
+          <td>
+            <a class="btn-icon-edit" href="/livraisons/status/${livraison.id}/EFFECTUEE" title="Marquer livré"><i class="fa fa-check"></i></a>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 document.getElementById('tableSearch').addEventListener('keyup', applyFilters);
