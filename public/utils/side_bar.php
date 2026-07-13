@@ -34,6 +34,7 @@ $userRole = session()->get('user_role');
     <a href="/emploi-temps" class="nav-item-main"><i class="fa fa-calendar-days nav-icon"></i> Emploi du temps</a>
     <?php elseif (strtolower($userRole ?? '') === 'magasinier' || strtolower($userRole ?? '') === 'comptable'): ?>
     <div class="nav-group">
+      <a href="/finances" class="nav-item-main"><i class="fa fa-circle-dollar-to-slot nav-icon"></i> Finance</a>
       <div class="nav-group-header" onclick="toggleSubmenu(this)">
         <div class="nav-header-left"><i class="fa fa-boxes-stacked nav-icon"></i><span>Gestion de stock</span></div>
         <i class="fa fa-chevron-down chevron"></i>

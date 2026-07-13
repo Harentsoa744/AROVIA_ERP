@@ -117,11 +117,11 @@ $routes->post('/contrat/update/(:num)', 'ContratController::update/$1');
 // -------------------------------------------------------
 // Yohan
 // -------------------------------------------------------
-$routes->get('finances', 'Finances::index', ['filter' => 'role:ADMIN,RESPONSABLE']);
-$routes->post('finances/store', 'Finances::store', ['filter' => 'role:ADMIN,RESPONSABLE']);
-$routes->get('finances/delete/(:num)', 'Finances::delete/$1', ['filter' => 'role:ADMIN,RESPONSABLE']);
-$routes->get('finances/tresorerie', 'Finances::tresorerie', ['filter' => 'role:ADMIN,RESPONSABLE']);
-$routes->get('finances/rapport', 'Finances::rapport', ['filter' => 'role:ADMIN,RESPONSABLE']);
+$routes->get('finances', 'Finances::index', ['filter' => 'role:ADMIN,RESPONSABLE,COMPTABLE']);
+$routes->post('finances/store', 'Finances::store', ['filter' => 'role:ADMIN,RESPONSABLE,COMPTABLE']);
+$routes->get('finances/delete/(:num)', 'Finances::delete/$1', ['filter' => 'role:ADMIN,RESPONSABLE,COMPTABLE']);
+$routes->get('finances/tresorerie', 'Finances::tresorerie', ['filter' => 'role:ADMIN,RESPONSABLE,COMPTABLE']);
+$routes->get('finances/rapport', 'Finances::rapport', ['filter' => 'role:ADMIN,RESPONSABLE,COMPTABLE']);
 
 $routes->get('statistiques/vente', 'StatistiquesVente::index');
 $routes->group('statistiques', function($routes) {

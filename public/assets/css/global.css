@@ -428,7 +428,7 @@ body {
 .kpi-card {
   background: var(--surface-white);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  /* border-radius: 12px; */
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -527,7 +527,7 @@ body {
 .content-card {
   background: var(--surface-white);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  /* border-radius: 12px; */
   padding: 1.5rem;
 }
 
