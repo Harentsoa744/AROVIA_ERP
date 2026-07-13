@@ -1,7 +1,6 @@
 <header class="topbar">
   <a href="/home" class="topbar-brand">
-    <div class="brand-icon">🐝</div>
-    <span class="brand-text">Miel <span>Arovia</span></span>
+    <img class="brand-logo" src="<?= base_url('assets/images/logo.png') ?>" alt="Arovia">
   </a>
   
 
