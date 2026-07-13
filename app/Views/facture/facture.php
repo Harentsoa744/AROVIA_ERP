@@ -195,7 +195,7 @@
             <div class="marque"><h1>AROVIA</h1>
                 <div class="page-title-wrap">
                   <h1>AROVIA</h1>
-                  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
+                  <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" style="width: 60%;" />
                 </div>
                 <div class="slogan">Beelieve in Madagascar</div>
             </div>
