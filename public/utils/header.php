@@ -27,25 +27,35 @@
     </div>
 </div>
     
-    <a href="/profil" class="topbar-user">
-      <div class="avatar">
-        <?php if (!empty(session()->get('user_photo'))): ?>
-          <img src="<?= base_url('uploads/utilisateurs/' . session()->get('user_photo')) ?>" 
-               alt="Photo de profil" 
-               style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
-        <?php else: ?>
-          <?= strtoupper(substr(session()->get('user_prenom') ?? 'A', 0, 1)) ?>
-        <?php endif; ?>
-      </div>
-      <div class="user-info d-none d-lg-block">
-        <div class="user-name">
-          <?= esc(session()->get('user_prenom')) . ' ' . esc(session()->get('user_nom')) ?>
+    <div class="profile-container">
+      <button class="topbar-user" id="profileBtn">
+        <div class="avatar">
+          <?php if (!empty(session()->get('user_photo'))): ?>
+            <img src="<?= base_url('uploads/utilisateurs/' . session()->get('user_photo')) ?>" 
+                 alt="Photo de profil" 
+                 style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+          <?php else: ?>
+            <?= strtoupper(substr(session()->get('user_prenom') ?? 'A', 0, 1)) ?>
+          <?php endif; ?>
         </div>
-        <div class="user-role">
-          <?= esc(session()->get('user_role')) ?>
+        <div class="user-info d-none d-lg-block">
+          <div class="user-name">
+            <?= esc(session()->get('user_prenom')) . ' ' . esc(session()->get('user_nom')) ?>
+          </div>
+          <div class="user-role">
+            <?= esc(session()->get('user_role')) ?>
+          </div>
         </div>
+      </button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <a href="/profil" class="profile-dropdown-item">
+          <i class="fa fa-user me-2"></i> Voir mon profil
+        </a>
+        <a href="/logout" class="profile-dropdown-item">
+          <i class="fa fa-sign-out-alt me-2"></i> Se déconnecter
+        </a>
       </div>
-    </a>
+    </div>
   </div>
 </header>
 <script>
@@ -290,5 +300,29 @@ chargerCount,
 
 
 
+});
+
+const profileBtn = document.querySelector("#profileBtn");
+const profileDropdown = document.querySelector("#profileDropdown");
+
+// --- GESTION DU CLIC PROFIL ---
+profileBtn.addEventListener("click", (e) => {
+    // On empêche la propagation pour éviter que le clic sur le bouton 
+    // ne ferme immédiatement le dropdown à cause du script de fermeture globale
+    e.stopPropagation(); 
+    
+    if (profileDropdown.style.display === "block") {
+        profileDropdown.style.display = "none";
+    } else {
+        profileDropdown.style.display = "block";
+        // Optionnel : fermer le dropdown de notification s'il est ouvert
+        dropdown.style.display = "none"; 
+    }
+});
+
+// --- BONUS : FERMER LES DROPDOWNS QUAND ON CLIQUE AILLEURS ---
+document.addEventListener("click", () => {
+    profileDropdown.style.display = "none";
+    dropdown.style.display = "none";
 });
 </script>
