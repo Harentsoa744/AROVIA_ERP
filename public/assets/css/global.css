@@ -1093,3 +1093,8 @@ body {
   margin-bottom: 7px;
   /* compense la barre ::after du h1 pour centrer optiquement */
 }
+.row-1{
+    align-items: center;
+    justify-content: start;
+    gap: 20px;
+}
