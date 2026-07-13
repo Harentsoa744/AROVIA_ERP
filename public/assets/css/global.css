@@ -165,11 +165,14 @@ body {
   padding: 0.3rem 0.6rem;
   border-radius: 10px;
   text-decoration: none;
+  border: inset 1px #c8860a;
 }
 
 .topbar-user:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #4b0f10;
+  transition: ease .3s;
 }
+
 
 .topbar-user .avatar {
   width: 34px;

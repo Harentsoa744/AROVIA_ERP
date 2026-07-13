@@ -8,33 +8,47 @@
 -- ============================================================================
 -- 1. NETTOYAGE — DROP dans l'ordre des dépendances
 -- ============================================================================
-DROP TABLE IF EXISTS disponibilites_livreurs  CASCADE;
+-- ============================================================================
+-- 1. NETTOYAGE — DROP dans l'ordre strict des dépendances
+-- ============================================================================
+-- Dépendances directes des ventes et livraisons
+DROP TABLE IF EXISTS disponibilites_livreurs   CASCADE;
 DROP TABLE IF EXISTS livraisons               CASCADE;
 DROP TABLE IF EXISTS livreurs                 CASCADE;
 DROP TABLE IF EXISTS vente_details            CASCADE;
 DROP TABLE IF EXISTS ventes                   CASCADE;
 DROP TABLE IF EXISTS clients                  CASCADE;
+
+-- Logistique, Commercialisation & Stock produits finis
 DROP TABLE IF EXISTS sorties                  CASCADE;
 DROP TABLE IF EXISTS supermarches             CASCADE;
-DROP TABLE IF EXISTS stock_produit_fini       CASCADE;
+DROP TABLE IF EXISTS stock_produit_fini       CASCADE; -- Placé avant types_bocaux
 DROP TABLE IF EXISTS transformations_detail   CASCADE;
 DROP TABLE IF EXISTS transformations          CASCADE;
 DROP TABLE IF EXISTS types_bocaux             CASCADE;
+
+-- Matières premières
 DROP TABLE IF EXISTS entrees_matiere_premiere CASCADE;
 DROP TABLE IF EXISTS stock_matiere_premiere   CASCADE;
 DROP TABLE IF EXISTS fournisseurs             CASCADE;
+
+-- Comptabilité & RH
 DROP TABLE IF EXISTS mouvements_financiers    CASCADE;
-DROP TABLE IF EXISTS comptes_tresorerie       CASCADE;
+DROP TABLE IF EXISTS comptes_tresorerie        CASCADE;
 DROP TABLE IF EXISTS paiements_salaires       CASCADE;
 DROP TABLE IF EXISTS planning                 CASCADE;
-DROP TABLE IF EXISTS employes                 CASCADE;
 DROP TABLE IF EXISTS contrats                 CASCADE;
+DROP TABLE IF EXISTS employes                 CASCADE;
 DROP TABLE IF EXISTS entreprise               CASCADE;
 DROP TABLE IF EXISTS statut                   CASCADE;
+
+-- Système & Utilisateurs
+DROP TABLE IF EXISTS notifications            CASCADE; -- Centralisé ici
 DROP TABLE IF EXISTS utilisateurs             CASCADE;
 DROP TABLE IF EXISTS roles                    CASCADE;
-DROP VIEW  IF EXISTS transactions             CASCADE;
 
+-- Vues
+DROP VIEW  IF EXISTS transactions             CASCADE;
 -- ============================================================================
 -- 2. UTILISATEURS & RÔLES
 -- ============================================================================
@@ -350,7 +364,6 @@ INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut)
 (3, '2025-03-20 14:00:00', 6000000.00, 'Virement', 'PAYE'),
 (4, '2025-04-02 11:15:00', 2750000.00, 'Cash', 'EN_COURS');
 
-DROP TABLE IF EXISTS notifications;
 CREATE TABLE notifications (
     id SERIAL PRIMARY KEY,
 
@@ -368,3 +381,8 @@ CREATE TABLE notifications (
 
     date_creation TIMESTAMP DEFAULT NOW()
 );
+
+
+ALTER TABLE employes ADD COLUMN photo_profil VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE utilisateurs ADD COLUMN photo_profil VARCHAR(255) DEFAULT NULL;
