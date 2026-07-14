@@ -11,6 +11,7 @@ class FinanceModel extends Model
     protected $returnType = 'array';
 
     protected $allowedFields = [
+        'compte_id',
         'type',
         'categorie',
         'montant',
@@ -86,7 +87,7 @@ class FinanceModel extends Model
 
         $query = $db->query("
             SELECT 
-                DATE_FORMAT(date_transaction, '%Y-%m') AS mois,
+                TO_CHAR(date_transaction, 'YYYY-MM') AS mois,
                 type,
                 SUM(montant) AS total
             FROM mouvements_financiers

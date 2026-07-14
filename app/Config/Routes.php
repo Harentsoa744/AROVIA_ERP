@@ -36,9 +36,10 @@ $routes->post('profil/update', 'ProfilController::update');
 
 $routes->get('livraisons', 'LivraisonController::index', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
 $routes->get('livraisons/historique', 'LivraisonController::historique', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
-$routes->get('livraisons/create', 'LivraisonController::create', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
-$routes->post('livraisons/store', 'LivraisonController::store', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
-$routes->get('livraisons/status/(:num)/(:any)', 'LivraisonController::updateStatut/$1/$2', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/assigner/(:num)', 'LivraisonController::assigner/$1', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->post('livraisons/store_assignation', 'LivraisonController::storeAssignation', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/updateStatut/(:num)/(:any)', 'LivraisonController::updateStatut/$1/$2', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
+$routes->get('livraisons/statut_sortie/(:num)/(:any)', 'LivraisonController::statutSortie/$1/$2', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
 $routes->get('livraisons/ajax', 'LivraisonController::ajaxList', ['filter' => 'role:LIVREUR,ADMIN,RESPONSABLE']);
 $routes->get('livreurs', 'LivreurController::index');
 $routes->post('livreurs/store', 'LivreurController::store');

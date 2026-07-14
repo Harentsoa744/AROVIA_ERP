@@ -60,17 +60,42 @@ class Sorties extends BaseController
             'quantite'            => 'required|is_natural_no_zero',
             'supermarche_id'      => 'required|is_natural_no_zero',
             'prix_vente_unitaire' => 'required|numeric|greater_than[0]',
+            'livraison_ou_point_vente' => 'required|in_list[LIVRAISON,POINT_VENTE]',
         ];
+
+        // Validation du statut selon le type de distribution
+        $livraisonOuPointVente = $this->request->getPost('livraison_ou_point_vente');
+        if ($livraisonOuPointVente === 'LIVRAISON') {
+            $rules['statut'] = 'required|in_list[A_LIVRER]';
+            // Si statut est A_LIVRER, date_livraison est requise
+            if ($this->request->getPost('statut') === 'A_LIVRER') {
+                $rules['date_livraison'] = 'required';
+            }
+        } else {
+            $rules['statut'] = 'required|in_list[PRIS]';
+        }
 
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $livraisonOuPointVente = $this->request->getPost('livraison_ou_point_vente');
+        $statut = $this->request->getPost('statut');
+        $dateLivraison = $this->request->getPost('date_livraison');
+
+        // Si POINT_VENTE, le statut doit être PRIS
+        if ($livraisonOuPointVente === 'POINT_VENTE') {
+            $statut = 'PRIS';
         }
 
         $resultat = $this->sortieModel->enregistrerSortie(
             (int) $this->request->getPost('type_bocal_id'),
             (int) $this->request->getPost('quantite'),
             (int) $this->request->getPost('supermarche_id'),
-            (float) $this->request->getPost('prix_vente_unitaire')
+            (float) $this->request->getPost('prix_vente_unitaire'),
+            $livraisonOuPointVente,
+            $statut,
+            $dateLivraison
         );
 
         if (! $resultat['succes']) {

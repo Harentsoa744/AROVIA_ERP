@@ -11,7 +11,7 @@ class SortieModel extends Model
     protected $allowedFields = [
         'date_sortie', 'type_bocal_id', 'quantite',
         'supermarche_id', 'prix_vente_unitaire', 'valeur_totale',
-        'cump_applique'
+        'cump_applique', 'livraison_ou_point_vente', 'statut', 'date_livraison'
     ];
 
     protected $returnType    = 'array';
@@ -47,7 +47,7 @@ class SortieModel extends Model
      * décrémente le stock produit fini, enregistre la sortie avec CUMP appliqué.
      * Protégé par transaction + verrouillage de ligne.
      */
-    public function enregistrerSortie(int $typeBocalId, int $quantite, int $supermarcheId, float $prixUnitaire): array
+    public function enregistrerSortie(int $typeBocalId, int $quantite, int $supermarcheId, float $prixUnitaire, string $livraisonOuPointVente = 'LIVRAISON', string $statut = 'A_LIVRER', ?string $dateLivraison = null): array
     {
         $db = \Config\Database::connect();
         $db->transStart();
@@ -75,7 +75,7 @@ class SortieModel extends Model
            ->update(['quantite_disponible' => $stockPF['quantite_disponible'] - $quantite]);
 
         // Enregistre la sortie
-        $db->table('sorties')->insert([
+        $insertData = [
             'date_sortie'          => date('Y-m-d H:i:s'),
             'type_bocal_id'        => $typeBocalId,
             'quantite'             => $quantite,
@@ -83,7 +83,16 @@ class SortieModel extends Model
             'prix_vente_unitaire'  => $prixUnitaire,
             'valeur_totale'        => $valeurTotale,
             'cump_applique'        => $cumpApplique,
-        ]);
+            'livraison_ou_point_vente' => $livraisonOuPointVente,
+            'statut'               => $statut,
+        ];
+
+        // Ajouter date_livraison si fournie
+        if ($dateLivraison) {
+            $insertData['date_livraison'] = date('Y-m-d H:i:s', strtotime($dateLivraison));
+        }
+
+        $db->table('sorties')->insert($insertData);
 
         $db->transComplete();
 
@@ -122,4 +131,4 @@ class SortieModel extends Model
             ->get()
             ->getResultArray();
     }
-}
+}

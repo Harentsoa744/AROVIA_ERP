@@ -4,12 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rapports financiers — Miel Arovia</title>
-  <link rel="stylesheet" href="/assets/bootstrap/bootstrap.min.css"/>
-  <link rel="stylesheet" href="/assets/css/global.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/bootstrap/bootstrap.min.css') ?>"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="<?= base_url('assets/css/global.css') ?>"/>
 </head>
 <body>
-<?php include 'utils/header.php'; ?>
-<?php include 'utils/side_bar.php'; ?>
+<?php include '../partials/header.php'; ?>
+<?php include '../partials/side_bar.php'; ?>
 <main class="main-wrapper">
   <div class="breadcrumb-bar"><a href="/finances">Finance</a> <span>›</span> Rapports & Analyses</div>
   <div class="page-header">
@@ -47,7 +48,8 @@
     <canvas id="evolutionChart"></canvas>
   </div>
 </main>
-<script src="assets/bootstrap/bootstrap.bundle.min.js"></script>
+
+<script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <script>
 const evolution = <?= json_encode($evolution ?? []) ?>;

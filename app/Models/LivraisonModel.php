@@ -10,7 +10,7 @@ class LivraisonModel extends Model
     protected $primaryKey = 'id';
 
     protected $allowedFields = [
-        'vente_id',
+        'sortie_id',
         'livreur_id',
         'date_prevue',
         'date_effective',

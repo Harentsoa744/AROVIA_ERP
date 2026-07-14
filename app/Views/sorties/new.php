@@ -62,6 +62,30 @@
       </div>
 
       <div class="mb-3">
+        <label class="arovia-label" for="livraison_ou_point_vente">Type de distribution *</label>
+        <select name="livraison_ou_point_vente" id="livraison_ou_point_vente" class="arovia-input" required onchange="updateStatutOptions()">
+          <option value="">Sélectionner...</option>
+          <option value="LIVRAISON">À livrer</option>
+          <option value="POINT_VENTE">Sur place</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="arovia-label" for="statut">Statut *</label>
+        <select name="statut" id="statut" class="arovia-input" required onchange="toggleDateLivraison()">
+          <option value="">Sélectionner...</option>
+          <option value="A_LIVRER">À livrer</option>
+          <option value="PRIS">Pris</option>
+          <option value="ANNULE">Annulé</option>
+        </select>
+      </div>
+
+      <div class="mb-3" id="date-livraison-container" style="display: none;">
+        <label class="arovia-label" for="date_livraison">Date et heure de livraison *</label>
+        <input type="datetime-local" name="date_livraison" id="date_livraison" class="arovia-input">
+      </div>
+
+      <div class="mb-3">
         <label class="arovia-label" for="quantite-input">Nombre de bocaux *</label>
         <input type="number" min="1" name="quantite" id="quantite-input" class="arovia-input" value="<?= old('quantite') ?>" placeholder="0" required>
       </div>
@@ -87,6 +111,37 @@ const cumpActuel = <?= (float) ($stockMP['cump_actuel'] ?? 0) ?>;
 const select = document.getElementById('type-bocal-select');
 const prixInput = document.getElementById('prix-input');
 const cumpInfo = document.getElementById('cump-info');
+
+function updateStatutOptions() {
+  const typeDistribution = document.getElementById('livraison_ou_point_vente').value;
+  const statutSelect = document.getElementById('statut');
+  
+  // Reset options
+  statutSelect.innerHTML = '<option value="">Sélectionner...</option>';
+  
+  if (typeDistribution === 'LIVRAISON') {
+    statutSelect.innerHTML += '<option value="A_LIVRER">À livrer</option>';
+  } else if (typeDistribution === 'POINT_VENTE') {
+    statutSelect.innerHTML += '<option value="PRIS">Pris</option>';
+  }
+  
+  toggleDateLivraison();
+}
+
+function toggleDateLivraison() {
+  const statut = document.getElementById('statut').value;
+  const dateContainer = document.getElementById('date-livraison-container');
+  const dateInput = document.getElementById('date_livraison');
+  
+  if (statut === 'A_LIVRER') {
+    dateContainer.style.display = 'block';
+    dateInput.required = true;
+  } else {
+    dateContainer.style.display = 'none';
+    dateInput.required = false;
+    dateInput.value = '';
+  }
+}
 
 function majPrixEtCout() {
     const option = select.options[select.selectedIndex];

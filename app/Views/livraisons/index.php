@@ -17,7 +17,6 @@
       <h1 class="page-title">Suivi des Distributions</h1>
       <img src="/assets/images/Pattern simple - 1.png" alt="Pattern" class="header-pattern-img" />
     </div>
-    <button class="btn-gold" data-bs-toggle="modal" data-bs-target="#modalLivraison"><i class="fa fa-plus"></i> Nouvelle Livraison</button>
   </div>
   <div class="row g-3 mb-4">
     <div class="col-6 col-md-8">
@@ -46,6 +45,45 @@
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-triangle-exclamation"></i></div><div class="kpi-label">Incidents</div><div class="kpi-value orange"><?= (int) ($stats['annulees'] ?? 0) ?></div></div></div>
   </div> -->
 
+  <!-- Tableau des livraisons à faire aujourd'hui -->
+  <h3 class="mb-3" style="color: var(--primary-color);">Livraisons à faire aujourd'hui</h3>
+  <div class="content-card mb-4">
+    <table class="arovia-table">
+      <thead>
+        <tr><th>ID Sortie</th><th>Supermarché</th><th>Adresse</th><th>Date</th><th>Statut</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        <?php if (!empty($sorties_aujourdhui)): ?>
+          <?php foreach ($sorties_aujourdhui as $sortie): ?>
+            <tr>
+              <td class="fw-600">#<?= (int) ($sortie['id'] ?? 0) ?></td>
+              <td><?= esc($sortie['supermarche_nom'] ?? '—') ?></td>
+              <td><?= esc($sortie['supermarche_adresse'] ?? '—') ?></td>
+              <td><?= esc(date('d/m/Y H:i', strtotime($sortie['date_sortie'] ?? 'now'))) ?></td>
+              <td><span class="badge bg-warning">À livrer</span></td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/livraisons/assigner/<?= (int) ($sortie['id'] ?? 0) ?>"><i class="fa fa-truck me-2"></i>Assigner livreur</a></li>
+                    <li><a class="dropdown-item" href="/livraisons/statut_sortie/<?= (int) ($sortie['id'] ?? 0) ?>/PRIS"><i class="fa fa-check me-2"></i>Pris sur place</a></li>
+                    <li><a class="dropdown-item" href="/livraisons/statut_sortie/<?= (int) ($sortie['id'] ?? 0) ?>/ANNULE"><i class="fa fa-times me-2"></i>Annuler</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune livraison prévue pour aujourd'hui.</td></tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tableau de toutes les livraisons -->
+  <h3 class="mb-3" style="color: var(--primary-color);">Toutes les livraisons</h3>
   <div class="content-card">
     <div class="mb-3 d-flex justify-content-end gap-2 flex-wrap align-items-center">
       <!-- Filtre statut -->
@@ -78,7 +116,18 @@
               <td><?= esc($livraison['date_prevue'] ?? '—') ?></td>
               <td><span class="badge-arovia badge-<?= strtolower(str_replace('_', '', $livraison['statut'] ?? 'en_cours')) === 'encours' ? 'blue' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'effectuee' ? 'green' : (strtolower(str_replace('_', '', $livraison['statut'] ?? '')) === 'enattente' ? 'orange' : 'red')) ?>"><i class="fa fa-truck me-1"></i><?= esc($livraison['statut'] ?? 'EN_COURS') ?></span></td>
               <td>
-                <a class="btn-icon-edit" href="/livraisons/status/<?= (int) ($livraison['id'] ?? 0) ?>/EFFECTUEE" title="Marquer livré"><i class="fa fa-check"></i></a>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fa fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/livraisons/updateStatut/<?= (int) ($livraison['id'] ?? 0) ?>/EFFECTUEE"><i class="fa fa-check me-2"></i>Livré</a></li>
+                    <li><a class="dropdown-item" href="/livraisons/updateStatut/<?= (int) ($livraison['id'] ?? 0) ?>/EN_ATTENTE"><i class="fa fa-clock me-2"></i>Mettre en attente</a></li>
+                    <li><a class="dropdown-item" href="/livraisons/updateStatut/<?= (int) ($livraison['id'] ?? 0) ?>/ANNULEE"><i class="fa fa-times me-2"></i>Annulé</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="/livraisons/updateStatut/<?= (int) ($livraison['id'] ?? 0) ?>/EN_RETARD"><i class="fa fa-exclamation-triangle me-2"></i>Livré en retard</a></li>
+                  </ul>
+                </div>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -89,51 +138,7 @@
     </table>
   </div>
 </main>
-<!-- Modal -->
-<div class="modal fade" id="modalLivraison" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title">Planifier une livraison</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-      <form method="post" action="/livraisons/store">
-        <div class="modal-body">
-          <div class="mb-3">
-            <label class="arovia-label" for="vente_id">Vente / commande *</label>
-            <select id="vente_id" name="vente_id" class="arovia-input" required>
-              <option value="">— Sélectionner —</option>
-              <?php foreach (($ventes ?? []) as $vente): ?>
-                <option value="<?= (int) $vente['id'] ?>">
-                  Vente #<?= (int) $vente['id'] ?><?= !empty($vente['client_nom']) ? ' - ' . esc($vente['client_nom']) : '' ?>
-                  <?= isset($vente['montant_total']) ? ' - ' . number_format((float) $vente['montant_total'], 0, ',', ' ') . ' Ar' : '' ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label class="arovia-label" for="client_id">Client / Destinataire *</label>
-            <select id="client_id" name="client_id" class="arovia-input" required>
-              <option value="">— Sélectionner —</option>
-              <?php foreach (($clients ?? []) as $client): ?>
-                <option value="<?= (int) $client['id'] ?>" data-address="<?= esc($client['adresse'] ?? '', 'attr') ?>">
-                  <?= esc($client['nom']) ?><?= !empty($client['telephone']) ? ' - ' . esc($client['telephone']) : '' ?>
-                </option>
-              <?php endforeach; ?>
-            </select>
-          </div>
-          <div class="mb-3"><label class="arovia-label" for="adresse_livraison">Adresse de destination *</label><input id="adresse_livraison" name="adresse_livraison" type="text" class="arovia-input" required/></div>
-          <div class="mb-3"><label class="arovia-label" for="livreur_id">Livreur assigné *</label><select id="livreur_id" name="livreur_id" class="arovia-input" required>
-            <?php foreach ($livreurs_dispo ?? [] as $livreur): ?>
-              <option value="<?= (int) ($livreur['id'] ?? 0) ?>"><?= esc($livreur['nom'] ?? 'Livreur') ?></option>
-            <?php endforeach; ?>
-          </select></div>
-          <div class="row">
-            <div class="col-6 mb-3"><label class="arovia-label" for="date_prevue">Date</label><input id="date_prevue" name="date_prevue" type="datetime-local" class="arovia-input"/></div>
-          </div>
-        </div>
-        <div class="modal-footer"><button type="button" class="btn-outline-gold" data-bs-dismiss="modal">Annuler</button><button type="submit" class="btn-gold">Planifier</button></div>
-      </form>
-    </div>
-  </div>
-</div>
+
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
@@ -172,7 +177,18 @@ function applyFilters() {
           <td>${livraison.date_prevue || '—'}</td>
           <td><span class="badge-arovia badge-${statutClass}"><i class="fa fa-truck me-1"></i>${livraison.statut}</span></td>
           <td>
-            <a class="btn-icon-edit" href="/livraisons/status/${livraison.id}/EFFECTUEE" title="Marquer livré"><i class="fa fa-check"></i></a>
+            <div class="dropdown">
+              <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="fa fa-ellipsis-v"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/livraisons/updateStatut/${livraison.id}/EFFECTUEE"><i class="fa fa-check me-2"></i>Livré</a></li>
+                <li><a class="dropdown-item" href="/livraisons/updateStatut/${livraison.id}/EN_ATTENTE"><i class="fa fa-clock me-2"></i>Mettre en attente</a></li>
+                <li><a class="dropdown-item" href="/livraisons/updateStatut/${livraison.id}/ANNULEE"><i class="fa fa-times me-2"></i>Annulé</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/livraisons/updateStatut/${livraison.id}/EN_RETARD"><i class="fa fa-exclamation-triangle me-2"></i>Livré en retard</a></li>
+              </ul>
+            </div>
           </td>
         `;
         tbody.appendChild(row);
@@ -183,16 +199,6 @@ function applyFilters() {
 
 document.getElementById('tableSearch').addEventListener('keyup', applyFilters);
 document.getElementById('filterStatut').addEventListener('change', applyFilters);
-
-const clientSelect = document.getElementById('client_id');
-const addressField = document.getElementById('adresse_livraison');
-
-if (clientSelect && addressField) {
-  clientSelect.addEventListener('change', function () {
-    const option = this.options[this.selectedIndex];
-    addressField.value = option ? (option.dataset.address || '') : '';
-  });
-}
 </script>
 </body>
 </html>

@@ -125,6 +125,8 @@
           <th>Total (Ar)</th>
           <th>CUMP (Ar/L)</th>
           <th>Marge (%)</th>
+          <th>Type</th>
+          <th>Statut</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -149,12 +151,36 @@
                 <small class="d-block text-muted"><?= number_format($tauxMarge, 2) ?> %</small>
               </td>
               <td>
+                <?php 
+                  $type = $sortie['livraison_ou_point_vente'] ?? 'LIVRAISON';
+                  if ($type === 'LIVRAISON'): ?>
+                    <span class="badge bg-primary">À livrer</span>
+                  <?php elseif ($type === 'POINT_VENTE'): ?>
+                    <span class="badge bg-success">Sur place</span>
+                  <?php else: ?>
+                    <span class="badge bg-secondary"><?= esc($type) ?></span>
+                  <?php endif; ?>
+              </td>
+              <td>
+                <?php 
+                  $statut = $sortie['statut'] ?? 'A_LIVRER';
+                  if ($statut === 'A_LIVRER'): ?>
+                    <span class="badge bg-warning">À livrer</span>
+                  <?php elseif ($statut === 'PRIS'): ?>
+                    <span class="badge bg-success">Pris</span>
+                  <?php elseif ($statut === 'ANNULE'): ?>
+                    <span class="badge bg-danger">Annulé</span>
+                  <?php else: ?>
+                    <span class="badge bg-secondary"><?= esc($statut) ?></span>
+                  <?php endif; ?>
+              </td>
+              <td>
                 <a class="btn-icon-edit" href="/factures/<?= (int) ($sortie['id'] ?? 0) ?>" title="Voir"><i class="fa fa-eye"></i></a>
               </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
-          <tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--text-muted)"><i class="fa fa-inbox" style="font-size:2rem;margin-bottom:.5rem;display:block"></i>Aucune vente enregistrée</td></tr>
+          <tr><td colspan="11" style="text-align:center;padding:2rem;color:var(--text-muted)"><i class="fa fa-inbox" style="font-size:2rem;margin-bottom:.5rem;display:block"></i>Aucune vente enregistrée</td></tr>
         <?php endif; ?>
       </tbody>
     </table>
@@ -190,6 +216,27 @@
             </select>
           </div>
           <div class="mb-3">
+            <label class="arovia-label" for="livraison_ou_point_vente">Type de distribution *</label>
+            <select id="livraison_ou_point_vente" name="livraison_ou_point_vente" class="arovia-input" required onchange="updateStatutOptions()">
+              <option value="">Sélectionner...</option>
+              <option value="LIVRAISON">À livrer</option>
+              <option value="POINT_VENTE">Sur place</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="arovia-label" for="statut">Statut *</label>
+            <select id="statut" name="statut" class="arovia-input" required onchange="toggleDateLivraison()">
+              <option value="">Sélectionner...</option>
+              <option value="A_LIVRER">À livrer</option>
+              <option value="PRIS">Pris</option>
+              <option value="ANNULE">Annulé</option>
+            </select>
+          </div>
+          <div class="mb-3" id="date-livraison-container" style="display: none;">
+            <label class="arovia-label" for="date_livraison">Date et heure de livraison *</label>
+            <input type="datetime-local" id="date_livraison" name="date_livraison" class="arovia-input">
+          </div>
+          <div class="mb-3">
             <label class="arovia-label" for="quantite">Nombre de bocaux *</label>
             <input id="quantite" name="quantite" type="number" min="1" class="arovia-input" placeholder="0" required/>
           </div>
@@ -220,6 +267,37 @@
 <script src="<?= base_url('assets/bootstrap/bootstrap.bundle.min.js') ?>"></script>
 <script>
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
+
+function updateStatutOptions() {
+  const typeDistribution = document.getElementById('livraison_ou_point_vente').value;
+  const statutSelect = document.getElementById('statut');
+  
+  // Reset options
+  statutSelect.innerHTML = '<option value="">Sélectionner...</option>';
+  
+  if (typeDistribution === 'LIVRAISON') {
+    statutSelect.innerHTML += '<option value="A_LIVRER">À livrer</option>';
+  } else if (typeDistribution === 'POINT_VENTE') {
+    statutSelect.innerHTML += '<option value="PRIS">Pris</option>';
+  }
+  
+  toggleDateLivraison();
+}
+
+function toggleDateLivraison() {
+  const statut = document.getElementById('statut').value;
+  const dateContainer = document.getElementById('date-livraison-container');
+  const dateInput = document.getElementById('date_livraison');
+  
+  if (statut === 'A_LIVRER') {
+    dateContainer.style.display = 'block';
+    dateInput.required = true;
+  } else {
+    dateContainer.style.display = 'none';
+    dateInput.required = false;
+    dateInput.value = '';
+  }
+}
 
 function applyFilters() {
   const query  = document.getElementById('tableSearch').value.toLowerCase();

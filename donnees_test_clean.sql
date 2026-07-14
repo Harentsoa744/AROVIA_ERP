@@ -200,7 +200,7 @@ INSERT INTO supermarches (nom, contact, telephone, email, localisation, actif) V
 -- ============================================================================
 -- 15. SORTIES
 -- ============================================================================
-INSERT INTO sorties (date_sortie, supermarche_id, type_bocal_id, quantite, prix_vente_unitaire, valeur_totale, cump_applique, marge_unitaire, marge_totale, motif, commentaire) VALUES
+INSERT INTO sorties (date_sortie, supermarche_id, type_bocal_id, quantite, prix_vente_unitaire, valeur_totale, cump_applique, marge_unitaire, marge_totale, motif, commentaire, livraison_ou_point_vente, statut) VALUES
 ('2026-01-25 10:00:00', 1, 1, 150, 5000.00, 750000.00, 2800.00, 2200.00, 330000.00, 'Vente', 'Commande régulière'),
 ('2026-02-10 11:00:00', 2, 2, 100, 12000.00, 1200000.00, 7361.11, 4638.89, 463889.00, 'Vente', 'Commande mensuelle'),
 ('2026-03-15 12:00:00', 3, 3, 80, 23000.00, 1840000.00, 14666.67, 8333.33, 666666.40, 'Vente', 'Promotion'),
@@ -222,35 +222,9 @@ INSERT INTO clients (nom, type_client, telephone, email, adresse) VALUES
 ('Boulangerie Pain Doré', 'particulier', '+261 34 00 234 56', 'pain@boulangerie.mg', 'Fianarantsoa'),
 ('Café de la Gare', 'particulier', '+261 34 00 345 67', 'cafe@gare.mg', 'Toamasina');
 
--- ============================================================================
--- 17. VENTES
--- ============================================================================
-INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut) VALUES
-(1, '2026-01-25 10:00:00', 1500000.00, 'Virement', 'PAYE'),
-(2, '2026-02-10 11:00:00', 5000000.00, 'Virement', 'PAYE'),
-(3, '2026-03-15 12:00:00', 6000000.00, 'Virement', 'PAYE'),
-(4, '2026-04-20 13:00:00', 2750000.00, 'Cash', 'PAYE'),
-(5, '2026-05-25 14:00:00', 3500000.00, 'Virement', 'PAYE'),
-(6, '2026-06-30 15:00:00', 4500000.00, 'Virement', 'PAYE'),
-(7, '2026-07-05 16:00:00', 1800000.00, 'MVOLA', 'PAYE'),
-(8, '2026-07-10 17:00:00', 3200000.00, 'Orange Money', 'PAYE'),
-(9, '2026-07-12 18:00:00', 4200000.00, 'Virement', 'PAYE'),
-(10, '2026-07-13 08:00:00', 2500000.00, 'Cash', 'EN_COURS');
 
--- ============================================================================
--- 18. VENTE DETAILS
--- ============================================================================
-INSERT INTO vente_details (vente_id, type_bocal_id, quantite, prix_unitaire, total_ligne) VALUES
-(1, 1, 150, 5000.00, 750000.00), (1, 2, 62, 12000.00, 750000.00),
-(2, 2, 200, 12000.00, 2400000.00), (2, 3, 109, 24000.00, 2616000.00),
-(3, 3, 150, 23000.00, 3450000.00), (3, 2, 125, 12000.00, 1500000.00), (3, 1, 210, 5000.00, 1050000.00),
-(4, 1, 300, 5000.00, 1500000.00), (4, 2, 104, 12000.00, 1248000.00),
-(5, 2, 150, 12000.00, 1800000.00), (5, 3, 74, 23000.00, 1702000.00),
-(6, 3, 120, 23000.00, 2760000.00), (6, 2, 75, 12000.00, 900000.00), (6, 1, 168, 5000.00, 840000.00),
-(7, 1, 180, 5000.00, 900000.00), (7, 2, 75, 12000.00, 900000.00),
-(8, 2, 133, 12000.00, 1596000.00), (8, 3, 70, 23000.00, 1610000.00),
-(9, 3, 100, 23000.00, 2300000.00), (9, 2, 158, 12000.00, 1896000.00),
-(10, 1, 200, 5000.00, 1000000.00), (10, 2, 125, 12000.00, 1500000.00);
+
+
 
 -- ============================================================================
 -- 19. LIVREURS
@@ -265,7 +239,7 @@ INSERT INTO livreurs (nom, telephone, vehicule, disponible) VALUES
 -- ============================================================================
 -- 20. LIVRAISONS
 -- ============================================================================
-INSERT INTO livraisons (vente_id, livreur_id, date_prevue, date_effective, adresse_livraison, statut) VALUES
+INSERT INTO livraisons (sortie_id, livreur_id, date_prevue, date_effective, adresse_livraison, statut) VALUES
 (1, 1, '2026-01-26 08:00:00', '2026-01-26 10:30:00', 'Ankorondrano, Tana', 'EFFECTUEE'),
 (2, 2, '2026-02-11 09:00:00', '2026-02-11 11:00:00', 'Ivandry, Tana', 'EFFECTUEE'),
 (3, 3, '2026-03-16 10:00:00', '2026-03-16 13:00:00', 'Centre-ville Antsirabe', 'EFFECTUEE'),

@@ -15,8 +15,6 @@
 DROP TABLE IF EXISTS disponibilites_livreurs   CASCADE;
 DROP TABLE IF EXISTS livraisons               CASCADE;
 DROP TABLE IF EXISTS livreurs                 CASCADE;
-DROP TABLE IF EXISTS vente_details            CASCADE;
-DROP TABLE IF EXISTS ventes                   CASCADE;
 DROP TABLE IF EXISTS clients                  CASCADE;
 
 -- Logistique, Commercialisation & Stock produits finis
@@ -236,7 +234,10 @@ CREATE TABLE sorties (
     marge_unitaire      NUMERIC(10,2) DEFAULT 0,
     marge_totale        NUMERIC(12,2) DEFAULT 0,
     motif               VARCHAR(50),
-    commentaire         TEXT
+    commentaire         TEXT,
+    livraison_ou_point_vente VARCHAR(20) DEFAULT 'LIVRAISON', -- 'LIVRAISON' ou 'POINT_VENTE'
+    statut              VARCHAR(20) DEFAULT 'A_LIVRER', -- 'A_LIVRER', 'PRIS', 'ANNULE'
+    date_livraison       TIMESTAMP DEFAULT NULL -- Date et heure de livraison prévue
 );
 
 -- ============================================================================
@@ -251,23 +252,9 @@ CREATE TABLE clients (
     adresse     TEXT
 );
 
-CREATE TABLE ventes (
-    id            SERIAL PRIMARY KEY,
-    client_id     INTEGER REFERENCES clients(id),
-    date_vente    TIMESTAMP DEFAULT NOW(),
-    montant_total NUMERIC(12,2),
-    mode_paiement VARCHAR(50),
-    statut        VARCHAR(50) DEFAULT 'PAYE'
-);
 
-CREATE TABLE vente_details (
-    id            SERIAL PRIMARY KEY,
-    vente_id      INTEGER REFERENCES ventes(id) ON DELETE CASCADE,
-    type_bocal_id INTEGER REFERENCES types_bocaux(id),
-    quantite      INTEGER NOT NULL,
-    prix_unitaire NUMERIC(12,2) NOT NULL,
-    total_ligne   NUMERIC(12,2) NOT NULL
-);
+
+
 
 CREATE TABLE livreurs (
     id         SERIAL PRIMARY KEY,
@@ -358,11 +345,7 @@ INSERT INTO clients (nom, type_client, telephone, email, adresse) VALUES
 ('Shoprite Antsirabe', 'supermarche', '+261 20 44 321 00', 'shoprite.ant@mg.mg', 'Centre-ville Antsirabe'),
 ('Score Behoririka', 'supermarche', '+261 20 22 987 65', 'behoririka@jumbo.mg', 'Behoririka, Tana');
 
-INSERT INTO ventes (client_id, date_vente, montant_total, mode_paiement, statut) VALUES
-(1, '2025-02-25 10:00:00', 1500000.00, 'Virement', 'PAYE'),
-(2, '2025-03-15 09:30:00', 5000000.00, 'Virement', 'PAYE'),
-(3, '2025-03-20 14:00:00', 6000000.00, 'Virement', 'PAYE'),
-(4, '2025-04-02 11:15:00', 2750000.00, 'Cash', 'EN_COURS');
+
 
 CREATE TABLE notifications (
     id SERIAL PRIMARY KEY,

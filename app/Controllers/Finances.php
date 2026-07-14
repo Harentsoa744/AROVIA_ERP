@@ -42,6 +42,7 @@ class Finances extends BaseController
     public function store()
     {
         $this->financeModel->insert([
+            'compte_id'        => 1, // Compte par défaut
             'type'             => $this->request->getPost('type'),
             'categorie'        => $this->request->getPost('categorie'),
             'montant'          => $this->request->getPost('montant'),
