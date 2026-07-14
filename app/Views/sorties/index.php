@@ -175,7 +175,7 @@
                   <?php endif; ?>
               </td>
               <td>
-                <a class="btn-icon-edit" href="/factures/<?= (int) ($sortie['id'] ?? 0) ?>" title="Voir"><i class="fa fa-eye"></i></a>
+                <a class="btn-icon-edit" href="/sorties/facture/<?= (int) ($sortie['id'] ?? 0) ?>" title="Voir facture"><i class="fa fa-file-invoice"></i></a>
               </td>
             </tr>
           <?php endforeach; ?>

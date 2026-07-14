@@ -56,10 +56,14 @@ class LivraisonController extends BaseController
             ->get()
             ->getResultArray();
 
-        // Filtrer les sorties pour aujourd'hui
-        $sortiesAujourdhui = array_values(array_filter($sortiesALivrer, function($sortie) use ($today) {
-            return date('Y-m-d', strtotime($sortie['date_sortie'])) === $today;
-        }));
+        // Filtrer les sorties pour aujourd'hui (utiliser date_livraison si disponible, sinon date_sortie)
+        $sortiesAujourdhui = [];
+        foreach ($sortiesALivrer as $sortie) {
+            $dateReference = !empty($sortie['date_livraison']) ? $sortie['date_livraison'] : $sortie['date_sortie'];
+            if (date('Y-m-d', strtotime($dateReference)) === $today) {
+                $sortiesAujourdhui[] = $sortie;
+            }
+        }
 
         // Récupérer les livraisons existantes
         $livraisons = $this->livraisonModel->getLivraisonsWithLivreur();
@@ -106,7 +110,7 @@ class LivraisonController extends BaseController
 
         // Validation des transitions de statut
         $transitionsValides = [
-            'EN_ATTENTE' => ['EN_COURS', 'ANNULEE'],
+            'EN_ATTENTE' => ['EN_COURS', 'EFFECTUEE', 'ANNULEE'],
             'EN_COURS' => ['EFFECTUEE', 'EN_RETARD', 'ANNULEE'],
             'EFFECTUEE' => [], // Statut final, ne peut plus changer
             'EN_RETARD' => ['EFFECTUEE', 'ANNULEE'],
@@ -153,7 +157,7 @@ class LivraisonController extends BaseController
 
         $data = [
             'sortie' => $sortie,
-            'livreurs_dispo' => $this->livreurModel->getDisponibles(),
+            'livreurs_dispo' => $this->livreurModel->getAllLivreurs(),
         ];
 
         return view('livraisons/assigner', $data);
@@ -177,43 +181,52 @@ class LivraisonController extends BaseController
 
         $db = \Config\Database::connect();
         
-        // Récupérer la sortie pour obtenir l'adresse
-        $sortie = $db->table('sorties')
-            ->select('sorties.*, supermarches.localisation as supermarche_adresse')
-            ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
-            ->where('sorties.id', $sortieId)
-            ->get()->getRowArray();
+        try {
+            // Récupérer la sortie pour obtenir l'adresse
+            $sortie = $db->table('sorties')
+                ->select('sorties.*, supermarches.localisation as supermarche_adresse')
+                ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
+                ->where('sorties.id', $sortieId)
+                ->get()->getRowArray();
 
-        if (!$sortie) {
-            return redirect()->to('/livraisons')->with('error', 'Sortie introuvable.');
+            if (!$sortie) {
+                return redirect()->to('/livraisons')->with('error', 'Sortie introuvable.');
+            }
+
+            // Créer la livraison
+            $this->livraisonModel->save([
+                'sortie_id' => $sortieId,
+                'livreur_id' => $livreurId,
+                'date_prevue' => $datePrevue,
+                'adresse_livraison' => $sortie['supermarche_adresse'] ?? '',
+                'statut' => 'EN_ATTENTE',
+            ]);
+
+            // Enregistrer dans l'historique (création) - avec gestion d'erreur
+            $livraisonId = $this->livraisonModel->getInsertID();
+            $utilisateurId = session()->get('user_id') ?? null;
+            try {
+                $this->historiqueLivraisonModel->enregistrerChangement(
+                    $livraisonId,
+                    null,
+                    'EN_ATTENTE',
+                    $utilisateurId,
+                    'Livraison créée à partir de la sortie #' . $sortieId
+                );
+            } catch (\Exception $e) {
+                // Si l'historique échoue, on continue quand même
+                log_message('error', 'Erreur historique livraison: ' . $e->getMessage());
+            }
+
+            // Mettre à jour le statut de la sortie
+            $db->table('sorties')
+                ->where('id', $sortieId)
+                ->update(['statut' => 'A_LIVRER']);
+
+            return redirect()->to('/livraisons')->with('message', 'Livraison assignée avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->to('/livraisons')->with('error', 'Erreur lors de l\'assignation: ' . $e->getMessage());
         }
-
-        // Créer la livraison
-        $this->livraisonModel->save([
-            'sortie_id' => $sortieId,
-            'livreur_id' => $livreurId,
-            'date_prevue' => $datePrevue,
-            'adresse_livraison' => $sortie['supermarche_adresse'] ?? '',
-            'statut' => 'EN_ATTENTE',
-        ]);
-
-        // Enregistrer dans l'historique (création)
-        $livraisonId = $this->livraisonModel->getInsertID();
-        $utilisateurId = session()->get('user_id') ?? null;
-        $this->historiqueLivraisonModel->enregistrerChangement(
-            $livraisonId,
-            null,
-            'EN_ATTENTE',
-            $utilisateurId,
-            'Livraison créée à partir de la sortie #' . $sortieId
-        );
-
-        // Mettre à jour le statut de la sortie
-        $db->table('sorties')
-            ->where('id', $sortieId)
-            ->update(['statut' => 'A_LIVRER']);
-
-        return redirect()->to('/livraisons')->with('message', 'Livraison assignée avec succès.');
     }
 
     public function statutSortie($sortieId, $statut)

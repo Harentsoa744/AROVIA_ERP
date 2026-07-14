@@ -25,10 +25,12 @@ class PlanningController extends BaseController
     {
         $db = \Config\Database::connect();
 
-        return $db->table('ventes')
-            ->select('ventes.id, ventes.montant_total, ventes.date_vente, clients.nom as client_nom')
-            ->join('clients', 'clients.id = ventes.client_id', 'left')
-            ->orderBy('ventes.id', 'DESC')
+        return $db->table('sorties')
+            ->select('sorties.id, sorties.valeur_totale as montant_total, sorties.date_sortie as date_vente, supermarches.nom as client_nom')
+            ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
+            ->where('sorties.livraison_ou_point_vente', 'LIVRAISON')
+            ->where('sorties.statut', 'A_LIVRER')
+            ->orderBy('sorties.id', 'DESC')
             ->get()
             ->getResultArray();
     }
@@ -37,8 +39,8 @@ class PlanningController extends BaseController
     {
         $db = \Config\Database::connect();
 
-        return $db->table('clients')
-            ->select('id, nom, type_client, telephone, email, adresse')
+        return $db->table('supermarches')
+            ->select('id, nom, localisation as adresse, contact as telephone')
             ->orderBy('nom', 'ASC')
             ->get()
             ->getResultArray();
@@ -124,8 +126,8 @@ class PlanningController extends BaseController
 
         if (!empty($clientId) && is_numeric($clientId)) {
             $db = \Config\Database::connect();
-            $client = $db->table('clients')
-                ->select('adresse')
+            $client = $db->table('supermarches')
+                ->select('localisation as adresse')
                 ->where('id', (int) $clientId)
                 ->get()
                 ->getRowArray();
@@ -135,8 +137,8 @@ class PlanningController extends BaseController
             }
         }
 
-        $venteId = $this->request->getPost('vente_id');
-        $venteId = (!empty($venteId) && is_numeric($venteId)) ? (int) $venteId : null;
+        $sortieId = $this->request->getPost('sortie_id');
+        $sortieId = (!empty($sortieId) && is_numeric($sortieId)) ? (int) $sortieId : null;
 
         $livreurId = $this->request->getPost('livreur_id');
         $livreurId = (!empty($livreurId) && is_numeric($livreurId)) ? (int) $livreurId : null;
@@ -145,7 +147,7 @@ class PlanningController extends BaseController
         $datePrevue = $this->normalizeDateTime($datePrevue);
 
         $this->livraisonModel->save([
-            'vente_id'          => $venteId,
+            'sortie_id'         => $sortieId,
             'livreur_id'        => $livreurId,
             'date_prevue'       => $datePrevue,
             'adresse_livraison' => $adresseLivraison,
@@ -161,10 +163,10 @@ class PlanningController extends BaseController
     public function details($id)
     {
         $livraison = $this->livraisonModel
-            ->select('livraisons.*, livreurs.nom as nom_livreur, livreurs.telephone, livreurs.vehicule, ventes.montant_total, clients.nom as client_nom')
+            ->select('livraisons.*, livreurs.nom as nom_livreur, livreurs.telephone, livreurs.vehicule, sorties.valeur_totale as montant_total, sorties.date_sortie, supermarches.nom as client_nom')
             ->join('livreurs', 'livreurs.id = livraisons.livreur_id', 'left')
-            ->join('ventes', 'ventes.id = livraisons.vente_id', 'left')
-            ->join('clients', 'clients.id = ventes.client_id', 'left')
+            ->join('sorties', 'sorties.id = livraisons.sortie_id', 'left')
+            ->join('supermarches', 'supermarches.id = sorties.supermarche_id', 'left')
             ->where('livraisons.id', $id)
             ->first();
 
@@ -199,8 +201,8 @@ class PlanningController extends BaseController
 
         if (!empty($clientId) && is_numeric($clientId)) {
             $db = \Config\Database::connect();
-            $client = $db->table('clients')
-                ->select('adresse')
+            $client = $db->table('supermarches')
+                ->select('localisation as adresse')
                 ->where('id', (int) $clientId)
                 ->get()
                 ->getRowArray();
@@ -210,8 +212,8 @@ class PlanningController extends BaseController
             }
         }
 
-        $venteId = $this->request->getPost('vente_id');
-        $venteId = (!empty($venteId) && is_numeric($venteId)) ? (int) $venteId : null;
+        $sortieId = $this->request->getPost('sortie_id');
+        $sortieId = (!empty($sortieId) && is_numeric($sortieId)) ? (int) $sortieId : null;
 
         $livreurId = $this->request->getPost('livreur_id');
         $livreurId = (!empty($livreurId) && is_numeric($livreurId)) ? (int) $livreurId : null;
@@ -223,7 +225,7 @@ class PlanningController extends BaseController
         $dateEffective = $this->normalizeDateTime($dateEffective);
 
         $data = [
-            'vente_id'          => $venteId,
+            'sortie_id'         => $sortieId,
             'livreur_id'        => $livreurId,
             'date_prevue'       => $datePrevue,
             'date_effective'    => $dateEffective,

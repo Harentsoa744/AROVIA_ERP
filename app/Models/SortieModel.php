@@ -93,10 +93,36 @@ class SortieModel extends Model
         }
 
         $db->table('sorties')->insert($insertData);
+        $sortieId = $db->insertID();
+
+        // Si c'est une livraison, on l'ajoute automatiquement dans les livraisons
+        if ($livraisonOuPointVente === 'LIVRAISON') {
+            $supermarche = $db->table('supermarches')->where('id', $supermarcheId)->get()->getRowArray();
+            $adresseLivraison = $supermarche['localisation'] ?? '';
+            
+            $livraisonData = [
+                'sortie_id' => $sortieId,
+                'date_prevue' => $insertData['date_livraison'] ?? date('Y-m-d H:i:s'),
+                'adresse_livraison' => $adresseLivraison,
+                'statut' => 'EN_ATTENTE',
+            ];
+            $db->table('livraisons')->insert($livraisonData);
+            $livraisonId = $db->insertID();
+
+            // Enregistrer dans l'historique
+            $db->table('historique_livraison')->insert([
+                'livraison_id' => $livraisonId,
+                'statut_precedent' => null,
+                'statut_nouveau' => 'EN_ATTENTE',
+                'date_changement' => date('Y-m-d H:i:s'),
+                'utilisateur_id' => session()->has('user_id') ? session()->get('user_id') : null,
+                'commentaire' => 'Création automatique suite à une sortie'
+            ]);
+        }
 
         $db->transComplete();
 
-        return ['succes' => $db->transStatus(), 'valeur_totale' => $valeurTotale];
+        return ['succes' => $db->transStatus(), 'valeur_totale' => $valeurTotale, 'id' => $sortieId];
     }
 
     // Pour la courbe : total des bocaux vendus, groupé par jour
@@ -130,5 +156,26 @@ class SortieModel extends Model
             ->groupBy('sm.id, sm.nom')
             ->get()
             ->getResultArray();
+    }
+
+    /**
+     * Récupère les sorties qui n'ont pas encore été facturées
+     */
+    public function getSortiesNonFacturees(): array
+    {
+        $db = \Config\Database::connect();
+        
+        $subquery = $db->table('ventes')
+            ->select('sortie_id')
+            ->where('sortie_id IS NOT NULL', null, false);
+        
+        return $this->select('sorties.*, types_bocaux.nom as bocal_nom, types_bocaux.volume_litres, supermarches.nom as supermarche_nom')
+            ->join('types_bocaux', 'types_bocaux.id = sorties.type_bocal_id')
+            ->join('supermarches', 'supermarches.id = sorties.supermarche_id')
+            ->whereNotIn('sorties.id', function($builder) {
+                $builder->select('sortie_id')->from('ventes')->where('sortie_id IS NOT NULL');
+            })
+            ->orderBy('sorties.date_sortie', 'DESC')
+            ->findAll();
     }
 }

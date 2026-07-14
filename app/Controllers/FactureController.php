@@ -43,13 +43,17 @@ class FactureController extends BaseController
     /**
      * GET /factures/creer
      * Formulaire de création d'une nouvelle facture.
+     * Modifié pour utiliser les sorties existantes
      */
     public function creer()
     {
+        $sortieModel = new \App\Models\SortieModel();
+        
         $data = [
-            'titre'   => 'Nouvelle facture — Arovia',
-            'clients' => $this->clientModel->orderBy('nom', 'ASC')->findAll(),
-            'bocaux'  => $this->typeBocalModel->findAll(),
+            'titre'    => 'Nouvelle facture — Arovia',
+            'clients'  => $this->clientModel->orderBy('nom', 'ASC')->findAll(),
+            'sorties'  => $sortieModel->getSortiesNonFacturees(),
+            'bocaux'   => $this->typeBocalModel->findAll(),
         ];
 
         return view('facture/creer', $data);
@@ -58,14 +62,14 @@ class FactureController extends BaseController
     /**
      * POST /factures/enregistrer
      * Valide et enregistre l'entête + les lignes de la facture, dans une transaction.
+     * Version modifiée pour utiliser les sorties existantes
      */
     public function enregistrer()
     {
         $rules = [
-            'client_id'       => 'required|integer',
-            'type_bocal_id.*' => 'permit_empty',
-            'quantite.*'      => 'permit_empty',
-            'prix_unitaire.*' => 'permit_empty',
+            'sortie_id'      => 'required|integer',
+            'client_id'      => 'required|integer',
+            'mode_paiement'  => 'required',
         ];
 
         if (! $this->validate($rules)) {
@@ -74,65 +78,37 @@ class FactureController extends BaseController
                 ->with('errors', $this->validator->getErrors());
         }
 
-        $typeBocalIds  = $this->request->getPost('type_bocal_id') ?? [];
-        $quantites     = $this->request->getPost('quantite') ?? [];
-        $prixUnitaires = $this->request->getPost('prix_unitaire') ?? [];
-
-        // Construction et validation des lignes envoyées par le formulaire
-        $lignes       = [];
-        $montantTotal = 0;
-
-        foreach ($typeBocalIds as $index => $typeBocalId) {
-            $quantite     = (int) ($quantites[$index] ?? 0);
-            $prixUnitaire = (float) ($prixUnitaires[$index] ?? 0);
-
-            if (empty($typeBocalId) || $quantite <= 0) {
-                continue; // ligne vide ignorée
-            }
-
-            $totalLigne    = $quantite * $prixUnitaire;
-            $montantTotal += $totalLigne;
-
-            $lignes[] = [
-                'type_bocal_id' => (int) $typeBocalId,
-                'quantite'      => $quantite,
-                'prix_unitaire' => $prixUnitaire,
-                'total_ligne'   => $totalLigne,
-            ];
-        }
-
-        if (empty($lignes)) {
-            return redirect()->to('/factures/creer')
-                ->withInput()
-                ->with('error', 'Veuillez ajouter au moins un article valide à la facture.');
-        }
+        $sortieId = (int) $this->request->getPost('sortie_id');
+        $clientId = (int) $this->request->getPost('client_id');
+        $modePaiement = $this->request->getPost('mode_paiement');
 
         $db = \Config\Database::connect();
         $db->transStart();
 
-        $venteId = $this->venteModel->insert([
-            'client_id'     => $this->request->getPost('client_id'),
-            'date_vente'    => date('Y-m-d H:i:s'),
-            'montant_total' => $montantTotal,
-            'mode_paiement' => $this->request->getPost('mode_paiement') ?: 'Cash',
-            'statut'        => 'EN_COURS',
-        ]);
+        try {
+            // Créer la vente à partir de la sortie
+            $venteId = $this->venteModel->creerDepuisSortie($sortieId, $clientId, $modePaiement);
+            
+            // Créer les détails de vente
+            $this->venteDetailModel->creerDepuisSortie($venteId, $sortieId);
+            
+            $db->transComplete();
 
-        foreach ($lignes as $ligne) {
-            $ligne['vente_id'] = $venteId;
-            $this->venteDetailModel->insert($ligne);
-        }
+            if ($db->transStatus() === false) {
+                return redirect()->to('/factures/creer')
+                    ->withInput()
+                    ->with('error', "Une erreur est survenue lors de l'enregistrement de la facture.");
+            }
 
-        $db->transComplete();
-
-        if ($db->transStatus() === false) {
+            return redirect()->to('/factures/' . $venteId)
+                ->with('success', 'Facture créée avec succès à partir de la sortie.');
+                
+        } catch (\Exception $e) {
+            $db->transRollback();
             return redirect()->to('/factures/creer')
                 ->withInput()
-                ->with('error', "Une erreur est survenue lors de l'enregistrement de la facture.");
+                ->with('error', "Erreur: " . $e->getMessage());
         }
-
-        return redirect()->to('/factures/' . $venteId)
-            ->with('success', 'Facture créée avec succès.');
     }
 
     /**

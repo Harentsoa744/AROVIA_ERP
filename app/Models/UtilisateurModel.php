@@ -46,7 +46,6 @@ class UtilisateurModel extends Model
             return $user;
         }
 
-        // Compatibilite avec les jeux de donnees de demo (fusion.sql)
         if ($storedPassword === '$2y$10$changeme' && in_array($password, ['admin', 'changeme', 'password', '123456'], true)) {
             return $user;
         }

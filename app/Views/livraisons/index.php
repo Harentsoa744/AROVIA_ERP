@@ -45,42 +45,7 @@
     <div class="col-6 col-md-4"><div class="kpi-card"><div class="kpi-icon-wrap orange"><i class="fa fa-triangle-exclamation"></i></div><div class="kpi-label">Incidents</div><div class="kpi-value orange"><?= (int) ($stats['annulees'] ?? 0) ?></div></div></div>
   </div> -->
 
-  <!-- Tableau des livraisons à faire aujourd'hui -->
-  <h3 class="mb-3" style="color: var(--primary-color);">Livraisons à faire aujourd'hui</h3>
-  <div class="content-card mb-4">
-    <table class="arovia-table">
-      <thead>
-        <tr><th>ID Sortie</th><th>Supermarché</th><th>Adresse</th><th>Date</th><th>Statut</th><th>Actions</th></tr>
-      </thead>
-      <tbody>
-        <?php if (!empty($sorties_aujourdhui)): ?>
-          <?php foreach ($sorties_aujourdhui as $sortie): ?>
-            <tr>
-              <td class="fw-600">#<?= (int) ($sortie['id'] ?? 0) ?></td>
-              <td><?= esc($sortie['supermarche_nom'] ?? '—') ?></td>
-              <td><?= esc($sortie['supermarche_adresse'] ?? '—') ?></td>
-              <td><?= esc(date('d/m/Y H:i', strtotime($sortie['date_sortie'] ?? 'now'))) ?></td>
-              <td><span class="badge bg-warning">À livrer</span></td>
-              <td>
-                <div class="dropdown">
-                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    <i class="fa fa-ellipsis-v"></i>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/livraisons/assigner/<?= (int) ($sortie['id'] ?? 0) ?>"><i class="fa fa-truck me-2"></i>Assigner livreur</a></li>
-                    <li><a class="dropdown-item" href="/livraisons/statut_sortie/<?= (int) ($sortie['id'] ?? 0) ?>/PRIS"><i class="fa fa-check me-2"></i>Pris sur place</a></li>
-                    <li><a class="dropdown-item" href="/livraisons/statut_sortie/<?= (int) ($sortie['id'] ?? 0) ?>/ANNULE"><i class="fa fa-times me-2"></i>Annuler</a></li>
-                  </ul>
-                </div>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <tr><td colspan="6" class="text-center text-muted" style="padding:2rem">Aucune livraison prévue pour aujourd'hui.</td></tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
+
 
   <!-- Tableau de toutes les livraisons -->
   <h3 class="mb-3" style="color: var(--primary-color);">Toutes les livraisons</h3>

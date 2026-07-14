@@ -21,4 +21,10 @@ class LivreurModel extends Model
     {
         return $this->where('disponible', true)->findAll();
     }
+
+    // Récupérer tous les livreurs (pour le formulaire d'assignation)
+    public function getAllLivreurs()
+    {
+        return $this->findAll();
+    }
 }

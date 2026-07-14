@@ -34,11 +34,11 @@
           
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="arovia-label" for="vente_id">Vente / Commande *</label>
-              <select id="vente_id" name="vente_id" class="arovia-input" required>
+              <label class="arovia-label" for="sortie_id">Sortie / Commande *</label>
+              <select id="sortie_id" name="sortie_id" class="arovia-input" required>
                 <?php foreach(($ventes ?? []) as $v){ ?>
-                  <option value="<?= (int) $v['id'] ?>" <?= (int) $v['id'] === (int) $livraison['vente_id'] ? 'selected' : '' ?>>
-                    Vente #<?= (int) $v['id'] ?> - <?= esc($v['client_nom'] ?? 'Sans client') ?> - <?= number_format((float) ($v['montant_total'] ?? 0), 0, ',', ' ') ?> Ar
+                  <option value="<?= (int) $v['id'] ?>" <?= (int) $v['id'] === (int) ($livraison['sortie_id'] ?? 0) ? 'selected' : '' ?>>
+                    Sortie #<?= (int) $v['id'] ?> - <?= esc($v['client_nom'] ?? 'Sans client') ?> - <?= number_format((float) ($v['montant_total'] ?? 0), 0, ',', ' ') ?> Ar
                   </option>
                 <?php } ?>
               </select>

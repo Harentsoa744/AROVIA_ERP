@@ -21,18 +21,28 @@
   </div>
   
   <div class="mb-4 d-flex justify-content-end gap-2 flex-wrap align-items-center">
-    <!-- Filtre poste -->
-    <div style="position:relative;">
-      <select id="filterPoste" class="arovia-input" style="height:38px;font-size:.9rem;min-width:160px;">
-        <option value="">Tous les postes</option>
+    <!-- Filtre poste avec checkboxes -->
+    <div class="dropdown">
+      <button class="btn-outline-gold" type="button" id="posteFilterDropdown" data-bs-toggle="dropdown" style="height:38px;font-size:.9rem;">
+        <i class="fa fa-filter me-2"></i>Filtrer par poste
+      </button>
+      <div class="dropdown-menu p-3" style="min-width:200px;">
+        <div class="form-check mb-2">
+          <input class="form-check-input" type="checkbox" id="selectAllPostes" checked>
+          <label class="form-check-label" for="selectAllPostes">Tous les postes</label>
+        </div>
+        <hr class="my-2">
         <?php
           $postes = array_unique(array_filter(array_column($employes ?? [], 'poste')));
           sort($postes);
           foreach ($postes as $poste):
         ?>
-        <option value="<?= esc(strtolower($poste)) ?>"><?= esc($poste) ?></option>
+        <div class="form-check">
+          <input class="form-check-input poste-checkbox" type="checkbox" value="<?= esc(strtolower($poste)) ?>" id="poste_<?= md5($poste) ?>" checked>
+          <label class="form-check-label" for="poste_<?= md5($poste) ?>"><?= esc($poste) ?></label>
+        </div>
         <?php endforeach; ?>
-      </select>
+      </div>
     </div>
     <!-- Recherche -->
     <div style="position: relative; width: 250px;">
@@ -100,22 +110,44 @@
 function toggleSubmenu(el){el.classList.toggle('open');el.nextElementSibling.classList.toggle('open');}
 
 function applyGridFilters() {
-  const query  = document.getElementById('gridSearch').value.toLowerCase();
-  const filtre = document.getElementById('filterPoste').value.toLowerCase();
-  const cards  = document.querySelectorAll('#employesGrid > div');
+  const query = document.getElementById('gridSearch').value.toLowerCase();
+  const posteCheckboxes = document.querySelectorAll('.poste-checkbox');
+  const selectedPostes = Array.from(posteCheckboxes)
+    .filter(cb => cb.checked)
+    .map(cb => cb.value.toLowerCase());
+  
+  const cards = document.querySelectorAll('#employesGrid > div');
 
   cards.forEach(card => {
-    const text      = card.textContent.toLowerCase();
-    const posteEl   = card.querySelector('.text-muted');
+    const text = card.textContent.toLowerCase();
+    const posteEl = card.querySelector('.text-muted');
     const posteText = (posteEl?.textContent || '').toLowerCase();
-    const matchQ = !query  || text.includes(query);
-    const matchF = !filtre || posteText.includes(filtre);
+    const matchQ = !query || text.includes(query);
+    const matchF = selectedPostes.length === 0 || selectedPostes.includes(posteText);
     card.style.display = (matchQ && matchF) ? '' : 'none';
   });
 }
 
+// Gestion du checkbox "Tous les postes"
+document.getElementById('selectAllPostes').addEventListener('change', function() {
+  const posteCheckboxes = document.querySelectorAll('.poste-checkbox');
+  posteCheckboxes.forEach(cb => {
+    cb.checked = this.checked;
+  });
+  applyGridFilters();
+});
+
+// Gestion des checkboxes individuels
+document.querySelectorAll('.poste-checkbox').forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    const allChecked = Array.from(document.querySelectorAll('.poste-checkbox'))
+      .every(cb => cb.checked);
+    document.getElementById('selectAllPostes').checked = allChecked;
+    applyGridFilters();
+  });
+});
+
 document.getElementById('gridSearch').addEventListener('keyup', applyGridFilters);
-document.getElementById('filterPoste').addEventListener('change', applyGridFilters);
 </script>
 </body>
 </html>
